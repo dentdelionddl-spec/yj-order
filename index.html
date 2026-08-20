@@ -3,570 +3,269 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>MISING.MAN — 용저우 공장 오더문의</title>
-<meta name="description" content="중국 용저우 의류공장. 잠옷·파자마, 셔츠·남방, 밴딩슬랙스 생산. 컬러·사이즈당 100장부터 오더 상담합니다." />
-<meta property="og:title" content="MISING.MAN — 용저우 공장 오더문의" />
-<meta property="og:description" content="한국에서 30년 생산하고, 직접 지은 중국 공장입니다. 잠옷·셔츠·밴딩슬랙스. 컬러·사이즈당 100장부터." />
-<meta property="og:type" content="website" />
-<meta name="theme-color" content="#f1f2f5" />
+<title>MISING.MAN — 오더문의</title>
+<meta name="description" content="잠옷·파자마, 셔츠·남방, 밴딩슬랙스 생산 공장. 컬러·사이즈당 100장부터 오더 상담합니다." />
+<meta property="og:title" content="MISING.MAN — 오더문의" />
+<meta property="og:description" content="잠옷·셔츠·밴딩슬랙스 생산 공장. 컬러·사이즈당 100장부터." />
+<meta name="theme-color" content="#ffffff" />
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
 <style>
 :root{
-  --bg:#f1f2f5; --bg2:#e7e9ee; --paper:#fff; --ink:#0f1319; --ink-2:#3a4150;
-  --dark:#101419; --dark-2:#181d25;
-  --blue:#2e6be6; --blue-d:#1f52bd; --blue-soft:#dfe9fd;
-  --muted:#767d8b; --line:#dcdfe6; --line-2:#c9cdd6;
-  --pill:999px;
+  --page:#e9ebef; --app:#fff; --ink:#111418; --sub:#5c636e; --muted:#8b929d;
+  --line:#e8eaee; --field:#f5f6f8; --blue:#2e6be6; --blue-d:#2159c9; --blue-soft:#eaf1ff;
+  --ok:#1f9d55; --ok-bg:#eaf7ef; --ok-line:#b7e3c8;
+  --warn:#c8352c; --warn-bg:#fdecea; --warn-line:#f3c3bd;
+  --r:12px;
   --body:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--app);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
 button,input,select,textarea{font-family:var(--body)}
-.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
-.rv{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1);animation:rvsafe .01s linear 3s forwards}
-@keyframes rvsafe{to{opacity:1;transform:none}}.rv.in{opacity:1;transform:none}
+a{color:inherit}
 
-/* 로고 */
-.logo{display:inline-block;font-weight:900;line-height:1;letter-spacing:-.05em;transform:skewX(-12deg) scaleX(.95);transform-origin:left center;white-space:nowrap}
+.device{display:contents}
+.app{width:100%;max-width:520px;margin:0 auto;background:var(--app);min-height:100dvh;display:flex;flex-direction:column;position:relative}
+.scroll{flex:1;padding:0 20px 24px}
 
-/* 상단 유틸바 */
-.util{border-bottom:1px solid var(--line);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.util-in{display:flex;justify-content:space-between;align-items:center;height:38px;gap:16px}
-.util .live{display:flex;align-items:center;gap:7px}
-.live .pulse{width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 0 rgba(46,107,230,.55);animation:pl 2.2s infinite}
-@keyframes pl{70%{box-shadow:0 0 0 8px rgba(46,107,230,0)}100%{box-shadow:0 0 0 0 rgba(46,107,230,0)}}
+/* 상단 */
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);padding:16px 20px 12px;border-bottom:1px solid var(--line)}
+.logo{display:inline-block;font-weight:900;font-size:15px;line-height:1;letter-spacing:-.05em;transform:skewX(-12deg) scaleX(.96);transform-origin:left center}
+.top .sub{display:block;margin-top:5px;font-size:11.5px;color:var(--muted);letter-spacing:.02em;font-weight:600}
 
-/* 헤더 */
-.hdr{position:sticky;top:0;z-index:60;background:rgba(241,242,245,.86);backdrop-filter:saturate(1.6) blur(14px);border-bottom:1px solid var(--line)}
-.hdr-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px}
-.hdr .logo{font-size:22px}
-.nav{display:flex;align-items:center;gap:0;font-size:14px;font-weight:600;color:var(--ink-2)}
-.nav a{padding:0 18px;position:relative;transition:color .18s}
-.nav a + a::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:1px;height:11px;background:var(--line-2)}
-.nav a:hover{color:var(--blue)}
-.pill{display:inline-flex;align-items:center;gap:10px;border-radius:var(--pill);font-weight:700;font-size:15px;padding:9px 10px 9px 22px;border:1px solid transparent;cursor:pointer;transition:background .18s,color .18s,border-color .18s,transform .12s}
-.pill:active{transform:scale(.985)}
-.arw{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:13px;flex:none;transition:transform .22s}
-.pill:hover .arw{transform:translate(2px,-2px)}
-.pill-blue{background:var(--blue);color:#fff}
-.pill-blue .arw{background:rgba(255,255,255,.22)}
-.pill-blue:hover{background:var(--blue-d)}
-.pill-dark{background:var(--ink);color:#fff}
-.pill-dark .arw{background:var(--blue)}
-.pill-line{background:transparent;color:var(--ink);border-color:var(--line-2)}
-.pill-line .arw{background:var(--blue);color:#fff}
-.pill-line:hover{border-color:var(--ink)}
-.pill-sm{font-size:13.5px;padding:7px 8px 7px 18px}
-.pill-sm .arw{width:26px;height:26px;font-size:12px}
+h1{font-size:25px;font-weight:800;letter-spacing:-.035em;margin:26px 0 8px;line-height:1.25}
+.lead{font-size:13.5px;color:var(--sub);margin:0 0 22px;line-height:1.6}
 
-/* 히어로 */
-.hero{padding:64px 0 0}
-.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.eyebrow::before{content:'#';color:var(--blue);font-weight:800}
-.hero-top{display:grid;grid-template-columns:1.35fr .65fr;gap:48px;align-items:end;margin:22px 0 34px}
-h1{font-size:clamp(40px,7.6vw,94px);line-height:.98;letter-spacing:-.05em;font-weight:900;margin:0}
-h1 .band{background:var(--blue);color:#fff;padding:0 .12em .06em;border-radius:6px;display:inline-block;transform:translateY(-.02em)}
-.hero-side p{font-size:15.5px;color:var(--ink-2);margin:0 0 20px}
-.hero-cta{display:flex;flex-wrap:wrap;gap:10px}
-
-.stage{position:relative;border-radius:28px;overflow:hidden;background:linear-gradient(140deg,#2b323d,#0f1319);min-height:clamp(300px,44vw,520px);background-size:cover;background-position:center}
-.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.stage::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,19,25,0) 45%,rgba(15,19,25,.55))}
-.floats{position:absolute;inset:0;z-index:2}
-.fchip{position:absolute;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-radius:16px;padding:12px 16px;box-shadow:0 10px 34px rgba(9,13,20,.28);display:flex;align-items:center;gap:12px}
-.fchip .k{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-.fchip .v{font-size:19px;font-weight:900;letter-spacing:-.03em;line-height:1.1}
-.fchip.a{left:24px;bottom:96px}
-.fchip.b{left:24px;bottom:24px;background:var(--blue);color:#fff}
-.fchip.b .k{color:#c3d8ff}
-.stamp{position:absolute;right:24px;top:24px;width:118px;height:118px}
-.stamp svg{width:100%;height:100%;animation:spin 22s linear infinite}
-.stamp text{font-size:12.4px;font-weight:800;letter-spacing:.06em;fill:#fff;text-transform:uppercase}
-.stamp .core{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
-.stamp .core b{width:44px;height:44px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:34px}
-.stat{padding:26px 0 30px;border-right:1px solid var(--line)}
-.stat:last-child{border-right:0}
-.stat b{display:block;font-size:clamp(30px,3.6vw,48px);font-weight:900;letter-spacing:-.045em;line-height:1}
-.stat b i{font-style:normal;font-size:.44em;color:var(--blue);margin-left:3px;letter-spacing:0}
-.stat span{display:block;margin-top:8px;font-size:13px;color:var(--muted);font-weight:600}
-
-/* 티커 */
-.ticker{background:var(--ink);color:#fff;overflow:hidden;padding:15px 0;margin-top:52px}
-.ticker-in{display:flex;width:max-content;animation:sl 34s linear infinite}
-.ticker-in span{font-size:15px;font-weight:800;letter-spacing:-.01em;padding:0 26px;white-space:nowrap;display:flex;align-items:center;gap:26px}
-.ticker-in span::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue);display:block}
-@keyframes sl{to{transform:translateX(-50%)}}
+/* 안내 박스 */
+.tips{background:var(--field);border-radius:var(--r);padding:14px 16px;margin:0 0 24px}
+.tips li{list-style:none;font-size:12.5px;color:var(--sub);line-height:1.7;padding-left:12px;position:relative}
+.tips ul{margin:0;padding:0}
+.tips li::before{content:'·';position:absolute;left:2px;color:var(--muted)}
+.tips b{color:var(--ink);font-weight:700}
 
 /* 섹션 */
-section.blk{padding:104px 0}
-.shead{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:44px}
-h2{font-size:clamp(28px,4.4vw,56px);line-height:1.02;letter-spacing:-.045em;font-weight:900;margin:14px 0 0}
-.shead p{margin:0;font-size:15.5px;color:var(--ink-2);max-width:44ch}
+.sec{margin:0 0 26px}
+.sec-h{display:flex;align-items:baseline;gap:8px;margin:0 0 12px}
+.sec-h span{font-size:11px;font-weight:800;color:var(--blue);letter-spacing:.08em}
+.sec-h h2{font-size:15px;font-weight:800;letter-spacing:-.02em;margin:0}
+.sec-h em{font-style:normal;font-size:11.5px;color:var(--muted);font-weight:600;margin-left:auto}
 
-.about{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-.about p{font-size:16.5px;color:var(--ink-2);margin:0 0 16px;max-width:48ch}
-.quote{border-left:3px solid var(--blue);padding-left:18px;font-size:18px;font-weight:700;letter-spacing:-.02em;margin:26px 0 0;line-height:1.5}
-.frame{position:relative;border-radius:24px;overflow:hidden;min-height:420px;background:linear-gradient(140deg,#dfe3ea,#b9bfcb);background-size:cover;background-position:center}
-.frame .tagpill{position:absolute;left:20px;top:20px;background:var(--paper);border-radius:var(--pill);padding:9px 16px;font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:8px;box-shadow:0 8px 22px rgba(9,13,20,.14)}
-.tagpill .d{width:8px;height:8px;border-radius:50%;background:var(--blue)}
-
-/* 프로세스 리스트 */
-.plist{border-top:1px solid var(--line-2)}
-.prow{display:grid;grid-template-columns:64px 1fr 240px 132px;gap:24px;align-items:center;padding:28px 12px;border-bottom:1px solid var(--line);transition:background .2s,padding .2s;position:relative}
-.prow:hover{background:var(--paper);padding-left:20px}
-.prow .no{font-size:12.5px;font-weight:800;color:var(--muted);letter-spacing:.06em}
-.prow h3{margin:0;font-size:clamp(20px,2.6vw,30px);font-weight:900;letter-spacing:-.04em}
-.prow .meta{font-size:14px;color:var(--muted)}
-.prow .go{justify-self:end;border:1px solid var(--line-2);border-radius:var(--pill);padding:9px 18px;font-size:12.5px;font-weight:700;color:var(--ink-2);white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
-.prow:hover .go{background:var(--blue);border-color:var(--blue);color:#fff}
-
-/* 품목 카드 */
-.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.pcard{background:var(--paper);border:1px solid var(--line);border-radius:22px;overflow:hidden;transition:transform .25s cubic-bezier(.2,.7,.3,1),box-shadow .25s}
-.pcard:hover{transform:translateY(-5px);box-shadow:0 18px 42px rgba(9,13,20,.1)}
-.pcard .ph{aspect-ratio:4/3;background:linear-gradient(140deg,#e9ecf1,#cdd3dd);position:relative;background-size:cover;background-position:center}
-.pcard .ph .lab{position:absolute;left:14px;top:14px;background:var(--blue);color:#fff;border-radius:var(--pill);padding:5px 12px;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-.pcard.sub .ph .lab{background:var(--ink)}
-.pcard .ft{display:flex;justify-content:space-between;align-items:center;padding:16px 18px 18px;gap:12px}
-.pcard .ft b{font-size:17px;letter-spacing:-.02em;display:block}
-.pcard .ft small{display:block;font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:500}
-.pcard .ft .n{border:1px solid var(--line-2);border-radius:var(--pill);padding:5px 11px;font-size:11.5px;font-weight:700;color:var(--muted);white-space:nowrap}
-.noline{margin-top:22px;background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:20px 22px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}
-.noline b{font-size:13px;font-weight:800;letter-spacing:.04em;color:var(--ink)}
-.noline span{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px}
-.noline span::before{content:'×';color:#c2503a;font-weight:900}
-
-/* 아코디언 */
-.acc{border-top:1px solid var(--line-2)}
-.acc details{border-bottom:1px solid var(--line)}
-.acc summary{list-style:none;cursor:pointer;padding:22px 4px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-weight:800;font-size:clamp(17px,2vw,21px);letter-spacing:-.025em}
-.acc summary::-webkit-details-marker{display:none}
-.acc .ic{width:30px;height:30px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;font-size:16px;font-weight:500;color:var(--muted);flex:none;transition:.2s}
-.acc details[open] .ic{background:var(--blue);border-color:var(--blue);color:#fff;transform:rotate(45deg)}
-.acc .acc-body{padding:0 4px 24px;font-size:15px;color:var(--ink-2);line-height:1.72;max-width:62ch}
-.acc .acc-body ul{margin:10px 0 0;padding-left:18px}
-
-/* 폼 */
-.form-sec{background:var(--dark);color:#e8ecf3;border-radius:34px;margin:0 28px 104px;padding:88px 0 96px;position:relative;overflow:hidden}
-.form-sec .eyebrow{color:#8b96a8}
-.form-sec h2{color:#fff}
-.form-sec .shead p{color:#9aa5b6}
-.fgrid{display:grid;grid-template-columns:328px 1fr;gap:44px;align-items:start;margin-top:44px}
-.calc{position:sticky;top:92px;background:var(--dark-2);border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:26px}
-.calc h3{margin:0 0 18px;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#8b96a8;font-weight:800}
-.crow{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;color:#9aa5b6;padding:7px 0}
-.crow b{color:#f2f5fa;font-weight:700}
-.cbig{font-size:52px;font-weight:900;letter-spacing:-.05em;color:#6f9dff;margin:18px 0 2px;line-height:1}
-.cbig small{font-size:15px;color:#9aa5b6;font-weight:700;margin-left:6px;letter-spacing:0}
-.cnote{margin-top:18px;background:rgba(46,107,230,.18);color:#b6cfff;border-radius:12px;padding:12px 14px;font-size:12.5px;font-weight:600;line-height:1.5}
-.fs{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:30px;margin:0 0 18px}
-.fs legend{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#6f9dff;font-weight:800;padding:0 12px}
-.hint{font-size:13px;color:#8b96a8;margin:0 0 20px;line-height:1.6}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.fl{display:flex;flex-direction:column;gap:8px}
-.fl.full{grid-column:1/-1}
-.fl label{font-size:12.5px;font-weight:700;color:#9aa5b6}
-.fl label i{font-style:normal;color:#6f9dff}
-.fl small{font-size:11.5px;color:#798394}
-.fl input,.fl select,.fl textarea{font-size:15px;color:var(--ink);background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:12px;padding:14px 15px;width:100%;transition:box-shadow .18s}
-.fl textarea{min-height:104px;resize:vertical;line-height:1.6}
-.fl input:focus,.fl select:focus,.fl textarea:focus{outline:none;box-shadow:0 0 0 3px rgba(46,107,230,.45)}
-.chips{display:flex;flex-wrap:wrap;gap:9px}
-.chk{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--pill);padding:10px 16px;font-size:14px;cursor:pointer;font-weight:600;transition:.16s}
-.chk:hover{border-color:rgba(255,255,255,.35)}
-.chk input{accent-color:var(--blue);width:15px;height:15px;margin:0}
-.chk:has(input:checked){background:var(--blue);color:#fff;border-color:var(--blue)}
-.sum{margin-top:22px;background:rgba(46,107,230,.14);border:1px solid rgba(46,107,230,.3);border-radius:16px;padding:18px 20px;font-size:15px;color:#d3e1f9}
-.sum b{color:#8db2ff;font-size:23px;font-weight:900;letter-spacing:-.03em}
-.drop{border:1.5px dashed rgba(255,255,255,.26);border-radius:16px;padding:34px;text-align:center;cursor:pointer;color:#9aa5b6;font-size:14.5px;font-weight:600;transition:.2s}
-.drop:hover{border-color:var(--blue);color:#8db2ff;background:rgba(46,107,230,.07)}
-.drop small{display:block;color:#798394;font-size:12px;margin-top:7px;font-weight:500}
-.thumbs{display:flex;flex-wrap:wrap;gap:12px;margin-top:16px}
-.thumb{position:relative;width:96px;height:96px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.16)}
-.thumb img{width:100%;height:100%;object-fit:cover}
-.thumb button{position:absolute;top:5px;right:5px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(8,11,16,.86);color:#fff;cursor:pointer;font-size:13px;line-height:1;padding:0}
-.agree{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:#9aa5b6;margin-top:8px;line-height:1.6}
-.agree input{margin-top:3px;accent-color:var(--blue);width:16px;height:16px;flex:none}
-.submit{margin-top:26px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.msg{font-size:14px;font-weight:700}
-.msg.err{color:#ffb3a7}
-.done{display:none;background:var(--dark-2);border:1px solid rgba(46,107,230,.5);border-radius:22px;padding:60px 30px;text-align:center}
-.done h3{font-size:30px;margin:0;letter-spacing:-.035em;font-weight:900;color:#fff}
-.done .no{font-size:26px;color:#8db2ff;margin:20px 0;font-weight:900;letter-spacing:.05em}
-.done p{color:#9aa5b6;margin:0 auto;max-width:44ch;font-size:15px}
-
-/* 푸터 */
-footer{padding:0 0 40px}
-.fmark{overflow:hidden;padding:0 28px}
-.fmark .logo{font-size:clamp(52px,15.5vw,208px);color:var(--ink);display:block;width:100%;letter-spacing:-.06em}
-.frow{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:22px;margin-top:26px;font-size:13px;color:var(--muted)}
-.frow nav{display:flex;gap:20px;flex-wrap:wrap}
-
-/* 모바일 고정 CTA */
-.mcta{display:none;position:fixed;left:14px;right:14px;bottom:14px;z-index:80}
-.mcta a{width:100%;justify-content:center;box-shadow:0 10px 30px rgba(9,13,20,.28)}
-
-@media (max-width:1000px){
-  .hero-top{grid-template-columns:1fr;align-items:start;gap:24px}
-  .about{grid-template-columns:1fr;gap:32px}
-  .shead{grid-template-columns:1fr;gap:16px}
-  .fgrid{grid-template-columns:1fr}
-  .calc{position:static}
-  .pgrid{grid-template-columns:repeat(2,1fr)}
-  .prow{grid-template-columns:44px 1fr;gap:6px 16px;padding:22px 4px}
-  .prow .meta{grid-column:2}
-  .prow .go{grid-column:2;justify-self:start;margin-top:10px}
-  .prow:hover{padding-left:10px}
-  section.blk{padding:76px 0}
-  .form-sec{margin:0 14px 76px;border-radius:26px;padding:64px 0 70px}
-  .nav{display:none}
-  .mcta{display:block}
-  .frame{min-height:300px}
+.f{margin:0 0 10px}
+.f label{display:block;font-size:12px;font-weight:700;color:var(--sub);margin:0 0 6px}
+.f label i{font-style:normal;color:var(--blue)}
+.f input,.f select,.f textarea{
+  width:100%;font-size:15px;color:var(--ink);background:var(--field);
+  border:1px solid transparent;border-radius:var(--r);padding:13px 14px;transition:border-color .15s,background .15s;
 }
-@media (max-width:640px){
-  .wrap{padding:0 18px}
-  .fmark{padding:0 18px}
-  .stats{grid-template-columns:1fr 1fr}
-  .stat{border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .stat:nth-child(2n){border-right:0}
-  .pgrid{grid-template-columns:1fr}
-  .fields{grid-template-columns:1fr}
-  .fs{padding:22px}
-  .hdr-in{height:62px}
-  .util-in{height:34px;font-size:10.5px}
-  .stamp{width:88px;height:88px;right:16px;top:16px}
-  .fchip.a{bottom:88px;left:16px}
-  .fchip.b{left:16px;bottom:16px}
-  body{padding-bottom:76px}
+.f input::placeholder,.f textarea::placeholder{color:#b3b9c2}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;background:#fff;border-color:var(--blue)}
+.f textarea{min-height:88px;resize:vertical;line-height:1.6}
+.f small{display:block;margin-top:6px;font-size:11.5px;color:var(--muted)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row2 .f{margin-bottom:0}
+
+/* 칩 */
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--field);border:1px solid transparent;border-radius:999px;padding:9px 14px;font-size:13.5px;font-weight:600;color:var(--sub);cursor:pointer;transition:.14s}
+.chip input{position:absolute;opacity:0;width:0;height:0}
+.chip:has(input:checked){background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* 수량 요약 */
+.total{margin-top:12px;background:var(--blue-soft);border:1px solid #cfe0ff;border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.total .k{font-size:11.5px;font-weight:700;color:#3a6fd0;letter-spacing:.04em}
+.total .v{font-size:24px;font-weight:900;letter-spacing:-.04em;color:var(--blue);line-height:1.1;margin-top:2px}
+.total .f2{font-size:11.5px;color:#5b7fc4;text-align:right;font-weight:600;line-height:1.5}
+
+/* 첨부 */
+.drop{border:1.5px dashed #d3d8e0;border-radius:var(--r);padding:22px;text-align:center;cursor:pointer;color:var(--sub);font-size:13.5px;font-weight:600;background:var(--field);transition:.15s}
+.drop:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.drop small{display:block;color:var(--muted);font-size:11.5px;margin-top:5px;font-weight:500}
+.thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.thumb{position:relative;width:66px;height:66px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb button{position:absolute;top:3px;right:3px;width:19px;height:19px;border-radius:50%;border:0;background:rgba(17,20,24,.72);color:#fff;cursor:pointer;font-size:11px;line-height:1;padding:0}
+
+/* 접기 */
+details.more{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:2px}
+details.more summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;font-size:13.5px;font-weight:700;background:var(--field)}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::after{content:'+';font-size:17px;color:var(--muted);font-weight:500}
+details.more[open] summary::after{content:'–';color:var(--blue)}
+details.more .inner{padding:16px}
+details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:1.6}
+
+/* 동의 · 버튼 */
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--sub);line-height:1.6;margin-top:4px}
+.agree input{margin-top:2px;accent-color:var(--blue);width:16px;height:16px;flex:none}
+.cta{position:sticky;bottom:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:12px 20px calc(12px + env(safe-area-inset-bottom))}
+.btn{width:100%;border:0;border-radius:var(--r);background:var(--blue);color:#fff;font-size:16px;font-weight:700;padding:16px;cursor:pointer;transition:background .15s,transform .1s}
+.btn:hover{background:var(--blue-d)}
+.btn:active{transform:scale(.99)}
+.btn:disabled{background:#a9bee8;cursor:default}
+.msg{font-size:12.5px;font-weight:700;color:var(--warn);margin:0 0 10px;text-align:center;display:none}
+.msg.on{display:block}
+
+/* 완료 */
+.done{display:none;padding:0 20px 40px}
+.done-card{background:var(--ok-bg);border:1px solid var(--ok-line);border-radius:var(--r);padding:22px 18px;text-align:center;margin-top:26px}
+.done-card .ic{width:42px;height:42px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;margin:0 auto 12px;font-size:20px;font-weight:800}
+.done-card h2{font-size:19px;margin:0 0 6px;letter-spacing:-.03em;font-weight:800}
+.done-card p{margin:0;font-size:13px;color:#3f7b57}
+.done-no{margin-top:16px;background:#fff;border:1px solid var(--ok-line);border-radius:10px;padding:12px;font-size:20px;font-weight:900;letter-spacing:.06em;color:var(--ok)}
+.done-tip{background:var(--field);border-radius:var(--r);padding:14px 16px;margin-top:16px;font-size:12.5px;color:var(--sub);line-height:1.7}
+
+/* PC — 모바일 프레임 */
+@media (min-width:820px){
+  body{background:var(--page);min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:32px 16px}
+  .device{display:block;padding:11px;background:#0e1116;border-radius:54px;box-shadow:0 40px 90px rgba(14,17,22,.34),0 0 0 1px rgba(255,255,255,.06) inset}
+  .app{width:390px;max-width:none;height:min(844px,calc(100dvh - 108px));min-height:0;border-radius:44px;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+  .app::-webkit-scrollbar{display:none}
+  .top{border-radius:44px 44px 0 0;padding-top:22px}
+  .cta{padding-bottom:20px}
+  .hint-pc{display:block}
 }
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *{transition:none!important;animation:none!important}
-  .rv{opacity:1;transform:none}
-}
+.hint-pc{display:none;position:fixed;left:0;right:0;bottom:18px;text-align:center;font-size:11.5px;color:#9aa1ac;letter-spacing:.06em;font-weight:600}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
-<div class="util">
-  <div class="wrap util-in">
-    <span>© 2026 MISING.MAN</span>
-    <span class="live"><span class="pulse"></span>용저우 라인 가동 중 · 잠옷 · 셔츠 · 밴딩슬랙스</span>
-    <span>Hunan, China</span>
+<div class="device">
+<div class="app" id="app">
+  <div class="top">
+    <span class="logo">MISING.MAN</span>
+    <span class="sub">잠옷 · 셔츠 · 밴딩슬랙스 생산 공장</span>
   </div>
-</div>
 
-<header class="hdr">
-  <div class="wrap hdr-in">
-    <a href="#top" class="logo">MISING.MAN</a>
-    <nav class="nav">
-      <a href="#about">공장 소개</a>
-      <a href="#how">진행 순서</a>
-      <a href="#items">생산 품목</a>
-      <a href="#terms">오더 기준</a>
-    </nav>
-    <a class="pill pill-dark pill-sm" href="#order">오더문의<span class="arw">↗</span></a>
-  </div>
-</header>
+  <div class="scroll" id="scroll">
+    <h1>오더문의</h1>
+    <p class="lead">아래 항목만 남겨주시면 영업팀이 1영업일 안에 연락드립니다. 자세한 작업지시는 상담하면서 같이 채웁니다.</p>
 
-<main id="top">
-<section class="hero">
-  <div class="wrap">
-    <span class="eyebrow rv">중국 후난성 용저우 · 자체 의류공장</span>
-    <div class="hero-top">
-      <h1 class="rv">잠옷, 셔츠,<br>밴딩 슬랙스.<br><span class="band">이 세 가지</span>만 합니다.</h1>
-      <div class="hero-side rv">
-        <p>한국에서 30년 생산했고, 불량과 납기로 크게 데인 뒤 직접 지은 공장입니다. 잘할 수 있는 품목만 남기고, 지킬 수 있는 납기만 약속합니다.</p>
-        <div class="hero-cta">
-          <a class="pill pill-blue" href="#order">오더문의 작성하기<span class="arw">↗</span></a>
-          <a class="pill pill-line" href="#terms">진행 기준<span class="arw">↓</span></a>
+    <div class="tips">
+      <ul>
+        <li>최소 수량은 <b>컬러 · 사이즈당 100장</b>입니다.</li>
+        <li>잠옷 · 셔츠 · 밴딩슬랙스가 주력이고, <b>블라우스와 카피 제품은 받지 않습니다.</b></li>
+        <li>상품 이미지가 있으면 견적이 가장 빠릅니다.</li>
+      </ul>
+    </div>
+
+    <form id="yj-form" novalidate>
+
+      <div class="sec">
+        <div class="sec-h"><span>01</span><h2>연락처</h2></div>
+        <div class="f"><label for="f-brand">브랜드 · 회사명 <i>*</i></label><input id="f-brand" maxlength="60" placeholder="예: 미싱맨" /></div>
+        <div class="row2">
+          <div class="f"><label for="f-name">담당자 <i>*</i></label><input id="f-name" maxlength="30" placeholder="이름" /></div>
+          <div class="f"><label for="f-phone">연락처 <i>*</i></label><input id="f-phone" inputmode="tel" maxlength="30" placeholder="010-0000-0000" /></div>
+        </div>
+        <div class="row2" style="margin-top:10px">
+          <div class="f"><label for="f-kakao">카카오톡 ID</label><input id="f-kakao" maxlength="40" placeholder="선택" /></div>
+          <div class="f"><label for="f-email">이메일</label><input id="f-email" type="email" maxlength="60" placeholder="선택" /></div>
         </div>
       </div>
-    </div>
 
-    <div class="stage rv" id="m-hero">
-      <div class="floats">
-        <div class="fchip a"><div><span class="k">생산 경력</span><span class="v">30년</span></div></div>
-        <div class="fchip b"><div><span class="k">최소 수량</span><span class="v">컬러·사이즈당 100장</span></div></div>
-        <div class="stamp">
-          <svg viewBox="0 0 200 200" aria-hidden="true">
-            <defs><path id="cpath" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" /></defs>
-            <text><textPath href="#cpath">MINIMUM 100 PCS · PER COLOR &amp; SIZE · </textPath></text>
-          </svg>
-          <div class="core"><b>100</b></div>
+      <div class="sec">
+        <div class="sec-h"><span>02</span><h2>품목</h2><em>중복 선택 가능</em></div>
+        <div class="chips">
+          <label class="chip"><input type="checkbox" name="items" value="잠옷·파자마" />잠옷·파자마</label>
+          <label class="chip"><input type="checkbox" name="items" value="잠옷원피스" />잠옷원피스</label>
+          <label class="chip"><input type="checkbox" name="items" value="셔츠·남방" />셔츠·남방</label>
+          <label class="chip"><input type="checkbox" name="items" value="밴딩슬랙스" />밴딩슬랙스</label>
+          <label class="chip"><input type="checkbox" name="items" value="반팔티" />반팔티</label>
+          <label class="chip"><input type="checkbox" name="items" value="기타" />기타</label>
         </div>
       </div>
-    </div>
 
-    <div class="stats">
-      <div class="stat rv"><b>30<i>년</i></b><span>대표 · 현장 관리자 생산 경력</span></div>
-      <div class="stat rv"><b>3<i>품목</i></b><span>잠옷 · 셔츠 · 밴딩슬랙스 전용 라인</span></div>
-      <div class="stat rv"><b>100<i>장</i></b><span>컬러 · 사이즈당 최소 발주 수량</span></div>
-      <div class="stat rv"><b>2<i>단계</i></b><span>라인 검단 → 최종 검품</span></div>
-    </div>
-  </div>
-</section>
-
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-in">
-    <span>잠옷 · 파자마</span><span>셔츠 · 남방</span><span>밴딩 슬랙스</span><span>광저우 원단 직소싱</span><span>컬러·사이즈당 100장</span><span>라인 검단 · 최종 검품</span>
-    <span>잠옷 · 파자마</span><span>셔츠 · 남방</span><span>밴딩 슬랙스</span><span>광저우 원단 직소싱</span><span>컬러·사이즈당 100장</span><span>라인 검단 · 최종 검품</span>
-  </div>
-</div>
-
-<section class="blk" id="about">
-  <div class="wrap about">
-    <div class="rv">
-      <span class="eyebrow">About</span>
-      <h2>왜 직접<br>공장을 지었나</h2>
-      <p style="margin-top:26px">한국에서 30년 동안 옷을 만들었습니다. 그동안 가장 많이 잃은 건 돈이 아니라 신뢰였습니다. 불량이 나고 납기가 밀리면 브랜드는 그 시즌을 통째로 날립니다.</p>
-      <p>그래서 남의 공장에 맡기는 걸 그만두고 용저우에 직접 라인을 지었습니다. 품목을 넓히는 대신 잘할 수 있는 것만 남겼습니다.</p>
-      <div class="quote">“지킬 수 없는 날짜는 처음부터 말하지 않습니다.”</div>
-    </div>
-    <div class="frame rv" id="m-about"><div class="tagpill"><span class="d"></span>용저우 자체 생산 라인</div></div>
-  </div>
-</section>
-
-<section class="blk" id="how" style="background:var(--paper)">
-  <div class="wrap">
-    <div class="shead rv">
-      <div><span class="eyebrow">How it works</span><h2>문의부터 출고까지</h2></div>
-      <p>양식 한 번 작성하면 영업팀이 1영업일 안에 연락드립니다. 각 단계에서 무엇이 결정되는지 미리 공개합니다.</p>
-    </div>
-    <div class="plist">
-      <div class="prow rv"><span class="no">01</span><h3>오더문의 접수</h3><span class="meta">작업지시 기준 양식 작성</span><span class="go">1영업일 내 회신</span></div>
-      <div class="prow rv"><span class="no">02</span><h3>사양 확인</h3><span class="meta">품목 · 수량 · 원단 · 납기 조율</span><span class="go">담당자 배정</span></div>
-      <div class="prow rv"><span class="no">03</span><h3>원단 소싱 · 견적</h3><span class="meta">광저우 상주팀 소싱안 제안</span><span class="go">D+2 견적서</span></div>
-      <div class="prow rv"><span class="no">04</span><h3>샘플 확인</h3><span class="meta">수정 후 재확인, 미승인 시 중단</span><span class="go">수정 1회 포함</span></div>
-      <div class="prow rv"><span class="no">05</span><h3>본생산 · 검품 · 출고</h3><span class="meta">라인 검단 → 최종 검품 → 선적</span><span class="go">납기 확정</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="blk" id="items">
-  <div class="wrap">
-    <div class="shead rv">
-      <div><span class="eyebrow">Capability</span><h2>지금 라인에서<br>받는 품목</h2></div>
-      <p>신규 현장이라 품목을 넓히지 않았습니다. 아래 품목은 라인이 이미 돌고 있어 샘플부터 본생산까지 속도가 붙습니다.</p>
-    </div>
-    <div class="pgrid">
-      <div class="pcard rv" id="p-1"><div class="ph"><span class="lab">Main</span></div><div class="ft"><div><b>잠옷 · 파자마</b><small>상하 세트 · 잠옷원피스</small></div><span class="n">주력</span></div></div>
-      <div class="pcard rv" id="p-2"><div class="ph"><span class="lab">Main</span></div><div class="ft"><div><b>셔츠 · 남방</b><small>기본 · 오버핏 · 칼라 마감</small></div><span class="n">주력</span></div></div>
-      <div class="pcard rv" id="p-3"><div class="ph"><span class="lab">Main</span></div><div class="ft"><div><b>밴딩 슬랙스</b><small>밴딩 처리 · 봉제 텐션</small></div><span class="n">주력</span></div></div>
-      <div class="pcard sub rv" id="p-4"><div class="ph"><span class="lab">Sub</span></div><div class="ft"><div><b>반팔 티셔츠</b><small>수량 · 원단 따라 상담 후 결정</small></div><span class="n">협의</span></div></div>
-      <div class="pcard sub rv" id="p-5"><div class="ph"><span class="lab">Option</span></div><div class="ft"><div><b>자수 · 프린트</b><small>부자재 · 후가공 별도 협의</small></div><span class="n">협의</span></div></div>
-      <div class="pcard sub rv" id="p-6"><div class="ph"><span class="lab">Sourcing</span></div><div class="ft"><div><b>원단 소싱</b><small>광저우 상주팀 직접 진행</small></div><span class="n">포함</span></div></div>
-    </div>
-    <div class="noline rv">
-      <b>받지 않는 오더</b>
-      <span>컬러 · 사이즈당 100장 미만</span>
-      <span>블라우스</span>
-      <span>타 브랜드 카피</span>
-      <span>샘플 · 도식화 · 레퍼런스 전무</span>
-    </div>
-  </div>
-</section>
-
-<section class="blk" id="terms" style="background:var(--paper)">
-  <div class="wrap about">
-    <div class="frame rv" id="m-terms"><div class="tagpill"><span class="d"></span>라인 검단 · 최종 검품</div></div>
-    <div class="rv">
-      <span class="eyebrow">Order terms</span>
-      <h2>이 기준에 맞으면<br>바로 상담합니다</h2>
-      <div class="acc" style="margin-top:30px">
-        <details open><summary>최소 수량<span class="ic">+</span></summary><div class="acc-body">컬러 · 사이즈당 100장입니다. 예를 들어 2컬러 × 3사이즈면 600장이 최소 수량이 됩니다. 이 기준 아래로는 라인을 세우는 비용이 단가를 넘어서기 때문에 서로에게 손해입니다.</div></details>
-        <details><summary>원단 · 부자재<span class="ic">+</span></summary><div class="acc-body">지정 원단이 있으면 그대로 진행합니다. 없으면 광저우 원단시장에 상주 중인 한국인 팀이 직접 소싱해 3안 내외로 제안드립니다.</div></details>
-        <details><summary>필요 자료<span class="ic">+</span></summary><div class="acc-body">상품 이미지와 사이즈 스펙, 봉제·가공 방식이 정리돼 있으면 견적이 가장 빠릅니다. 사진·레퍼런스만 있어도 상담은 가능합니다.</div></details>
-        <details><summary>납기 · 검품<span class="ic">+</span></summary><div class="acc-body">납기는 원단 확정일 기준으로 산정해 안내합니다. 검품은 30년 경력 현장 관리자가 라인 검단부터 최종 검품까지 직접 보고, 외부 검사기관 지정도 가능합니다.</div></details>
+      <div class="sec">
+        <div class="sec-h"><span>03</span><h2>수량</h2></div>
+        <div class="row2">
+          <div class="f"><label for="f-styles">스타일 수</label><input id="f-styles" type="number" min="1" max="99" step="1" value="1" /></div>
+          <div class="f"><label for="f-colors">컬러 수</label><input id="f-colors" type="number" min="1" max="99" step="1" value="1" /></div>
+        </div>
+        <div class="row2" style="margin-top:10px">
+          <div class="f"><label for="f-sizes">사이즈 수</label><input id="f-sizes" type="number" min="1" max="99" step="1" value="1" /></div>
+          <div class="f"><label for="f-unit">컬러·사이즈당 <i>*</i></label><input id="f-unit" type="number" min="100" max="100000" step="10" value="100" /></div>
+        </div>
+        <div class="total">
+          <div><span class="k">총 발주 수량</span><div class="v" id="c-total">100장</div></div>
+          <div class="f2" id="c-formula">1 × 1 × 1 × 100</div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<section class="form-sec" id="order">
-  <div class="wrap">
-    <div class="shead">
-      <div><span class="eyebrow">Order sheet</span><h2>작업지시 기준으로<br>받습니다</h2></div>
-      <p>아는 만큼만 적으셔도 됩니다. 비어 있는 항목은 상담하면서 같이 채웁니다.</p>
-    </div>
+      <div class="sec">
+        <div class="sec-h"><span>04</span><h2>납기 · 이미지</h2></div>
+        <div class="row2">
+          <div class="f"><label for="f-due">최종 납기일 <i>*</i></label><input id="f-due" type="date" /></div>
+          <div class="f"><label for="f-price">희망 단가</label><input id="f-price" maxlength="40" placeholder="선택" /></div>
+        </div>
+        <div class="f" style="margin-top:12px">
+          <label>상품 이미지 <em style="font-style:normal;color:#8b929d;font-weight:600">최대 5장</em></label>
+          <div class="drop" id="f-drop">이미지 선택하기<small>완성 이미지 · 도식화 · 레퍼런스 사진</small></div>
+          <input type="file" id="f-img" accept="image/*" multiple style="display:none" />
+          <div class="thumbs" id="f-thumbs"></div>
+        </div>
+      </div>
 
-    <div class="fgrid">
-      <aside class="calc">
-        <h3>발주 수량 계산</h3>
-        <div class="crow"><span>스타일 수</span><b id="c-style">1</b></div>
-        <div class="crow"><span>컬러 수</span><b id="c-color">1</b></div>
-        <div class="crow"><span>사이즈 수</span><b id="c-size">1</b></div>
-        <div class="crow"><span>컬러·사이즈당</span><b id="c-unit">100장</b></div>
-        <div class="cbig" id="c-total">100<small>장</small></div>
-        <div class="crow"><span>총 발주 수량</span><b id="c-formula">1 × 1 × 1 × 100</b></div>
-        <div class="cnote">컬러 · 사이즈당 100장이 최소 기준입니다. 그 아래로는 입력되지 않습니다.</div>
-      </aside>
-
-      <div>
-        <form id="yj-form" novalidate>
-          <fieldset class="fs">
-            <legend>01 · 문의자 정보</legend>
-            <div class="fields">
-              <div class="fl"><label for="f-brand">브랜드 · 회사명 <i>*</i></label><input id="f-brand" maxlength="60" /></div>
-              <div class="fl"><label for="f-name">담당자명 <i>*</i></label><input id="f-name" maxlength="30" /></div>
-              <div class="fl"><label for="f-phone">연락처 <i>*</i></label><input id="f-phone" inputmode="tel" maxlength="30" placeholder="010-0000-0000" /></div>
-              <div class="fl"><label for="f-email">이메일</label><input id="f-email" type="email" maxlength="60" /></div>
-              <div class="fl"><label for="f-kakao">카카오톡 ID</label><input id="f-kakao" maxlength="40" /></div>
-              <div class="fl"><label for="f-channel">판매 채널 · 현황</label><input id="f-channel" maxlength="60" placeholder="예: 자사몰 + 지그재그, 월 3천만" /></div>
-            </div>
-          </fieldset>
-
-          <fieldset class="fs">
-            <legend>02 · 상품 이미지</legend>
-            <p class="hint">완성 이미지, 도식화, 레퍼런스 사진 무엇이든 좋습니다. 최대 5장. 업로드 전에 자동으로 용량을 줄입니다.</p>
-            <div class="drop" id="f-drop">이미지 선택하기<small>JPG · PNG · WEBP</small></div>
-            <input type="file" id="f-img" accept="image/*" multiple style="display:none" />
-            <div class="thumbs" id="f-thumbs"></div>
-          </fieldset>
-
-          <fieldset class="fs">
-            <legend>03 · 발주 구성</legend>
-            <div class="fields">
-              <div class="fl full">
-                <label>문의 품목 <i>*</i></label>
-                <div class="chips">
-                  <label class="chk"><input type="checkbox" name="items" value="잠옷·파자마" />잠옷·파자마</label>
-                  <label class="chk"><input type="checkbox" name="items" value="잠옷원피스" />잠옷원피스</label>
-                  <label class="chk"><input type="checkbox" name="items" value="셔츠·남방" />셔츠·남방</label>
-                  <label class="chk"><input type="checkbox" name="items" value="밴딩슬랙스" />밴딩슬랙스</label>
-                  <label class="chk"><input type="checkbox" name="items" value="반팔티" />반팔티</label>
-                  <label class="chk"><input type="checkbox" name="items" value="기타" />기타</label>
-                </div>
+      <div class="sec">
+        <details class="more">
+          <summary>작업지시 상세 입력 (선택)</summary>
+          <div class="inner">
+            <p class="cap">알고 계신 항목만 적어주세요. 비워두셔도 접수됩니다.</p>
+            <div class="f"><label for="f-material">주원자재 · 부자재</label><textarea id="f-material" maxlength="1900" placeholder="예: 겉감 레이온 65 / 폴리 35, 단추 4공 11mm, 밴딩 30mm"></textarea></div>
+            <div class="f"><label for="f-detailspec">디테일 내용</label><textarea id="f-detailspec" maxlength="1900" placeholder="예: 셔츠 카라, 커프스 단추 1개, 밑단 곡선 처리"></textarea></div>
+            <div class="f"><label for="f-sizespec">사이즈 스펙</label><textarea id="f-sizespec" maxlength="1900" placeholder="예: M — 총장 72 / 가슴 54 / 어깨 46 (편차 ±1cm)"></textarea></div>
+            <div class="f"><label for="f-sewing">부위별 봉제 · 가공</label><textarea id="f-sewing" maxlength="1900" placeholder="예: 옆선 오버록 3본, 밑단 삼봉, 자수 좌흉부 1개소"></textarea></div>
+            <div class="f"><label for="f-packing">포장 명세</label><textarea id="f-packing" maxlength="1900" placeholder="예: 개별 OPP + 사이즈 스티커, 10장 1속, 카톤 60장"></textarea></div>
+            <div class="f"><label>검사 방식</label>
+              <div class="chips">
+                <label class="chip"><input type="checkbox" name="qcways" value="자체검사" />자체검사</label>
+                <label class="chip"><input type="checkbox" name="qcways" value="외부검사" />외부검사</label>
+                <label class="chip"><input type="checkbox" name="qcways" value="공장 기준 위임" />공장 위임</label>
               </div>
-              <div class="fl"><label for="f-styles">스타일 수 <i>*</i></label><input id="f-styles" type="number" min="1" max="99" step="1" value="1" /></div>
-              <div class="fl"><label for="f-colors">컬러 수 <i>*</i></label><input id="f-colors" type="number" min="1" max="99" step="1" value="1" /></div>
-              <div class="fl"><label for="f-sizes">사이즈 수 <i>*</i></label><input id="f-sizes" type="number" min="1" max="99" step="1" value="1" /></div>
-              <div class="fl"><label for="f-unit">컬러 · 사이즈당 수량 <i>*</i></label><input id="f-unit" type="number" min="100" max="100000" step="10" value="100" /><small>최소 100장부터 진행합니다.</small></div>
-              <div class="fl"><label for="f-due">최종 납기일 <i>*</i></label><input id="f-due" type="date" /></div>
-              <div class="fl"><label for="f-price">희망 단가</label><input id="f-price" maxlength="40" placeholder="예: 장당 8,000원 선" /></div>
-              <div class="fl full"><label for="f-fabric">원단 · 부자재 확정 여부</label><select id="f-fabric"><option value="">선택</option><option>확정</option><option>미확정</option><option>공장 소싱 요청</option></select></div>
             </div>
-            <div class="sum" id="f-sum">총 발주 수량 <b>100장</b> — 1스타일 × 1컬러 × 1사이즈 × 100장</div>
-          </fieldset>
-
-          <fieldset class="fs">
-            <legend>04 · 작업지시 내용</legend>
-            <div class="fields">
-              <div class="fl full"><label for="f-material">주원자재 · 부자재 (소재 구성)</label><textarea id="f-material" maxlength="1900" placeholder="예: 겉감 레이온 65 / 폴리 35, 배색 면 100&#10;단추 4공 11mm, 밴딩 30mm, 케어라벨 별도 지급"></textarea></div>
-              <div class="fl full"><label for="f-detailspec">디테일 내용</label><textarea id="f-detailspec" maxlength="1900" placeholder="예: 앞판 절개 없음, 셔츠 카라, 소매 커프스 단추 1개, 밑단 곡선 처리"></textarea></div>
-              <div class="fl full"><label for="f-sizespec">사이즈 스펙</label><textarea id="f-sizespec" maxlength="1900" placeholder="예: M — 총장 72 / 가슴 54 / 어깨 46 / 소매 60&#10;L — 총장 74 / 가슴 56 / 어깨 48 / 소매 62 (편차 ±1cm)"></textarea></div>
-              <div class="fl full"><label for="f-sewing">부위별 봉제 · 가공 방식</label><textarea id="f-sewing" maxlength="1900" placeholder="예: 옆선 오버록 3본 + 인터록, 밑단 삼봉, 카라 시보리 없음&#10;가공 — 실켓 / 워싱 없음 / 자수 좌흉부 1개소"></textarea></div>
-              <div class="fl full"><label for="f-packing">포장 명세</label><textarea id="f-packing" maxlength="1900" placeholder="예: 개별 OPP 봉투 + 사이즈 스티커, 10장 1속, 폴리백 방습제 1개, 카톤 박스 60장 기준"></textarea></div>
-              <div class="fl full">
-                <label>검사 방식</label>
-                <div class="chips">
-                  <label class="chk"><input type="checkbox" name="qcways" value="자체검사" />자체검사</label>
-                  <label class="chk"><input type="checkbox" name="qcways" value="외부검사" />외부검사</label>
-                  <label class="chk"><input type="checkbox" name="qcways" value="공장 기준 위임" />공장 기준 위임</label>
-                </div>
-              </div>
-              <div class="fl full"><label for="f-qc">QC 기준</label><textarea id="f-qc" maxlength="1900" placeholder="예: AQL 2.5 기준, 오염·봉제 불량 0 허용, 치수 편차 ±1cm 이내&#10;외부검사 시 검사기관과 비용 부담 주체를 적어주세요."></textarea></div>
-              <div class="fl"><label for="f-asset">보유 자료</label><select id="f-asset"><option value="">선택</option><option>실물 샘플</option><option>도식화·작업지시서</option><option>사진·이미지만</option><option>없음</option></select></div>
-              <div class="fl full"><label for="f-detail">그 외 전달사항</label><textarea id="f-detail" maxlength="1900" placeholder="참고 링크, 진행 일정, 궁금한 점을 자유롭게 적어주세요."></textarea></div>
+            <div class="f" style="margin-top:10px"><label for="f-qc">QC 기준</label><textarea id="f-qc" maxlength="1900" placeholder="예: AQL 2.5, 치수 편차 ±1cm 이내"></textarea></div>
+            <div class="row2" style="margin-top:10px">
+              <div class="f"><label for="f-fabric">원단 확정</label><select id="f-fabric"><option value="">선택</option><option>확정</option><option>미확정</option><option>공장 소싱 요청</option></select></div>
+              <div class="f"><label for="f-asset">보유 자료</label><select id="f-asset"><option value="">선택</option><option>실물 샘플</option><option>도식화·작업지시서</option><option>사진·이미지만</option><option>없음</option></select></div>
             </div>
-          </fieldset>
-
-          <div class="hp"><label>회사 주소<input type="text" name="company_addr" tabindex="-1" autocomplete="off" /></label></div>
-          <label class="agree"><input type="checkbox" id="f-agree" /><span>상담 회신을 위해 입력하신 정보와 첨부 이미지를 수집·이용하는 데 동의합니다. 상담 종료 후 보관 목적이 끝나면 파기합니다.</span></label>
-          <div class="submit">
-            <button type="submit" class="pill pill-blue" id="f-submit">문의 보내기<span class="arw">↗</span></button>
-            <span class="msg" id="f-msg"></span>
+            <div class="f" style="margin-top:10px"><label for="f-channel">판매 채널 · 현황</label><input id="f-channel" maxlength="60" placeholder="예: 자사몰 + 지그재그" /></div>
+            <div class="f"><label for="f-detail">그 외 전달사항</label><textarea id="f-detail" maxlength="1900" placeholder="참고 링크, 진행 일정, 궁금한 점"></textarea></div>
           </div>
-        </form>
-
-        <div class="done" id="yj-done">
-          <h3>접수됐습니다</h3>
-          <div class="no" id="done-no"></div>
-          <p>영업팀이 1영업일 안에 연락드립니다. 접수번호를 기억해두시면 문의하실 때 빠릅니다.</p>
-        </div>
+        </details>
       </div>
+
+      <div style="position:absolute;left:-9999px"><label>회사 주소<input type="text" name="company_addr" tabindex="-1" autocomplete="off" /></label></div>
+
+      <label class="agree"><input type="checkbox" id="f-agree" /><span>상담 회신을 위해 입력하신 정보와 첨부 이미지를 수집·이용하는 데 동의합니다.</span></label>
+    </form>
+  </div>
+
+  <div class="cta" id="cta">
+    <p class="msg" id="f-msg"></p>
+    <button type="button" class="btn" id="f-submit">오더문의 보내기</button>
+  </div>
+
+  <div class="done" id="yj-done">
+    <div class="done-card">
+      <div class="ic">✓</div>
+      <h2>접수됐습니다</h2>
+      <p>영업팀이 1영업일 안에 연락드립니다.</p>
+      <div class="done-no" id="done-no"></div>
+    </div>
+    <div class="done-tip">
+      · 접수번호를 기억해두시면 문의하실 때 빠릅니다.<br>
+      · 상품 이미지와 사이즈 스펙이 준비되면 상담 때 함께 전달해주세요.<br>
+      · 컬러 · 사이즈당 100장 미만은 진행이 어렵습니다.
     </div>
   </div>
-</section>
-</main>
-
-<footer>
-  <div class="fmark"><span class="logo">MISING.MAN</span></div>
-  <div class="wrap">
-    <div class="frow">
-        <span class="fnote">잠옷 · 셔츠 · 밴딩 슬랙스</span>      <nav><a href="#about">공장 소개</a><a href="#how">진행 순서</a><a href="#items">생산 품목</a><a href="#terms">오더 기준</a><a href="#order">문의하기</a></nav>
-      <span>© 2026 MISING.MAN</span>
-    </div>
-  </div>
-</footer>
-
-<div class="mcta"><a class="pill pill-blue" href="#order">오더문의 작성하기<span class="arw">↗</span></a></div>
+</div>
+</div>
+<div class="hint-pc">MISING.MAN · ORDER INQUIRY</div>
 
 <script>
 (function(){
-  var ASSETS = {
-    hero:'assets/hero.jpg', heroVideo:'', about:'assets/about.jpg', terms:'assets/qc.jpg',
-    p1:'assets/item-1.jpg', p2:'assets/item-2.jpg', p3:'assets/item-3.jpg',
-    p4:'assets/item-4.jpg', p5:'assets/item-5.jpg', p6:'assets/item-6.jpg'
-  };
-  function paint(el, url){
-    if (!el || !url) return;
-    var probe = new Image();
-    probe.onload = function(){ el.style.backgroundImage = 'url(' + url + ')'; };
-    probe.src = url;
-  }
-  var $ = function(id){ return document.getElementById(id); };
-  paint($('m-hero'), ASSETS.hero);
-  paint($('m-about'), ASSETS.about);
-  paint($('m-terms'), ASSETS.terms);
-  [1,2,3,4,5,6].forEach(function(n){
-    var c = $('p-' + n);
-    if (c) paint(c.querySelector('.ph'), ASSETS['p' + n]);
-  });
-  if (ASSETS.heroVideo) {
-    var box = $('m-hero');
-    var v = document.createElement('video');
-    v.src = ASSETS.heroVideo; v.autoplay = true; v.muted = true; v.loop = true;
-    v.playsInline = true; v.setAttribute('playsinline',''); v.preload = 'metadata';
-    if (ASSETS.hero) v.poster = ASSETS.hero;
-    box.insertBefore(v, box.firstChild);
-  }
-
-  // 스크롤 등장
-  var items = document.querySelectorAll('.rv');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function(es){
-      es.forEach(function(e, i){
-        if (e.isIntersecting) {
-          var el = e.target;
-          setTimeout(function(){ el.classList.add('in'); }, Math.min(i * 60, 240));
-          io.unobserve(el);
-        }
-      });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-    items.forEach(function(el){ io.observe(el); });
-  } else {
-    items.forEach(function(el){ el.classList.add('in'); });
-  }
-
-  // 아코디언 아이콘
-  document.querySelectorAll('.acc details').forEach(function(d){
-    d.addEventListener('toggle', function(){
-      if (d.open) {
-        d.parentNode.querySelectorAll('details').forEach(function(o){ if (o !== d) o.open = false; });
-      }
-    });
-  });
-
-  // 폼
   var MIN_UNIT = 100;
+  var $ = function(id){ return document.getElementById(id); };
   var f = $('yj-form');
   var images = [];
 
@@ -577,15 +276,12 @@ footer{padding:0 0 40px}
     return v;
   }
   function calc(){
-    var s = iv($('f-styles'), 1, 99), c = iv($('f-colors'), 1, 99);
-    var z = iv($('f-sizes'), 1, 99), u = iv($('f-unit'), MIN_UNIT, 100000);
+    var s = iv($('f-styles'),1,99), c = iv($('f-colors'),1,99);
+    var z = iv($('f-sizes'),1,99), u = iv($('f-unit'),MIN_UNIT,100000);
     var total = s * c * z * u;
-    $('c-style').textContent = s; $('c-color').textContent = c; $('c-size').textContent = z;
-    $('c-unit').textContent = u.toLocaleString() + '장';
-    $('c-total').innerHTML = total.toLocaleString() + '<small>장</small>';
-    $('c-formula').textContent = s + ' × ' + c + ' × ' + z + ' × ' + u.toLocaleString();
-    $('f-sum').innerHTML = '총 발주 수량 <b>' + total.toLocaleString() + '장</b> — ' + s + '스타일 × ' + c + '컬러 × ' + z + '사이즈 × ' + u.toLocaleString() + '장';
-    return { styles: s, colors: c, sizes: z, perUnit: u, total: total };
+    $('c-total').textContent = total.toLocaleString() + '장';
+    $('c-formula').innerHTML = s + '스타일 × ' + c + '컬러 × ' + z + '사이즈<br>× ' + u.toLocaleString() + '장';
+    return { styles:s, colors:c, sizes:z, perUnit:u, total:total };
   }
   ['f-styles','f-colors','f-sizes','f-unit'].forEach(function(id){
     $(id).addEventListener('input', calc);
@@ -602,8 +298,8 @@ footer{padding:0 0 40px}
       var d = document.createElement('div'); d.className = 'thumb';
       var im = document.createElement('img'); im.src = img.url; im.alt = '';
       var b = document.createElement('button'); b.type = 'button'; b.textContent = '×';
-      b.setAttribute('aria-label', '이미지 삭제');
-      b.addEventListener('click', function(){ images.splice(i, 1); renderThumbs(); });
+      b.setAttribute('aria-label','이미지 삭제');
+      b.addEventListener('click', function(){ images.splice(i,1); renderThumbs(); });
       d.appendChild(im); d.appendChild(b); box.appendChild(d);
     });
   }
@@ -616,12 +312,12 @@ footer{padding:0 0 40px}
         im.onerror = reject;
         im.onload = function(){
           var max = 1500, w = im.width, h = im.height;
-          if (w > max || h > max) { var k = max / Math.max(w, h); w = Math.round(w * k); h = Math.round(h * k); }
+          if (w > max || h > max) { var k = max / Math.max(w,h); w = Math.round(w*k); h = Math.round(h*k); }
           var cv = document.createElement('canvas'); cv.width = w; cv.height = h;
           cv.getContext('2d').drawImage(im, 0, 0, w, h);
           var url = cv.toDataURL('image/jpeg', 0.78);
-          var nm = String(file.name || 'image').split('.')[0].slice(0, 50) + '.jpg';
-          resolve({ name: nm, url: url, data: url.split(',')[1] });
+          var nm = String(file.name || 'image').split('.')[0].slice(0,50) + '.jpg';
+          resolve({ name:nm, url:url, data:url.split(',')[1] });
         };
         im.src = fr.result;
       };
@@ -633,7 +329,7 @@ footer{padding:0 0 40px}
     var files = Array.prototype.slice.call(e.target.files || []);
     var room = 5 - images.length;
     if (room <= 0) { alert('이미지는 최대 5장까지 첨부할 수 있습니다.'); return; }
-    Promise.all(files.slice(0, room).map(shrink)).then(function(list){
+    Promise.all(files.slice(0,room).map(shrink)).then(function(list){
       images = images.concat(list); renderThumbs(); $('f-img').value = '';
     }).catch(function(){ alert('이미지를 읽지 못했습니다. 다른 파일로 시도해주세요.'); });
   });
@@ -646,52 +342,55 @@ footer{padding:0 0 40px}
     return 'B';
   }
 
-  f.addEventListener('submit', function(e){
-    e.preventDefault();
-    var msg = $('f-msg'); msg.className = 'msg'; msg.textContent = '';
-    function fail(t, el){ msg.className = 'msg err'; msg.textContent = t; if (el) { el.focus(); el.scrollIntoView({block:'center'}); } }
-    var items2 = Array.prototype.slice.call(f.querySelectorAll('input[name="items"]:checked')).map(function(i){ return i.value; });
+  function fail(t, el){
+    var m = $('f-msg'); m.className = 'msg on'; m.textContent = t;
+    if (el) { el.focus(); el.scrollIntoView({ block:'center', behavior:'smooth' }); }
+  }
+
+  $('f-submit').addEventListener('click', function(){
+    var m = $('f-msg'); m.className = 'msg'; m.textContent = '';
+    var items = Array.prototype.slice.call(f.querySelectorAll('input[name="items"]:checked')).map(function(i){ return i.value; });
     var qcWays = Array.prototype.slice.call(f.querySelectorAll('input[name="qcways"]:checked')).map(function(i){ return i.value; });
-    var req = [['f-brand','브랜드·회사명'],['f-name','담당자명'],['f-phone','연락처']];
+    var req = [['f-brand','브랜드 · 회사명'],['f-name','담당자'],['f-phone','연락처']];
     for (var i = 0; i < req.length; i++){
       if (!$(req[i][0]).value.trim()) { return fail(req[i][1] + '을(를) 입력해주세요.', $(req[i][0])); }
     }
-    if (!items2.length) return fail('문의 품목을 하나 이상 선택해주세요.');
+    if (!items.length) return fail('품목을 하나 이상 선택해주세요.');
     if (!$('f-due').value) return fail('최종 납기일을 선택해주세요.', $('f-due'));
-    if ((parseInt($('f-unit').value, 10) || 0) < MIN_UNIT) return fail('컬러 · 사이즈당 최소 100장부터 진행합니다.', $('f-unit'));
-    var st = calc();
+    if ((parseInt($('f-unit').value,10) || 0) < MIN_UNIT) return fail('컬러 · 사이즈당 최소 100장부터 진행합니다.', $('f-unit'));
     if (!$('f-agree').checked) return fail('정보 수집·이용 동의가 필요합니다.');
+    var st = calc();
 
     var payload = {
-      brand: $('f-brand').value.trim(), manager: $('f-name').value.trim(), phone: $('f-phone').value.trim(),
-      email: $('f-email').value.trim(), kakao: $('f-kakao').value.trim(), channel: $('f-channel').value.trim(),
-      items: items2, styles: st.styles, colors: st.colors, sizes: st.sizes, perUnit: st.perUnit,
-      due: $('f-due').value || '', price: $('f-price').value.trim(), fabric: $('f-fabric').value, asset: $('f-asset').value,
-      material: $('f-material').value.trim(), detailSpec: $('f-detailspec').value.trim(),
-      sizeSpec: $('f-sizespec').value.trim(), sewing: $('f-sewing').value.trim(),
-      packing: $('f-packing').value.trim(), qc: $('f-qc').value.trim(), qcWays: qcWays,
-      detail: $('f-detail').value.trim(), grade: grade(st),
-      source: new URLSearchParams(location.search).get('src') || '스레드',
-      company_addr: f.company_addr.value,
-      images: images.map(function(im){ return { name: im.name, mime: 'image/jpeg', data: im.data }; })
+      brand:$('f-brand').value.trim(), manager:$('f-name').value.trim(), phone:$('f-phone').value.trim(),
+      email:$('f-email').value.trim(), kakao:$('f-kakao').value.trim(), channel:$('f-channel').value.trim(),
+      items:items, styles:st.styles, colors:st.colors, sizes:st.sizes, perUnit:st.perUnit,
+      due:$('f-due').value || '', price:$('f-price').value.trim(), fabric:$('f-fabric').value, asset:$('f-asset').value,
+      material:$('f-material').value.trim(), detailSpec:$('f-detailspec').value.trim(),
+      sizeSpec:$('f-sizespec').value.trim(), sewing:$('f-sewing').value.trim(),
+      packing:$('f-packing').value.trim(), qc:$('f-qc').value.trim(), qcWays:qcWays,
+      detail:$('f-detail').value.trim(), grade:grade(st),
+      source:new URLSearchParams(location.search).get('src') || '스레드',
+      company_addr:f.company_addr.value,
+      images:images.map(function(im){ return { name:im.name, mime:'image/jpeg', data:im.data }; })
     };
 
     var btn = $('f-submit');
     btn.disabled = true; btn.textContent = '보내는 중…';
-    fetch('/api/inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+    fetch('/api/inquiry', { method:'POST', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify(payload) })
+      .then(function(r){ return r.json().then(function(d){ return { ok:r.ok, d:d }; }); })
       .then(function(res){
         if (!res.ok) throw new Error(res.d && res.d.error ? res.d.error : '전송 실패');
-        f.style.display = 'none';
+        $('scroll').style.display = 'none';
+        $('cta').style.display = 'none';
         $('yj-done').style.display = 'block';
-        $('done-no').textContent = res.d.no ? 'YJ-' + res.d.no : '';
-        $('yj-done').scrollIntoView({ block: 'center' });
+        $('done-no').textContent = res.d.no ? 'YJ-' + res.d.no : '접수 완료';
+        $('app').scrollTop = 0;
+        window.scrollTo(0,0);
       })
       .catch(function(err){
-        btn.disabled = false;
-        btn.innerHTML = '문의 보내기<span class="arw">↗</span>';
-        msg.className = 'msg err';
-        msg.textContent = '전송이 안 됐습니다. 잠시 후 다시 시도하시거나 스레드 DM으로 보내주세요.';
+        btn.disabled = false; btn.textContent = '오더문의 보내기';
+        fail('전송이 안 됐습니다. 잠시 후 다시 시도하시거나 스레드 DM으로 보내주세요.');
         console.error(err);
       });
   });
