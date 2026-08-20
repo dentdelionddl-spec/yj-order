@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Y&J 용저우 공장 — 오더문의</title>
+<meta name="description" content="중국 용저우 Y&J 의류공장. 잠옷·파자마, 셔츠·남방, 밴딩슬랙스 생산. 컬러·사이즈당 100장부터 오더 상담합니다." />
+<meta property="og:title" content="Y&J 용저우 공장 — 오더문의" />
+<meta property="og:description" content="한국에서 30년 생산하고, 직접 지은 중국 공장입니다. 잠옷·셔츠·밴딩슬랙스. 컬러·사이즈당 100장부터." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<style>
+:root{
+  --ink:#14181d;
+  --indigo:#1e3a5f;
+  --indigo-deep:#132a45;
+  --paper:#f4f2ec;
+  --chalk:#fbfaf6;
+  --line:#cfc9ba;
+  --mark:#f2c230;
+  --muted:#6e7480;
+  --red:#b4462f;
+  --s1:8px; --s2:12px; --s3:16px; --s4:24px; --s5:40px; --s6:64px;
+  --mono:'JetBrains Mono','Pretendard Variable',monospace;
+  --disp:'Archivo','Pretendard Variable',sans-serif;
+  --body:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%}
+a{color:inherit}
+.yj-wrap{max-width:1080px;margin:0 auto;padding:0 var(--s4)}
+.yj-mono{font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;font-size:11px;font-weight:600}
+
+.yj-top{position:sticky;top:0;z-index:50;background:var(--indigo-deep);color:var(--chalk);border-bottom:2px solid var(--mark)}
+.yj-top-in{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);height:56px}
+.yj-logo{display:flex;align-items:baseline;gap:10px}
+.yj-logo b{font-family:var(--disp);font-weight:800;font-size:19px;letter-spacing:-.01em}
+.yj-logo span{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#a9bdd6;text-transform:uppercase}
+.yj-topbtn{
+  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--mark);color:var(--ink);text-decoration:none;
+  padding:9px 14px;border-radius:2px;white-space:nowrap;
+}
+.yj-topbtn:hover{background:#ffd44d}
+
+.yj-hero{
+  background:var(--indigo);color:var(--chalk);padding:var(--s6) 0 0;
+  background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+.yj-eyebrow{color:var(--mark);margin-bottom:var(--s4)}
+.yj-h1{
+  font-family:var(--disp);font-weight:800;
+  font-size:clamp(30px,6.2vw,58px);line-height:1.12;letter-spacing:-.025em;
+  margin:0 0 var(--s4);max-width:16ch;
+}
+.yj-h1 em{font-style:normal;color:var(--mark)}
+.yj-lede{font-size:clamp(15px,1.7vw,18px);color:#d5e0ec;max-width:52ch;margin:0 0 var(--s5)}
+.yj-cta-row{display:flex;flex-wrap:wrap;gap:var(--s2);padding-bottom:var(--s6)}
+.yj-btn{
+  display:inline-block;text-decoration:none;border:0;cursor:pointer;
+  font-family:var(--body);font-size:15px;font-weight:700;
+  padding:14px 24px;border-radius:2px;
+}
+.yj-btn-mark{background:var(--mark);color:var(--ink)}
+.yj-btn-mark:hover{background:#ffd44d}
+.yj-btn-ghost{background:transparent;color:var(--chalk);box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+.yj-btn-ghost:hover{background:rgba(255,255,255,.08)}
+
+.yj-spec{border-top:1px solid rgba(255,255,255,.18);display:grid;grid-template-columns:repeat(3,1fr)}
+.yj-spec div{padding:var(--s3) 0;border-right:1px solid rgba(255,255,255,.18)}
+.yj-spec div:nth-child(3n){border-right:0}
+.yj-spec dt{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8fa8c4;margin-bottom:4px}
+.yj-spec dd{margin:0;font-size:14px;font-weight:600;color:var(--chalk)}
+
+.yj-sec{padding:var(--s6) 0}
+.yj-sec + .yj-sec{border-top:2px dashed var(--line)}
+.yj-label{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:var(--s3);display:block}
+.yj-h2{font-family:var(--disp);font-weight:800;font-size:clamp(22px,3.4vw,34px);line-height:1.25;letter-spacing:-.02em;margin:0 0 var(--s4);max-width:22ch}
+.yj-p{margin:0 0 var(--s3);color:#3b424c;max-width:62ch}
+
+.yj-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.yj-item{background:var(--chalk);padding:var(--s4)}
+.yj-item h3{font-size:17px;margin:0 0 6px;font-weight:700}
+.yj-item p{margin:0;font-size:14px;color:var(--muted);line-height:1.55}
+.yj-item .yj-tag{display:inline-block;margin-bottom:10px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:3px 7px;background:var(--indigo);color:var(--chalk)}
+.yj-item.is-off{background:#efece4}
+.yj-item.is-off .yj-tag{background:var(--red)}
+
+.yj-rules{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.yj-rules li{display:grid;grid-template-columns:132px 1fr;gap:var(--s4);padding:var(--s3) 0;border-bottom:1px solid var(--line)}
+.yj-rules b{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--indigo);padding-top:4px}
+.yj-rules span{font-size:15px}
+.yj-note{margin-top:var(--s4);padding:var(--s3) var(--s4);background:#efece4;border-left:3px solid var(--red);font-size:14px}
+.yj-note b{display:block;margin-bottom:6px;font-size:13px}
+.yj-note ul{margin:0;padding-left:18px;color:#4a5058}
+
+.yj-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:var(--s4)}
+.yj-step{background:var(--chalk);padding:var(--s4) var(--s3)}
+.yj-step .yj-num{font-family:var(--mono);font-size:11px;color:var(--mark);background:var(--indigo-deep);display:inline-block;padding:2px 6px;margin-bottom:10px}
+.yj-step h4{margin:0 0 4px;font-size:15px}
+.yj-step p{margin:0;font-size:13px;color:var(--muted)}
+
+.yj-form-sec{background:var(--indigo-deep);color:var(--chalk)}
+.yj-form-sec .yj-label{color:#8fa8c4}
+.yj-form-sec .yj-h2{color:var(--chalk)}
+.yj-grid{display:grid;grid-template-columns:340px 1fr;gap:var(--s5);align-items:start}
+.yj-calc{position:sticky;top:76px;background:#0f2338;border:1px solid rgba(255,255,255,.16);padding:var(--s4)}
+.yj-calc h3{margin:0 0 var(--s3);font-size:14px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#8fa8c4;font-weight:600}
+.yj-calc-line{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:#b9cadb;padding:5px 0}
+.yj-calc-big{font-family:var(--disp);font-weight:800;font-size:44px;line-height:1;letter-spacing:-.02em;color:var(--mark);margin:var(--s3) 0 4px}
+.yj-calc-big small{font-size:15px;color:#b9cadb;font-weight:600;margin-left:6px}
+.yj-verdict{margin-top:var(--s3);padding:10px 12px;font-size:13px;font-weight:600;border-radius:2px;background:rgba(255,255,255,.08)}
+.yj-verdict.ok{background:rgba(105,190,120,.18);color:#a8e6b4}
+.yj-verdict.no{background:rgba(200,80,60,.2);color:#ffb9a8}
+
+.yj-fields{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)}
+.yj-f{display:flex;flex-direction:column;gap:6px}
+.yj-f.full{grid-column:1/-1}
+.yj-f label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8fa8c4;font-weight:600}
+.yj-f label i{font-style:normal;color:var(--mark)}
+.yj-f input,.yj-f select,.yj-f textarea{
+  font-family:var(--body);font-size:15px;color:var(--ink);background:var(--chalk);
+  border:1px solid rgba(0,0,0,.15);border-radius:2px;padding:11px 12px;width:100%;
+}
+.yj-f textarea{min-height:104px;resize:vertical}
+.yj-f input:focus,.yj-f select:focus,.yj-f textarea:focus{outline:2px solid var(--mark);outline-offset:1px}
+.yj-checks{display:flex;flex-wrap:wrap;gap:var(--s1)}
+.yj-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);padding:8px 12px;border-radius:2px;font-size:14px;cursor:pointer}
+.yj-chip input{accent-color:var(--mark);width:16px;height:16px;margin:0}
+.yj-chip:has(input:checked){background:var(--mark);color:var(--ink);border-color:var(--mark)}
+.yj-agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#c3d2e0;margin-top:var(--s2)}
+.yj-agree input{margin-top:3px;accent-color:var(--mark);width:16px;height:16px}
+.yj-submit{margin-top:var(--s4);display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap}
+.yj-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.yj-msg{font-size:14px;font-weight:600}
+.yj-msg.err{color:#ffb9a8}
+
+.yj-done{display:none;background:#0f2338;border:1px solid var(--mark);padding:var(--s5) var(--s4);text-align:center}
+.yj-done h3{font-family:var(--disp);font-size:26px;margin:0 0 var(--s2)}
+.yj-done .yj-no{font-family:var(--mono);font-size:22px;color:var(--mark);margin:var(--s3) 0}
+.yj-done p{color:#b9cadb;margin:0 auto;max-width:44ch;font-size:15px}
+
+footer{background:var(--indigo-deep);color:#7e93aa;padding:var(--s4) 0;border-top:1px solid rgba(255,255,255,.12);font-size:12px}
+.yj-foot{display:flex;justify-content:space-between;gap:var(--s3);flex-wrap:wrap}
+
+@media (max-width:860px){
+  :root{--s6:44px;--s5:28px}
+  .yj-grid{grid-template-columns:1fr}
+  .yj-calc{position:static}
+  .yj-spec{grid-template-columns:repeat(2,1fr)}
+  .yj-spec div:nth-child(3n){border-right:1px solid rgba(255,255,255,.18)}
+  .yj-spec div:nth-child(2n){border-right:0}
+}
+@media (max-width:560px){
+  .yj-fields{grid-template-columns:1fr}
+  .yj-rules li{grid-template-columns:1fr;gap:2px}
+  .yj-h1{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="yj-top">
+  <div class="yj-wrap yj-top-in">
+    <div class="yj-logo"><b>Y&amp;J</b><span>Yongzhou Apparel</span></div>
+    <a class="yj-topbtn" href="#order">오더문의</a>
+  </div>
+</header>
+
+<section class="yj-hero">
+  <div class="yj-wrap">
+    <span class="yj-mono yj-eyebrow">중국 후난성 용저우 · Y&amp;J 의류공장</span>
+    <h1 class="yj-h1">잠옷, 셔츠, <em>밴딩 슬랙스.</em><br>이 세 가지를 제일 잘합니다.</h1>
+    <p class="yj-lede">한국에서 30년 생산했고, 불량과 납기로 크게 데인 뒤 직접 지은 공장입니다. 그래서 아무 오더나 받지 않습니다. 우리가 잘 만들 수 있는 품목과 수량만 받고, 받은 건 끝까지 책임집니다.</p>
+    <div class="yj-cta-row">
+      <a class="yj-btn yj-btn-mark" href="#order">오더문의 작성하기</a>
+      <a class="yj-btn yj-btn-ghost" href="#rules">진행 기준 먼저 보기</a>
+    </div>
+    <dl class="yj-spec">
+      <div><dt>소재지</dt><dd>중국 후난성 용저우</dd></div>
+      <div><dt>주력 품목</dt><dd>잠옷 · 셔츠 · 밴딩슬랙스</dd></div>
+      <div><dt>최소 수량</dt><dd>컬러 · 사이즈당 100장</dd></div>
+      <div><dt>원단 소싱</dt><dd>광저우 상주팀 직접 진행</dd></div>
+      <div><dt>대표 경력</dt><dd>의류 생산 30년</dd></div>
+      <div><dt>현장 관리자</dt><dd>생산 관리 30년</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="yj-sec">
+  <div class="yj-wrap">
+    <span class="yj-label">품목 / Capability</span>
+    <h2 class="yj-h2">지금 라인에서 받는 품목</h2>
+    <p class="yj-p">신규 현장이라 품목을 넓히지 않았습니다. 아래 품목은 라인이 이미 돌고 있어 샘플부터 본생산까지 속도가 붙습니다.</p>
+    <div class="yj-items">
+      <div class="yj-item"><span class="yj-tag">MAIN</span><h3>잠옷 · 파자마</h3><p>상하 세트, 잠옷원피스. 현재 라인을 가장 많이 채우고 있는 품목입니다.</p></div>
+      <div class="yj-item"><span class="yj-tag">MAIN</span><h3>셔츠 · 남방</h3><p>기본 셔츠부터 오버핏까지. 칼라·커프스 마감 검단을 따로 봅니다.</p></div>
+      <div class="yj-item"><span class="yj-tag">MAIN</span><h3>밴딩 슬랙스</h3><p>밴딩 처리와 봉제 텐션이 관건인 품목. 잠옷·셔츠와 같은 수준으로 잡고 있습니다.</p></div>
+      <div class="yj-item"><span class="yj-tag">SUB</span><h3>반팔 티셔츠</h3><p>메인 품목은 아닙니다. 수량과 원단에 따라 상담 후 결정합니다.</p></div>
+      <div class="yj-item is-off"><span class="yj-tag">불가</span><h3>블라우스</h3><p>현재 라인에서 받지 않습니다. 무리해서 받았다가 품질로 문제 만드는 게 서로에게 손해입니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="yj-sec" id="rules">
+  <div class="yj-wrap">
+    <span class="yj-label">기준 / Order Terms</span>
+    <h2 class="yj-h2">이 기준에 맞으면 바로 상담합니다</h2>
+    <ul class="yj-rules">
+      <li><b>최소 수량</b><span>컬러 · 사이즈당 100장. 예를 들어 2컬러 × 3사이즈면 600장이 최소입니다.</span></li>
+      <li><b>원단 · 부자재</b><span>지정 원단이 있으면 그대로 진행하고, 없으면 광저우 원단시장에 상주 중인 한국인 팀이 직접 소싱해 제안합니다.</span></li>
+      <li><b>필요 자료</b><span>실물 샘플이나 도식화(작업지시서)가 있으면 가장 빠릅니다. 사진·레퍼런스만 있어도 상담은 가능합니다.</span></li>
+      <li><b>납기</b><span>원단 확정일 기준으로 산정해 안내합니다. 지킬 수 없는 날짜는 처음부터 말하지 않습니다.</span></li>
+      <li><b>검품</b><span>30년 경력 현장 관리자가 라인 검단과 최종 검품을 직접 봅니다.</span></li>
+    </ul>
+    <div class="yj-note">
+      <b>이런 문의는 받기 어렵습니다</b>
+      <ul>
+        <li>컬러 · 사이즈당 100장 미만의 소량 오더</li>
+        <li>타 브랜드 제품을 그대로 복제해달라는 요청</li>
+        <li>샘플 · 도식화 · 레퍼런스가 전부 없는 상태의 문의</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="yj-sec">
+  <div class="yj-wrap">
+    <span class="yj-label">진행 순서 / Process</span>
+    <h2 class="yj-h2">문의부터 출고까지</h2>
+    <div class="yj-flow">
+      <div class="yj-step"><span class="yj-num">01</span><h4>문의 접수</h4><p>아래 양식 작성. 영업팀이 1영업일 안에 연락드립니다.</p></div>
+      <div class="yj-step"><span class="yj-num">02</span><h4>사양 확인</h4><p>품목 · 수량 · 원단 · 납기를 맞춰봅니다.</p></div>
+      <div class="yj-step"><span class="yj-num">03</span><h4>견적</h4><p>원단 소싱 결과를 반영한 단가를 드립니다.</p></div>
+      <div class="yj-step"><span class="yj-num">04</span><h4>샘플</h4><p>확인 후 수정. 여기서 맞지 않으면 본생산은 진행하지 않습니다.</p></div>
+      <div class="yj-step"><span class="yj-num">05</span><h4>본생산 · 출고</h4><p>라인 검단 → 최종 검품 → 출고.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="yj-sec yj-form-sec" id="order">
+  <div class="yj-wrap">
+    <span class="yj-label">오더문의 / Inquiry</span>
+    <h2 class="yj-h2">필요한 정보만 적어주세요</h2>
+
+    <div class="yj-grid">
+      <aside class="yj-calc">
+        <h3>최소 수량 계산</h3>
+        <div class="yj-calc-line"><span>스타일 수</span><b id="c-style">1</b></div>
+        <div class="yj-calc-line"><span>컬러 수</span><b id="c-color">1</b></div>
+        <div class="yj-calc-line"><span>사이즈 수</span><b id="c-size">1</b></div>
+        <div class="yj-calc-line"><span>기준</span><b>컬러·사이즈당 100장</b></div>
+        <div class="yj-calc-big" id="c-moq">100<small>장 이상</small></div>
+        <div class="yj-calc-line"><span>입력하신 총 수량</span><b id="c-qty">—</b></div>
+        <div class="yj-verdict" id="c-verdict">수량을 입력하면 기준 충족 여부를 바로 보여드립니다.</div>
+      </aside>
+
+      <div>
+        <form id="yj-form" novalidate>
+          <div class="yj-fields">
+            <div class="yj-f"><label for="f-brand">브랜드 · 회사명 <i>*</i></label><input id="f-brand" name="brand" required maxlength="60" /></div>
+            <div class="yj-f"><label for="f-name">담당자명 <i>*</i></label><input id="f-name" name="manager" required maxlength="30" /></div>
+            <div class="yj-f"><label for="f-phone">연락처 <i>*</i></label><input id="f-phone" name="phone" required inputmode="tel" maxlength="30" placeholder="010-0000-0000" /></div>
+            <div class="yj-f"><label for="f-email">이메일</label><input id="f-email" name="email" type="email" maxlength="60" /></div>
+            <div class="yj-f"><label for="f-kakao">카카오톡 ID</label><input id="f-kakao" name="kakao" maxlength="40" /></div>
+            <div class="yj-f"><label for="f-due">희망 납기</label><input id="f-due" name="due" type="date" /></div>
+
+            <div class="yj-f full">
+              <label>문의 품목 <i>*</i></label>
+              <div class="yj-checks">
+                <label class="yj-chip"><input type="checkbox" name="items" value="잠옷·파자마" />잠옷·파자마</label>
+                <label class="yj-chip"><input type="checkbox" name="items" value="잠옷원피스" />잠옷원피스</label>
+                <label class="yj-chip"><input type="checkbox" name="items" value="셔츠·남방" />셔츠·남방</label>
+                <label class="yj-chip"><input type="checkbox" name="items" value="밴딩슬랙스" />밴딩슬랙스</label>
+                <label class="yj-chip"><input type="checkbox" name="items" value="반팔티" />반팔티</label>
+                <label class="yj-chip"><input type="checkbox" name="items" value="기타" />기타</label>
+              </div>
+            </div>
+
+            <div class="yj-f"><label for="f-style">스타일 수 <i>*</i></label><input id="f-style" name="styles" type="number" min="1" max="99" value="1" /></div>
+            <div class="yj-f"><label for="f-color">컬러 수 <i>*</i></label><input id="f-color" name="colors" type="number" min="1" max="99" value="1" /></div>
+            <div class="yj-f"><label for="f-size">사이즈 수 <i>*</i></label><input id="f-size" name="sizes" type="number" min="1" max="99" value="1" /></div>
+            <div class="yj-f"><label for="f-qty">총 발주 예정 수량 <i>*</i></label><input id="f-qty" name="qty" type="number" min="0" max="1000000" placeholder="예: 600" /></div>
+
+            <div class="yj-f">
+              <label for="f-fabric">원단 · 부자재</label>
+              <select id="f-fabric" name="fabric">
+                <option value="">선택</option>
+                <option>확정</option><option>미확정</option><option>공장 소싱 요청</option>
+              </select>
+            </div>
+            <div class="yj-f">
+              <label for="f-asset">보유 자료</label>
+              <select id="f-asset" name="asset">
+                <option value="">선택</option>
+                <option>실물 샘플</option><option>도식화·작업지시서</option><option>사진·이미지만</option><option>없음</option>
+              </select>
+            </div>
+            <div class="yj-f"><label for="f-price">희망 단가</label><input id="f-price" name="price" maxlength="40" placeholder="예: 장당 8,000원 선" /></div>
+            <div class="yj-f"><label for="f-channel">판매 채널 · 현황</label><input id="f-channel" name="channel" maxlength="60" placeholder="예: 자사몰 + 지그재그, 월 3천만" /></div>
+
+            <div class="yj-f full"><label for="f-detail">상세 내용</label><textarea id="f-detail" name="detail" maxlength="2000" placeholder="원하는 제품, 참고 링크, 진행 일정 등 자유롭게 적어주세요."></textarea></div>
+          </div>
+
+          <div class="yj-hp"><label>회사 주소<input type="text" name="company_addr" tabindex="-1" autocomplete="off" /></label></div>
+
+          <label class="yj-agree"><input type="checkbox" id="f-agree" required /><span>상담 회신을 위해 입력하신 정보를 수집·이용하는 데 동의합니다. 수집 항목은 위 입력값이며, 상담 종료 후 보관 목적이 끝나면 파기합니다.</span></label>
+
+          <div class="yj-submit">
+            <button type="submit" class="yj-btn yj-btn-mark" id="f-submit">문의 보내기</button>
+            <span class="yj-msg" id="f-msg"></span>
+          </div>
+        </form>
+
+        <div class="yj-done" id="yj-done">
+          <h3>접수됐습니다</h3>
+          <div class="yj-no" id="done-no"></div>
+          <p>영업팀이 1영업일 안에 연락드립니다. 접수번호를 기억해두시면 문의하실 때 빠릅니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="yj-wrap yj-foot">
+    <span>Y&amp;J · 중국 후난성 용저우 의류공장</span>
+    <span class="yj-mono">Order Inquiry</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var f = $('yj-form');
+  var fields = { styles:$('f-style'), colors:$('f-color'), sizes:$('f-size'), qty:$('f-qty') };
+
+  function n(el, def){ var v = parseInt(el.value, 10); return (isNaN(v) || v < 1) ? def : v; }
+
+  function calc(){
+    var s = n(fields.styles,1), c = n(fields.colors,1), z = n(fields.sizes,1);
+    var moq = s * c * z * 100;
+    var qty = parseInt(fields.qty.value, 10);
+    $('c-style').textContent = s; $('c-color').textContent = c; $('c-size').textContent = z;
+    $('c-moq').innerHTML = moq.toLocaleString() + '<small>장 이상</small>';
+    $('c-qty').textContent = isNaN(qty) ? '—' : qty.toLocaleString() + '장';
+    var v = $('c-verdict');
+    if (isNaN(qty)) { v.className = 'yj-verdict'; v.textContent = '수량을 입력하면 기준 충족 여부를 바로 보여드립니다.'; }
+    else if (qty >= moq) { v.className = 'yj-verdict ok'; v.textContent = '기준 충족 — 바로 상담 가능한 수량입니다.'; }
+    else { v.className = 'yj-verdict no'; v.textContent = '기준 미달 — ' + (moq - qty).toLocaleString() + '장이 부족합니다. 그래도 보내주시면 조건을 함께 확인해드립니다.'; }
+    return { moq: moq, qty: isNaN(qty) ? 0 : qty, ok: !isNaN(qty) && qty >= moq };
+  }
+  Object.keys(fields).forEach(function(k){ fields[k].addEventListener('input', calc); });
+  calc();
+
+  function grade(st){
+    var asset = $('f-asset').value;
+    var hasAsset = (asset === '실물 샘플' || asset === '도식화·작업지시서');
+    if (st.ok && hasAsset && st.qty >= 500) return 'A';
+    if (!st.ok || asset === '없음') return 'C';
+    return 'B';
+  }
+
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var msg = $('f-msg'); msg.className = 'yj-msg'; msg.textContent = '';
+    var items = Array.prototype.slice.call(f.querySelectorAll('input[name="items"]:checked')).map(function(i){ return i.value; });
+    var required = [['f-brand','브랜드·회사명'],['f-name','담당자명'],['f-phone','연락처']];
+    for (var i = 0; i < required.length; i++){
+      if (!$(required[i][0]).value.trim()){
+        msg.className = 'yj-msg err'; msg.textContent = required[i][1] + '을(를) 입력해주세요.';
+        $(required[i][0]).focus(); return;
+      }
+    }
+    if (!items.length){ msg.className='yj-msg err'; msg.textContent='문의 품목을 하나 이상 선택해주세요.'; return; }
+    if (!fields.qty.value.trim()){ msg.className='yj-msg err'; msg.textContent='총 발주 예정 수량을 입력해주세요.'; fields.qty.focus(); return; }
+    if (!$('f-agree').checked){ msg.className='yj-msg err'; msg.textContent='정보 수집·이용 동의가 필요합니다.'; return; }
+
+    var st = calc();
+    var params = new URLSearchParams(location.search);
+    var payload = {
+      brand: $('f-brand').value.trim(),
+      manager: $('f-name').value.trim(),
+      phone: $('f-phone').value.trim(),
+      email: $('f-email').value.trim(),
+      kakao: $('f-kakao').value.trim(),
+      items: items,
+      styles: n(fields.styles,1), colors: n(fields.colors,1), sizes: n(fields.sizes,1),
+      qty: st.qty, moqOk: st.ok, grade: grade(st),
+      due: $('f-due').value || '',
+      fabric: $('f-fabric').value,
+      asset: $('f-asset').value,
+      price: $('f-price').value.trim(),
+      channel: $('f-channel').value.trim(),
+      detail: $('f-detail').value.trim(),
+      source: params.get('src') || '스레드',
+      company_addr: f.company_addr.value
+    };
+
+    var btn = $('f-submit');
+    btn.disabled = true; btn.textContent = '보내는 중…';
+    fetch('/api/inquiry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+      .then(function(res){
+        if (!res.ok) throw new Error(res.d && res.d.error ? res.d.error : '전송 실패');
+        f.style.display = 'none';
+        $('yj-done').style.display = 'block';
+        $('done-no').textContent = res.d.no ? 'YJ-' + res.d.no : '';
+        $('yj-done').scrollIntoView({ block: 'center' });
+      })
+      .catch(function(err){
+        btn.disabled = false; btn.textContent = '문의 보내기';
+        msg.className = 'yj-msg err';
+        msg.textContent = '전송이 안 됐습니다. 잠시 후 다시 시도하시거나 스레드 DM으로 보내주세요.';
+        console.error(err);
+      });
+  });
+})();
+</script>
+</body>
+</html>
