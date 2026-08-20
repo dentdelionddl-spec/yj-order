@@ -4,6 +4,7 @@
 const DB_ID = process.env.NOTION_DB_ID || 'b400cf41ae804765b1b15e3a4b004ba1';
 const NOTION_VERSION = '2022-06-28';
 const NOTION = 'https://api.notion.com/v1';
+const MIN_PER_UNIT = 100; // 컬러·사이즈당 최소 수량
 
 const ITEMS = ['잠옷·파자마', '잠옷원피스', '셔츠·남방', '밴딩슬랙스', '반팔티', '기타'];
 const FABRIC = ['확정', '미확정', '공장 소싱 요청'];
@@ -17,6 +18,7 @@ const num = (v) => {
   const n = parseInt(v, 10);
   return Number.isFinite(n) && n >= 0 ? n : null;
 };
+const clamp = (v, lo, hi) => Math.min(Math.max(num(v) || lo, lo), hi);
 const pick = (v, list) => (list.includes(v) ? v : null);
 const rt = (s) => ({ rich_text: [{ text: { content: s } }] });
 
@@ -90,15 +92,14 @@ export default async function handler(req, res) {
   const items = Array.isArray(b.items) ? b.items.filter((i) => ITEMS.includes(i)).slice(0, 6) : [];
   const qcWays = Array.isArray(b.qcWays) ? b.qcWays.filter((i) => QCWAY.includes(i)).slice(0, 3) : [];
 
-  const rowsIn = Array.isArray(b.rows) ? b.rows.slice(0, 60) : [];
-  const rows = rowsIn
-    .map((r) => ({ color: txt(r && r.color, 30), size: txt(r && r.size, 20), qty: num(r && r.qty) || 0 }))
-    .filter((r) => r.color || r.size || r.qty);
-  const qty = rows.reduce((s, r) => s + r.qty, 0);
-  const colors = new Set(rows.map((r) => r.color).filter(Boolean)).size;
-  const sizes = new Set(rows.map((r) => r.size).filter(Boolean)).size;
-  const moqOk = rows.length > 0 && rows.every((r) => r.qty >= 100);
-  const rowsText = rows.map((r) => r.color + ' / ' + r.size + ' / ' + r.qty.toLocaleString() + '장').join(String.fromCharCode(10));
+  // 발주 구성 — 스타일 수 × 컬러 수 × 사이즈 수 × (컬러·사이즈당 수량)
+  const styles = clamp(b.styles, 1, 99);
+  const colors = clamp(b.colors, 1, 99);
+  const sizes = clamp(b.sizes, 1, 99);
+  const perUnit = clamp(b.perUnit, MIN_PER_UNIT, 100000);
+  const qty = styles * colors * sizes * perUnit;
+  const moqOk = perUnit >= MIN_PER_UNIT;
+  const rowsText = styles + '스타일 × ' + colors + '컬러 × ' + sizes + '사이즈 × ' + perUnit.toLocaleString() + '장 = 총 ' + qty.toLocaleString() + '장';
 
   const email = txt(b.email, 60);
   const dueRaw = txt(b.due, 10);
@@ -109,16 +110,16 @@ export default async function handler(req, res) {
     '담당자': rt(manager),
     '연락처': { phone_number: phone },
     '진행 상태': { select: { name: '신규' } },
-    '등급': { select: { name: pick(b.grade, GRADE) || (moqOk ? 'B' : 'C') } },
+    '등급': { select: { name: pick(b.grade, GRADE) || 'B' } },
     '품목': { multi_select: items.map((n) => ({ name: n })) },
-    '스타일 수': { number: num(b.styles) || 1 },
+    '스타일 수': { number: styles },
     '컬러 수': { number: colors },
     '사이즈 수': { number: sizes },
     '총 수량': { number: qty },
     'MOQ 충족': { checkbox: !!moqOk },
+    '발주 구성': rt(rowsText),
     '유입 경로': { select: { name: pick(txt(b.source), SOURCE) || '스레드' } },
   };
-  if (rowsText) P['발주 구성'] = rt(rowsText.slice(0, 1900));
   if (qcWays.length) P['검사 방식'] = { multi_select: qcWays.map((n) => ({ name: n })) };
   if (email) P['이메일'] = { email };
   if (txt(b.kakao, 40)) P['카톡ID'] = rt(txt(b.kakao, 40));
