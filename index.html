@@ -26,8 +26,8 @@ a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 button,input,select,textarea{font-family:var(--body)}
 .wrap{max-width:1240px;margin:0 auto;padding:0 28px}
-.rv{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
-.rv.in{opacity:1;transform:none}
+.rv{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1);animation:rvsafe .01s linear 3s forwards}
+@keyframes rvsafe{to{opacity:1;transform:none}}.rv.in{opacity:1;transform:none}
 
 /* 로고 */
 .logo{display:inline-block;font-weight:900;line-height:1;letter-spacing:-.05em;transform:skewX(-12deg) scaleX(.95);transform-origin:left center;white-space:nowrap}
