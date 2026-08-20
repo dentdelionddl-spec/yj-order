@@ -8,333 +8,445 @@
 <meta property="og:title" content="Y&J 용저우 공장 — 오더문의" />
 <meta property="og:description" content="한국에서 30년 생산하고, 직접 지은 중국 공장입니다. 잠옷·셔츠·밴딩슬랙스. 컬러·사이즈당 100장부터." />
 <meta property="og:type" content="website" />
+<meta name="theme-color" content="#F6F3E7" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
 <style>
 :root{
-  --ink:#14181d; --indigo:#1e3a5f; --indigo-deep:#132a45; --paper:#f4f2ec; --chalk:#fbfaf6;
-  --line:#cfc9ba; --mark:#f2c230; --muted:#6e7480; --red:#b4462f;
-  --s1:8px; --s2:12px; --s3:16px; --s4:24px; --s5:40px; --s6:64px;
-  --mono:'JetBrains Mono','Pretendard Variable',monospace;
-  --disp:'Archivo','Pretendard Variable',sans-serif;
+  --cream:#f6f3e7; --cream-2:#efebdb; --card:#fffdf6; --ink:#1a2115; --olive:#2b3a1d;
+  --olive-2:#3d5129; --lime:#c9ef54; --muted:#6f7663; --line:#e4dfcd; --white:#fff;
+  --r-lg:24px; --r-md:16px; --r-sm:12px; --pill:999px;
+  --s1:8px; --s2:12px; --s3:16px; --s4:24px; --s5:40px; --s6:64px; --s7:96px;
   --body:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
-img{max-width:100%}
-a{color:inherit}
-.yj-wrap{max-width:1080px;margin:0 auto;padding:0 var(--s4)}
-.yj-mono{font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;font-size:11px;font-weight:600}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 
-.yj-top{position:sticky;top:0;z-index:50;background:var(--indigo-deep);color:var(--chalk);border-bottom:2px solid var(--mark)}
-.yj-top-in{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);height:56px}
-.yj-logo{display:flex;align-items:baseline;gap:10px}
-.yj-logo b{font-family:var(--disp);font-weight:800;font-size:19px;letter-spacing:-.01em}
-.yj-logo span{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#a9bdd6;text-transform:uppercase}
-.yj-topbtn{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:var(--mark);color:var(--ink);text-decoration:none;padding:9px 14px;border-radius:2px;white-space:nowrap}
-.yj-topbtn:hover{background:#ffd44d}
+/* 헤더 */
+.hdr{position:sticky;top:0;z-index:60;background:rgba(246,243,231,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.hdr-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.brand{display:flex;align-items:baseline;gap:8px;font-weight:800;font-size:21px;letter-spacing:-.02em}
+.brand i{font-style:normal;font-size:10px;font-weight:600;letter-spacing:.16em;color:var(--muted);text-transform:uppercase}
+.nav{display:flex;gap:26px;font-size:14.5px;font-weight:600;color:#3c4436}
+.nav a:hover{color:var(--olive)}
+.pill{display:inline-flex;align-items:center;gap:8px;border-radius:var(--pill);font-weight:700;font-size:15px;padding:13px 24px;border:1px solid transparent;cursor:pointer;font-family:var(--body);transition:transform .12s ease,background .15s ease}
+.pill:active{transform:scale(.98)}
+.pill-dark{background:var(--olive);color:#fdfdf7}
+.pill-dark:hover{background:var(--olive-2)}
+.pill-line{background:transparent;color:var(--ink);border-color:#c9c4b0}
+.pill-line:hover{background:var(--cream-2)}
+.pill-sm{padding:10px 18px;font-size:14px}
+.dot{width:16px;height:16px;border-radius:50%;background:var(--lime);display:inline-block;flex:none}
 
-.yj-hero{background:var(--indigo);color:var(--chalk);padding:var(--s6) 0 0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:32px 32px}
-.yj-eyebrow{color:var(--mark);margin-bottom:var(--s4)}
-.yj-h1{font-family:var(--disp);font-weight:800;font-size:clamp(30px,6.2vw,58px);line-height:1.12;letter-spacing:-.025em;margin:0 0 var(--s4);max-width:16ch}
-.yj-h1 em{font-style:normal;color:var(--mark)}
-.yj-lede{font-size:clamp(15px,1.7vw,18px);color:#d5e0ec;max-width:52ch;margin:0 0 var(--s5)}
-.yj-cta-row{display:flex;flex-wrap:wrap;gap:var(--s2);padding-bottom:var(--s6)}
-.yj-btn{display:inline-block;text-decoration:none;border:0;cursor:pointer;font-family:var(--body);font-size:15px;font-weight:700;padding:14px 24px;border-radius:2px}
-.yj-btn-mark{background:var(--mark);color:var(--ink)}
-.yj-btn-mark:hover{background:#ffd44d}
-.yj-btn-ghost{background:transparent;color:var(--chalk);box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
-.yj-btn-ghost:hover{background:rgba(255,255,255,.08)}
+/* 히어로 */
+.hero{padding:var(--s6) 0 var(--s5)}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
+.media{border-radius:var(--r-lg);overflow:hidden;position:relative;background:linear-gradient(150deg,#3d5129,#1a2115);min-height:380px;background-size:cover;background-position:center}
+.media.tall{min-height:460px}
+.media.short{min-height:240px;margin-top:16px;background:linear-gradient(150deg,#e6e3d2,#cfd2bd)}
+.media video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.chip-float{position:absolute;background:var(--white);border-radius:14px;padding:10px 14px;box-shadow:0 8px 24px rgba(26,33,21,.16);display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600}
+.chip-float b{font-size:17px;font-weight:800;letter-spacing:-.02em}
+.chip-float .dot{width:22px;height:22px;display:grid;place-items:center;font-size:11px;color:var(--olive);font-weight:800}
+.cf-1{left:16px;bottom:76px}
+.cf-2{left:16px;bottom:16px;background:var(--lime)}
+.eyeb{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+h1{font-size:clamp(30px,4.6vw,46px);line-height:1.14;letter-spacing:-.035em;font-weight:800;margin:0 0 18px}
+.lede{font-size:16.5px;color:#4a5142;margin:0 0 22px;max-width:46ch}
+.ticks{list-style:none;margin:0 0 24px;padding:0;display:grid;gap:11px}
+.ticks li{display:flex;gap:10px;align-items:flex-start;font-size:15px;font-weight:600}
+.ticks svg{flex:none;margin-top:3px}
+.notice{display:flex;gap:10px;background:var(--cream-2);border-radius:var(--r-sm);padding:13px 15px;font-size:13px;color:#5c6353;margin:0 0 24px}
+.cta-row{display:flex;flex-direction:column;gap:10px;margin-bottom:26px}
+.cta-row .pill{justify-content:center;width:100%}
+.acc{border-top:1px solid var(--line)}
+.acc details{border-bottom:1px solid var(--line)}
+.acc summary{list-style:none;cursor:pointer;padding:16px 2px;display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:15px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:'+';font-size:20px;font-weight:600;color:var(--muted)}
+.acc details[open] summary::after{content:'–'}
+.acc .acc-body{padding:0 2px 18px;font-size:14.5px;color:#5c6353;line-height:1.68}
+.acc .acc-body ul{margin:8px 0 0;padding-left:18px}
+.jump{margin-top:22px}
+.jump-lbl{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:10px}
+.jump-row{display:flex;flex-wrap:wrap;gap:8px}
+.jump-row a{border:1px solid #cfcab6;border-radius:var(--pill);padding:8px 15px;font-size:13px;font-weight:600;color:#4a5142}
+.jump-row a:hover{background:var(--cream-2)}
 
-.yj-spec{border-top:1px solid rgba(255,255,255,.18);display:grid;grid-template-columns:repeat(3,1fr)}
-.yj-spec div{padding:var(--s3) 0;border-right:1px solid rgba(255,255,255,.18)}
-.yj-spec div:nth-child(3n){border-right:0}
-.yj-spec dt{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8fa8c4;margin-bottom:4px}
-.yj-spec dd{margin:0;font-size:14px;font-weight:600;color:var(--chalk)}
+/* 섹션 공통 */
+section.blk{padding:var(--s7) 0}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h2{font-size:clamp(26px,3.6vw,40px);line-height:1.18;letter-spacing:-.03em;font-weight:800;margin:14px 0 18px}
+.sec-p{font-size:16px;color:#4a5142;margin:0 0 14px;max-width:52ch}
+.center{text-align:center}
+.center h2{max-width:20ch;margin-left:auto;margin-right:auto}
+.center .sec-p{margin-left:auto;margin-right:auto}
 
-.yj-sec{padding:var(--s6) 0}
-.yj-sec + .yj-sec{border-top:2px dashed var(--line)}
-.yj-label{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:var(--s3);display:block}
-.yj-h2{font-family:var(--disp);font-weight:800;font-size:clamp(22px,3.4vw,34px);line-height:1.25;letter-spacing:-.02em;margin:0 0 var(--s4);max-width:22ch}
-.yj-p{margin:0 0 var(--s3);color:#3b424c;max-width:62ch}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5);align-items:center}
+.mini{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:10px}
+.mini li{display:flex;gap:10px;font-size:15px;color:#3c4436}
+.badge{position:absolute;top:16px;left:16px;background:var(--white);border-radius:var(--pill);padding:8px 14px;font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:7px;box-shadow:0 6px 18px rgba(26,33,21,.14)}
 
-.yj-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
-.yj-item{background:var(--chalk);padding:var(--s4)}
-.yj-item h3{font-size:17px;margin:0 0 6px;font-weight:700}
-.yj-item p{margin:0;font-size:14px;color:var(--muted);line-height:1.55}
-.yj-item .yj-tag{display:inline-block;margin-bottom:10px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:3px 7px;background:var(--indigo);color:var(--chalk)}
-.yj-item.is-off{background:#efece4}
-.yj-item.is-off .yj-tag{background:var(--red)}
+/* How it works */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:var(--s5)}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px 22px 24px}
+.step-no{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center;display:block;margin-bottom:10px}
+.step h3{font-size:19px;letter-spacing:-.02em;margin:0 0 10px;text-align:center;font-weight:800}
+.step p{margin:0;font-size:14px;color:#5c6353;text-align:center}
+.step-vis{background:var(--cream-2);border-radius:var(--r-md);margin-top:18px;padding:16px;display:grid;gap:8px}
+.vis-row{background:var(--white);border-radius:10px;padding:9px 12px;font-size:12.5px;font-weight:600;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(26,33,21,.05)}
+.vis-row.dark{background:var(--olive);color:#f4f7e8}
+.vis-row.lime{background:var(--lime)}
+.vis-row span{color:var(--muted);font-weight:600}
+.vis-row.dark span{color:#c3d0a8}
 
-.yj-rules{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.yj-rules li{display:grid;grid-template-columns:132px 1fr;gap:var(--s4);padding:var(--s3) 0;border-bottom:1px solid var(--line)}
-.yj-rules b{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--indigo);padding-top:4px}
-.yj-rules span{font-size:15px}
-.yj-note{margin-top:var(--s4);padding:var(--s3) var(--s4);background:#efece4;border-left:3px solid var(--red);font-size:14px}
-.yj-note b{display:block;margin-bottom:6px;font-size:13px}
-.yj-note ul{margin:0;padding-left:18px;color:#4a5058}
+/* 품목 카드 */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:var(--s5)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;position:relative}
+.card .k{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--olive);color:#eef4dd;border-radius:var(--pill);padding:5px 11px;margin-bottom:14px}
+.card.no .k{background:#a8452f;color:#fff}
+.card.no{background:var(--cream-2)}
+.card h3{margin:0 0 8px;font-size:19px;letter-spacing:-.02em;font-weight:800}
+.card p{margin:0;font-size:14px;color:#5c6353}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;margin-top:var(--s5)}
+.strip div{background:var(--card);padding:22px}
+.strip dt{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px}
+.strip dd{margin:0;font-size:16px;font-weight:700;letter-spacing:-.01em}
 
-.yj-flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:var(--s4)}
-.yj-step{background:var(--chalk);padding:var(--s4) var(--s3)}
-.yj-step .yj-num{font-family:var(--mono);font-size:11px;color:var(--mark);background:var(--indigo-deep);display:inline-block;padding:2px 6px;margin-bottom:10px}
-.yj-step h4{margin:0 0 4px;font-size:15px}
-.yj-step p{margin:0;font-size:13px;color:var(--muted)}
+/* 폼 */
+.form-sec{background:var(--olive);color:#f3f6ea;border-radius:36px;margin:0 20px var(--s7);padding:var(--s7) 0}
+.form-sec .tag{color:#b9c8a0}
+.form-sec h2{color:#fbfdf5}
+.form-grid{display:grid;grid-template-columns:320px 1fr;gap:var(--s5);align-items:start;margin-top:var(--s5)}
+.calc{position:sticky;top:88px;background:#22301a;border:1px solid rgba(255,255,255,.12);border-radius:var(--r-lg);padding:24px}
+.calc h3{margin:0 0 16px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#b9c8a0;font-weight:700}
+.calc-row{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;color:#c7d3b4;padding:6px 0}
+.calc-row b{color:#f6f9ee;font-weight:700}
+.calc-big{font-size:44px;font-weight:800;letter-spacing:-.035em;color:var(--lime);margin:16px 0 2px;line-height:1}
+.calc-big small{font-size:15px;color:#c7d3b4;font-weight:700;margin-left:6px}
+.calc-note{margin-top:16px;background:rgba(201,239,84,.14);color:#dbf29a;border-radius:var(--r-sm);padding:11px 13px;font-size:12.5px;font-weight:600}
+.fs{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-lg);padding:26px;margin:0 0 18px}
+.fs legend{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);font-weight:800;padding:0 10px}
+.hint{font-size:13px;color:#b3c19b;margin:0 0 18px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fl{display:flex;flex-direction:column;gap:7px}
+.fl.full{grid-column:1/-1}
+.fl label{font-size:12.5px;font-weight:700;color:#c7d3b4}
+.fl label i{font-style:normal;color:var(--lime)}
+.fl small{font-size:11.5px;color:#9aa886}
+.fl input,.fl select,.fl textarea{font-family:var(--body);font-size:15px;color:var(--ink);background:var(--card);border:1px solid rgba(0,0,0,.08);border-radius:var(--r-sm);padding:13px 14px;width:100%}
+.fl textarea{min-height:96px;resize:vertical}
+.fl input:focus,.fl select:focus,.fl textarea:focus{outline:2px solid var(--lime);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chk{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:var(--pill);padding:9px 15px;font-size:14px;cursor:pointer;font-weight:600}
+.chk input{accent-color:var(--lime);width:15px;height:15px;margin:0}
+.chk:has(input:checked){background:var(--lime);color:var(--ink);border-color:var(--lime)}
+.sum{margin-top:20px;background:rgba(201,239,84,.13);border-radius:var(--r-md);padding:16px 18px;font-size:15px;color:#e7f2cd}
+.sum b{color:var(--lime);font-size:21px;font-weight:800;letter-spacing:-.02em}
+.drop{border:1.5px dashed rgba(255,255,255,.35);border-radius:var(--r-md);padding:30px;text-align:center;cursor:pointer;color:#c7d3b4;font-size:14.5px;font-weight:600}
+.drop:hover{border-color:var(--lime);color:var(--lime)}
+.drop small{display:block;color:#93a37c;font-size:12px;margin-top:6px;font-weight:500}
+.thumbs{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px}
+.thumb{position:relative;width:92px;height:92px;border-radius:var(--r-sm);overflow:hidden;border:1px solid rgba(255,255,255,.2)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb button{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(20,26,16,.82);color:#fff;cursor:pointer;font-size:13px;line-height:1;padding:0}
+.agree{display:flex;gap:11px;align-items:flex-start;font-size:13px;color:#bfcaad;margin-top:6px}
+.agree input{margin-top:3px;accent-color:var(--lime);width:16px;height:16px}
+.submit{margin-top:22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.msg{font-size:14px;font-weight:700}
+.msg.err{color:#ffc4b0}
+.done{display:none;background:#22301a;border:1px solid var(--lime);border-radius:var(--r-lg);padding:52px 28px;text-align:center}
+.done h3{font-size:27px;margin:0 0 8px;letter-spacing:-.02em;font-weight:800;color:#fbfdf5}
+.done .no{font-size:24px;color:var(--lime);margin:18px 0;font-weight:800;letter-spacing:.04em}
+.done p{color:#bfcaad;margin:0 auto;max-width:44ch;font-size:15px}
 
-.yj-form-sec{background:var(--indigo-deep);color:var(--chalk)}
-.yj-form-sec .yj-label{color:#8fa8c4}
-.yj-form-sec .yj-h2{color:var(--chalk)}
-.yj-grid{display:grid;grid-template-columns:320px 1fr;gap:var(--s5);align-items:start}
-.yj-calc{position:sticky;top:76px;background:#0f2338;border:1px solid rgba(255,255,255,.16);padding:var(--s4)}
-.yj-calc h3{margin:0 0 var(--s3);font-size:13px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#8fa8c4;font-weight:600}
-.yj-calc-line{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;color:#b9cadb;padding:5px 0}
-.yj-calc-line b{color:var(--chalk)}
-.yj-calc-big{font-family:var(--disp);font-weight:800;font-size:40px;line-height:1;letter-spacing:-.02em;color:var(--mark);margin:var(--s3) 0 4px}
-.yj-calc-big small{font-size:14px;color:#b9cadb;font-weight:600;margin-left:6px}
-.yj-verdict{margin-top:var(--s3);padding:10px 12px;font-size:13px;font-weight:600;border-radius:2px;background:rgba(105,190,120,.18);color:#a8e6b4}
+footer{padding:var(--s5) 0 var(--s6);color:var(--muted);font-size:13px}
+.foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:24px}
 
-.yj-fs{border:1px solid rgba(255,255,255,.16);padding:var(--s4);margin:0 0 var(--s4)}
-.yj-fs legend{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mark);padding:0 8px;font-weight:600}
-.yj-hint{font-size:12px;color:#8fa8c4;margin:0 0 var(--s3)}
-.yj-fields{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)}
-.yj-f{display:flex;flex-direction:column;gap:6px}
-.yj-f.full{grid-column:1/-1}
-.yj-f label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8fa8c4;font-weight:600}
-.yj-f label i{font-style:normal;color:var(--mark)}
-.yj-f input,.yj-f select,.yj-f textarea{font-family:var(--body);font-size:15px;color:var(--ink);background:var(--chalk);border:1px solid rgba(0,0,0,.15);border-radius:2px;padding:11px 12px;width:100%}
-.yj-f textarea{min-height:96px;resize:vertical}
-.yj-f input:focus,.yj-f select:focus,.yj-f textarea:focus{outline:2px solid var(--mark);outline-offset:1px}
-.yj-f small{font-size:11px;color:#8fa8c4}
-.yj-checks{display:flex;flex-wrap:wrap;gap:var(--s1)}
-.yj-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);padding:8px 12px;border-radius:2px;font-size:14px;cursor:pointer}
-.yj-chip input{accent-color:var(--mark);width:16px;height:16px;margin:0}
-.yj-chip:has(input:checked){background:var(--mark);color:var(--ink);border-color:var(--mark)}
-
-.yj-sum{margin-top:var(--s4);padding:var(--s3) var(--s4);background:rgba(242,194,48,.12);border-left:3px solid var(--mark);font-size:15px}
-.yj-sum b{color:var(--mark);font-family:var(--disp);font-size:20px;letter-spacing:-.01em}
-
-.yj-drop{border:1px dashed rgba(255,255,255,.4);padding:var(--s4);text-align:center;border-radius:2px;cursor:pointer;color:#c3d2e0;font-size:14px}
-.yj-drop:hover{border-color:var(--mark);color:var(--mark)}
-.yj-drop small{display:block;color:#8fa8c4;font-size:12px;margin-top:6px}
-.yj-thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-.yj-thumb{position:relative;width:88px;height:88px;border:1px solid rgba(255,255,255,.25)}
-.yj-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.yj-thumb button{position:absolute;top:-9px;right:-9px;width:22px;height:22px;border-radius:50%;border:0;background:var(--red);color:#fff;cursor:pointer;font-size:13px;line-height:1;padding:0}
-
-.yj-agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#c3d2e0;margin-top:var(--s2)}
-.yj-agree input{margin-top:3px;accent-color:var(--mark);width:16px;height:16px}
-.yj-submit{margin-top:var(--s4);display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap}
-.yj-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.yj-msg{font-size:14px;font-weight:600}
-.yj-msg.err{color:#ffb9a8}
-
-.yj-done{display:none;background:#0f2338;border:1px solid var(--mark);padding:var(--s5) var(--s4);text-align:center}
-.yj-done h3{font-family:var(--disp);font-size:26px;margin:0 0 var(--s2)}
-.yj-done .yj-no{font-family:var(--mono);font-size:22px;color:var(--mark);margin:var(--s3) 0}
-.yj-done p{color:#b9cadb;margin:0 auto;max-width:44ch;font-size:15px}
-
-footer{background:var(--indigo-deep);color:#7e93aa;padding:var(--s4) 0;border-top:1px solid rgba(255,255,255,.12);font-size:12px}
-.yj-foot{display:flex;justify-content:space-between;gap:var(--s3);flex-wrap:wrap}
-
-@media (max-width:860px){
-  :root{--s6:44px;--s5:28px}
-  .yj-grid{grid-template-columns:1fr}
-  .yj-calc{position:static}
-  .yj-spec{grid-template-columns:repeat(2,1fr)}
-  .yj-spec div:nth-child(3n){border-right:1px solid rgba(255,255,255,.18)}
-  .yj-spec div:nth-child(2n){border-right:0}
+@media (max-width:940px){
+  :root{--s7:64px;--s6:44px;--s5:28px}
+  .nav{display:none}
+  .hero-grid,.about-grid,.form-grid{grid-template-columns:1fr}
+  .steps,.cards{grid-template-columns:1fr}
+  .calc{position:static}
+  .media{min-height:300px}
+  .media.tall{min-height:320px}
+  .form-sec{border-radius:28px;margin-left:12px;margin-right:12px}
+  .strip{grid-template-columns:1fr 1fr}
 }
-@media (max-width:560px){
-  .yj-fields{grid-template-columns:1fr}
-  .yj-rules li{grid-template-columns:1fr;gap:2px}
-  .yj-h1{max-width:none}
+@media (max-width:600px){
+  .wrap{padding:0 16px}
+  .fields{grid-template-columns:1fr}
+  .strip{grid-template-columns:1fr}
+  .fs{padding:20px}
+  .hdr-in{height:60px}
+  .brand i{display:none}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 </style>
 </head>
 <body>
 
-<header class="yj-top">
-  <div class="yj-wrap yj-top-in">
-    <div class="yj-logo"><b>Y&amp;J</b><span>Yongzhou Apparel</span></div>
-    <a class="yj-topbtn" href="#order">오더문의</a>
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <div class="brand">Y&amp;J<i>Yongzhou Apparel</i></div>
+    <nav class="nav">
+      <a href="#about">공장 소개</a>
+      <a href="#items">생산 품목</a>
+      <a href="#how">진행 순서</a>
+      <a href="#terms">오더 기준</a>
+    </nav>
+    <a class="pill pill-line pill-sm" href="#order">오더문의 →</a>
   </div>
 </header>
 
-<section class="yj-hero">
-  <div class="yj-wrap">
-    <span class="yj-mono yj-eyebrow">중국 후난성 용저우 · Y&amp;J 의류공장</span>
-    <h1 class="yj-h1">잠옷, 셔츠, <em>밴딩 슬랙스.</em><br>이 세 가지를 제일 잘합니다.</h1>
-    <p class="yj-lede">한국에서 30년 생산했고, 불량과 납기로 크게 데인 뒤 직접 지은 공장입니다. 그래서 아무 오더나 받지 않습니다. 우리가 잘 만들 수 있는 품목과 수량만 받고, 받은 건 끝까지 책임집니다.</p>
-    <div class="yj-cta-row">
-      <a class="yj-btn yj-btn-mark" href="#order">오더문의 작성하기</a>
-      <a class="yj-btn yj-btn-ghost" href="#rules">진행 기준 먼저 보기</a>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="media tall" id="m-hero">
+        <div class="chip-float cf-1"><span class="dot">30</span><div>생산 경력<br><b>30년</b></div></div>
+        <div class="chip-float cf-2"><div>최소 수량 &nbsp;<b>컬러·사이즈당 100장</b></div></div>
+      </div>
+      <div class="media short" id="m-sub"></div>
     </div>
-    <dl class="yj-spec">
+
+    <div>
+      <span class="eyeb"><span class="dot"></span>중국 후난성 용저우 · Y&amp;J 의류공장</span>
+      <h1>잠옷, 셔츠, 밴딩 슬랙스.<br>이 세 가지를 제일 잘합니다.</h1>
+      <ul class="ticks">
+        <li><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#2b3a1d"/><path d="M6 10.4l2.6 2.6L14.2 7.4" stroke="#c9ef54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>주력 3품목만 받는 전용 라인</li>
+        <li><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#2b3a1d"/><path d="M6 10.4l2.6 2.6L14.2 7.4" stroke="#c9ef54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>광저우 상주팀이 원단 직접 소싱</li>
+        <li><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="#2b3a1d"/><path d="M6 10.4l2.6 2.6L14.2 7.4" stroke="#c9ef54" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>30년 경력 관리자가 검단·검품 직접</li>
+      </ul>
+      <p class="lede">한국에서 30년 생산했고, 불량과 납기로 크게 데인 뒤 직접 지은 공장입니다. 그래서 아무 오더나 받지 않습니다.</p>
+      <div class="notice"><span>ⓘ</span><span>오더문의는 작업지시 기준으로 받습니다. 소재 구성 · 사이즈 스펙 · 봉제 방식까지 함께 적어주시면 견적이 가장 빠릅니다.</span></div>
+      <div class="cta-row">
+        <a class="pill pill-dark" href="#order">→ 오더문의 작성하기</a>
+        <a class="pill pill-line" href="#terms">진행 기준 먼저 보기</a>
+      </div>
+
+      <div class="acc">
+        <details open>
+          <summary>생산 품목</summary>
+          <div class="acc-body">잠옷·파자마(세트/원피스), 셔츠·남방, 밴딩 슬랙스가 메인입니다. 반팔 티셔츠는 수량·원단에 따라 상담 후 결정하고, 블라우스는 현재 라인에서 받지 않습니다.</div>
+        </details>
+        <details>
+          <summary>원단 · 부자재</summary>
+          <div class="acc-body">지정 원단이 있으면 그대로 진행합니다. 없으면 광저우 원단시장에 상주 중인 한국인 팀이 직접 소싱해 제안합니다.</div>
+        </details>
+        <details>
+          <summary>납기 · 검품</summary>
+          <div class="acc-body">납기는 원단 확정일 기준으로 산정해 안내합니다. 지킬 수 없는 날짜는 처음부터 말하지 않습니다. 검품은 30년 경력 현장 관리자가 라인 검단부터 최종 검품까지 직접 보고, 외부 검사기관 지정도 가능합니다.</div>
+        </details>
+      </div>
+
+      <div class="jump">
+        <div class="jump-lbl">바로가기</div>
+        <div class="jump-row">
+          <a href="#about">공장 소개</a><a href="#how">진행 순서</a><a href="#items">품목</a><a href="#terms">오더 기준</a><a href="#order">문의하기</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <span class="tag"><span class="dot"></span>About Y&amp;J</span>
+      <h2>왜 직접 공장을<br>지었을까요?</h2>
+      <p class="sec-p">한국에서 30년 동안 옷을 만들었습니다. 그동안 가장 많이 잃은 건 돈이 아니라 신뢰였습니다. 불량이 나고 납기가 밀리면 브랜드는 그 시즌을 통째로 날립니다.</p>
+      <p class="sec-p">그래서 남의 공장에 맡기는 걸 그만두고 용저우에 직접 라인을 지었습니다. 잘할 수 있는 품목만 남기고, 지킬 수 있는 납기만 약속합니다.</p>
+      <ul class="mini">
+        <li><span class="dot"></span>주력 품목만 남긴 전용 라인 구성</li>
+        <li><span class="dot"></span>광저우 원단시장 상주 소싱팀 운영</li>
+        <li><span class="dot"></span>라인 검단 → 최종 검품 2단계 관리</li>
+      </ul>
+    </div>
+    <div class="media" id="m-about"><div class="badge"><span class="dot"></span>용저우 자체 생산 라인</div></div>
+  </div>
+</section>
+
+<section class="blk center" id="how">
+  <div class="wrap">
+    <span class="tag"><span class="dot"></span>How it Works</span>
+    <h2>문의부터 출고까지</h2>
+    <p class="sec-p">양식 한 번 작성하면 영업팀이 1영업일 안에 연락드립니다.</p>
+    <div class="steps">
+      <div class="step">
+        <span class="step-no">Step 1</span>
+        <h3>오더문의 작성</h3>
+        <p>작업지시 기준으로 필요한 항목만 적으면 됩니다.</p>
+        <div class="step-vis">
+          <div class="vis-row">품목 <span>잠옷·파자마</span></div>
+          <div class="vis-row lime">발주 수량 <span>600장</span></div>
+          <div class="vis-row">납기 <span>11월 20일</span></div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-no">Step 2</span>
+        <h3>사양 확인 · 견적</h3>
+        <p>원단 소싱 결과를 반영해 단가를 확정합니다.</p>
+        <div class="step-vis">
+          <div class="vis-row">원단 소싱 <span>광저우 3안</span></div>
+          <div class="vis-row">단가 <span>확정</span></div>
+          <div class="vis-row dark">견적서 발송 <span>D+2</span></div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-no">Step 3</span>
+        <h3>샘플 · 본생산</h3>
+        <p>샘플이 맞지 않으면 본생산은 진행하지 않습니다.</p>
+        <div class="step-vis">
+          <div class="vis-row">샘플 확인 <span>수정 1회</span></div>
+          <div class="vis-row">라인 검단 <span>진행</span></div>
+          <div class="vis-row lime">최종 검품 · 출고 <span>완료</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk" id="items">
+  <div class="wrap">
+    <span class="tag"><span class="dot"></span>Capability</span>
+    <h2>지금 라인에서 받는 품목</h2>
+    <p class="sec-p">신규 현장이라 품목을 넓히지 않았습니다. 아래 품목은 라인이 이미 돌고 있어 샘플부터 본생산까지 속도가 붙습니다.</p>
+    <div class="cards">
+      <div class="card"><span class="k">Main</span><h3>잠옷 · 파자마</h3><p>상하 세트, 잠옷원피스. 현재 라인을 가장 많이 채우고 있는 품목입니다.</p></div>
+      <div class="card"><span class="k">Main</span><h3>셔츠 · 남방</h3><p>기본 셔츠부터 오버핏까지. 칼라·커프스 마감 검단을 따로 봅니다.</p></div>
+      <div class="card"><span class="k">Main</span><h3>밴딩 슬랙스</h3><p>밴딩 처리와 봉제 텐션이 관건인 품목. 잠옷·셔츠와 같은 수준으로 잡고 있습니다.</p></div>
+      <div class="card"><span class="k">Sub</span><h3>반팔 티셔츠</h3><p>메인 품목은 아닙니다. 수량과 원단에 따라 상담 후 결정합니다.</p></div>
+      <div class="card no"><span class="k">불가</span><h3>블라우스</h3><p>현재 라인에서 받지 않습니다. 무리해서 받았다가 품질로 문제 만드는 게 서로에게 손해입니다.</p></div>
+      <div class="card no"><span class="k">불가</span><h3>카피 제품</h3><p>타 브랜드 제품을 그대로 복제해달라는 요청은 진행하지 않습니다.</p></div>
+    </div>
+    <dl class="strip">
       <div><dt>소재지</dt><dd>중국 후난성 용저우</dd></div>
-      <div><dt>주력 품목</dt><dd>잠옷 · 셔츠 · 밴딩슬랙스</dd></div>
       <div><dt>최소 수량</dt><dd>컬러 · 사이즈당 100장</dd></div>
-      <div><dt>원단 소싱</dt><dd>광저우 상주팀 직접 진행</dd></div>
-      <div><dt>대표 경력</dt><dd>의류 생산 30년</dd></div>
-      <div><dt>현장 관리자</dt><dd>생산 관리 30년</dd></div>
+      <div><dt>원단 소싱</dt><dd>광저우 상주팀 직접</dd></div>
     </dl>
   </div>
 </section>
 
-<section class="yj-sec">
-  <div class="yj-wrap">
-    <span class="yj-label">품목 / Capability</span>
-    <h2 class="yj-h2">지금 라인에서 받는 품목</h2>
-    <p class="yj-p">신규 현장이라 품목을 넓히지 않았습니다. 아래 품목은 라인이 이미 돌고 있어 샘플부터 본생산까지 속도가 붙습니다.</p>
-    <div class="yj-items">
-      <div class="yj-item"><span class="yj-tag">MAIN</span><h3>잠옷 · 파자마</h3><p>상하 세트, 잠옷원피스. 현재 라인을 가장 많이 채우고 있는 품목입니다.</p></div>
-      <div class="yj-item"><span class="yj-tag">MAIN</span><h3>셔츠 · 남방</h3><p>기본 셔츠부터 오버핏까지. 칼라·커프스 마감 검단을 따로 봅니다.</p></div>
-      <div class="yj-item"><span class="yj-tag">MAIN</span><h3>밴딩 슬랙스</h3><p>밴딩 처리와 봉제 텐션이 관건인 품목. 잠옷·셔츠와 같은 수준으로 잡고 있습니다.</p></div>
-      <div class="yj-item"><span class="yj-tag">SUB</span><h3>반팔 티셔츠</h3><p>메인 품목은 아닙니다. 수량과 원단에 따라 상담 후 결정합니다.</p></div>
-      <div class="yj-item is-off"><span class="yj-tag">불가</span><h3>블라우스</h3><p>현재 라인에서 받지 않습니다. 무리해서 받았다가 품질로 문제 만드는 게 서로에게 손해입니다.</p></div>
+<section class="blk" id="terms">
+  <div class="wrap about-grid">
+    <div class="media" id="m-terms"><div class="badge"><span class="dot"></span>라인 검단 · 최종 검품</div></div>
+    <div>
+      <span class="tag"><span class="dot"></span>Order Terms</span>
+      <h2>이 기준에 맞으면<br>바로 상담합니다</h2>
+      <div class="acc" style="margin-top:20px">
+        <details open><summary>최소 수량</summary><div class="acc-body">컬러 · 사이즈당 100장입니다. 예를 들어 2컬러 × 3사이즈면 600장이 최소 수량이 됩니다.</div></details>
+        <details><summary>필요 자료</summary><div class="acc-body">상품 이미지와 사이즈 스펙, 봉제·가공 방식이 정리돼 있으면 견적이 가장 빠릅니다. 사진·레퍼런스만 있어도 상담은 가능합니다.</div></details>
+        <details><summary>받기 어려운 문의</summary><div class="acc-body"><ul><li>컬러 · 사이즈당 100장 미만의 소량 오더</li><li>타 브랜드 제품을 그대로 복제해달라는 요청</li><li>샘플 · 도식화 · 레퍼런스가 전부 없는 상태의 문의</li></ul></div></details>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="yj-sec" id="rules">
-  <div class="yj-wrap">
-    <span class="yj-label">기준 / Order Terms</span>
-    <h2 class="yj-h2">이 기준에 맞으면 바로 상담합니다</h2>
-    <ul class="yj-rules">
-      <li><b>최소 수량</b><span>컬러 · 사이즈당 100장. 예를 들어 2컬러 × 3사이즈면 600장이 최소입니다.</span></li>
-      <li><b>원단 · 부자재</b><span>지정 원단이 있으면 그대로 진행하고, 없으면 광저우 원단시장에 상주 중인 한국인 팀이 직접 소싱해 제안합니다.</span></li>
-      <li><b>필요 자료</b><span>상품 이미지와 사이즈 스펙, 봉제·가공 방식이 정리돼 있으면 견적이 가장 빠릅니다. 사진·레퍼런스만 있어도 상담은 가능합니다.</span></li>
-      <li><b>납기</b><span>원단 확정일 기준으로 산정해 안내합니다. 지킬 수 없는 날짜는 처음부터 말하지 않습니다.</span></li>
-      <li><b>검품</b><span>30년 경력 현장 관리자가 라인 검단과 최종 검품을 직접 봅니다. 외부 검사 지정도 가능합니다.</span></li>
-    </ul>
-    <div class="yj-note">
-      <b>이런 문의는 받기 어렵습니다</b>
-      <ul>
-        <li>컬러 · 사이즈당 100장 미만의 소량 오더</li>
-        <li>타 브랜드 제품을 그대로 복제해달라는 요청</li>
-        <li>샘플 · 도식화 · 레퍼런스가 전부 없는 상태의 문의</li>
-      </ul>
-    </div>
-  </div>
-</section>
+<section class="form-sec" id="order">
+  <div class="wrap">
+    <span class="tag"><span class="dot"></span>Order Sheet</span>
+    <h2>작업지시 기준으로 받습니다</h2>
 
-<section class="yj-sec">
-  <div class="yj-wrap">
-    <span class="yj-label">진행 순서 / Process</span>
-    <h2 class="yj-h2">문의부터 출고까지</h2>
-    <div class="yj-flow">
-      <div class="yj-step"><span class="yj-num">01</span><h4>문의 접수</h4><p>아래 양식 작성. 영업팀이 1영업일 안에 연락드립니다.</p></div>
-      <div class="yj-step"><span class="yj-num">02</span><h4>사양 확인</h4><p>품목 · 수량 · 원단 · 납기를 맞춰봅니다.</p></div>
-      <div class="yj-step"><span class="yj-num">03</span><h4>견적</h4><p>원단 소싱 결과를 반영한 단가를 드립니다.</p></div>
-      <div class="yj-step"><span class="yj-num">04</span><h4>샘플</h4><p>확인 후 수정. 여기서 맞지 않으면 본생산은 진행하지 않습니다.</p></div>
-      <div class="yj-step"><span class="yj-num">05</span><h4>본생산 · 출고</h4><p>라인 검단 → 최종 검품 → 출고.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="yj-sec yj-form-sec" id="order">
-  <div class="yj-wrap">
-    <span class="yj-label">오더문의 / Order Sheet</span>
-    <h2 class="yj-h2">작업지시 기준으로 받습니다</h2>
-
-    <div class="yj-grid">
-      <aside class="yj-calc">
+    <div class="form-grid">
+      <aside class="calc">
         <h3>발주 수량 계산</h3>
-        <div class="yj-calc-line"><span>스타일 수</span><b id="c-style">1</b></div>
-        <div class="yj-calc-line"><span>컬러 수</span><b id="c-color">1</b></div>
-        <div class="yj-calc-line"><span>사이즈 수</span><b id="c-size">1</b></div>
-        <div class="yj-calc-line"><span>컬러·사이즈당</span><b id="c-unit">100장</b></div>
-        <div class="yj-calc-big" id="c-total">100<small>장</small></div>
-        <div class="yj-calc-line"><span>총 발주 수량</span><b id="c-formula">1 × 1 × 1 × 100</b></div>
-        <div class="yj-verdict">컬러 · 사이즈당 100장이 최소 기준입니다.</div>
+        <div class="calc-row"><span>스타일 수</span><b id="c-style">1</b></div>
+        <div class="calc-row"><span>컬러 수</span><b id="c-color">1</b></div>
+        <div class="calc-row"><span>사이즈 수</span><b id="c-size">1</b></div>
+        <div class="calc-row"><span>컬러·사이즈당</span><b id="c-unit">100장</b></div>
+        <div class="calc-big" id="c-total">100<small>장</small></div>
+        <div class="calc-row"><span>총 발주 수량</span><b id="c-formula">1 × 1 × 1 × 100</b></div>
+        <div class="calc-note">컬러 · 사이즈당 100장이 최소 기준입니다.</div>
       </aside>
 
       <div>
         <form id="yj-form" novalidate>
-
-          <fieldset class="yj-fs">
+          <fieldset class="fs">
             <legend>01 · 문의자 정보</legend>
-            <div class="yj-fields">
-              <div class="yj-f"><label for="f-brand">브랜드 · 회사명 <i>*</i></label><input id="f-brand" maxlength="60" /></div>
-              <div class="yj-f"><label for="f-name">담당자명 <i>*</i></label><input id="f-name" maxlength="30" /></div>
-              <div class="yj-f"><label for="f-phone">연락처 <i>*</i></label><input id="f-phone" inputmode="tel" maxlength="30" placeholder="010-0000-0000" /></div>
-              <div class="yj-f"><label for="f-email">이메일</label><input id="f-email" type="email" maxlength="60" /></div>
-              <div class="yj-f"><label for="f-kakao">카카오톡 ID</label><input id="f-kakao" maxlength="40" /></div>
-              <div class="yj-f"><label for="f-channel">판매 채널 · 현황</label><input id="f-channel" maxlength="60" placeholder="예: 자사몰 + 지그재그, 월 3천만" /></div>
+            <div class="fields">
+              <div class="fl"><label for="f-brand">브랜드 · 회사명 <i>*</i></label><input id="f-brand" maxlength="60" /></div>
+              <div class="fl"><label for="f-name">담당자명 <i>*</i></label><input id="f-name" maxlength="30" /></div>
+              <div class="fl"><label for="f-phone">연락처 <i>*</i></label><input id="f-phone" inputmode="tel" maxlength="30" placeholder="010-0000-0000" /></div>
+              <div class="fl"><label for="f-email">이메일</label><input id="f-email" type="email" maxlength="60" /></div>
+              <div class="fl"><label for="f-kakao">카카오톡 ID</label><input id="f-kakao" maxlength="40" /></div>
+              <div class="fl"><label for="f-channel">판매 채널 · 현황</label><input id="f-channel" maxlength="60" placeholder="예: 자사몰 + 지그재그, 월 3천만" /></div>
             </div>
           </fieldset>
 
-          <fieldset class="yj-fs">
+          <fieldset class="fs">
             <legend>02 · 상품 이미지</legend>
-            <p class="yj-hint">완성 이미지, 도식화, 레퍼런스 사진 무엇이든 좋습니다. 최대 5장. 업로드 전에 자동으로 용량을 줄입니다.</p>
-            <div class="yj-drop" id="f-drop">이미지 선택하기<small>JPG · PNG · WEBP</small></div>
+            <p class="hint">완성 이미지, 도식화, 레퍼런스 사진 무엇이든 좋습니다. 최대 5장. 업로드 전에 자동으로 용량을 줄입니다.</p>
+            <div class="drop" id="f-drop">이미지 선택하기<small>JPG · PNG · WEBP</small></div>
             <input type="file" id="f-img" accept="image/*" multiple style="display:none" />
-            <div class="yj-thumbs" id="f-thumbs"></div>
+            <div class="thumbs" id="f-thumbs"></div>
           </fieldset>
 
-          <fieldset class="yj-fs">
+          <fieldset class="fs">
             <legend>03 · 발주 구성</legend>
-            <div class="yj-fields">
-              <div class="yj-f full">
+            <div class="fields">
+              <div class="fl full">
                 <label>문의 품목 <i>*</i></label>
-                <div class="yj-checks">
-                  <label class="yj-chip"><input type="checkbox" name="items" value="잠옷·파자마" />잠옷·파자마</label>
-                  <label class="yj-chip"><input type="checkbox" name="items" value="잠옷원피스" />잠옷원피스</label>
-                  <label class="yj-chip"><input type="checkbox" name="items" value="셔츠·남방" />셔츠·남방</label>
-                  <label class="yj-chip"><input type="checkbox" name="items" value="밴딩슬랙스" />밴딩슬랙스</label>
-                  <label class="yj-chip"><input type="checkbox" name="items" value="반팔티" />반팔티</label>
-                  <label class="yj-chip"><input type="checkbox" name="items" value="기타" />기타</label>
+                <div class="chips">
+                  <label class="chk"><input type="checkbox" name="items" value="잠옷·파자마" />잠옷·파자마</label>
+                  <label class="chk"><input type="checkbox" name="items" value="잠옷원피스" />잠옷원피스</label>
+                  <label class="chk"><input type="checkbox" name="items" value="셔츠·남방" />셔츠·남방</label>
+                  <label class="chk"><input type="checkbox" name="items" value="밴딩슬랙스" />밴딩슬랙스</label>
+                  <label class="chk"><input type="checkbox" name="items" value="반팔티" />반팔티</label>
+                  <label class="chk"><input type="checkbox" name="items" value="기타" />기타</label>
                 </div>
               </div>
-              <div class="yj-f"><label for="f-styles">스타일 수 <i>*</i></label><input id="f-styles" type="number" min="1" max="99" step="1" value="1" /></div>
-              <div class="yj-f"><label for="f-colors">컬러 수 <i>*</i></label><input id="f-colors" type="number" min="1" max="99" step="1" value="1" /></div>
-              <div class="yj-f"><label for="f-sizes">사이즈 수 <i>*</i></label><input id="f-sizes" type="number" min="1" max="99" step="1" value="1" /></div>
-              <div class="yj-f"><label for="f-unit">컬러 · 사이즈당 수량 <i>*</i></label><input id="f-unit" type="number" min="100" max="100000" step="10" value="100" /><small>최소 100장부터 진행합니다.</small></div>
-              <div class="yj-f"><label for="f-due">최종 납기일 <i>*</i></label><input id="f-due" type="date" /></div>
-              <div class="yj-f"><label for="f-price">희망 단가</label><input id="f-price" maxlength="40" placeholder="예: 장당 8,000원 선" /></div>
-              <div class="yj-f full"><label for="f-fabric">원단 · 부자재 확정 여부</label><select id="f-fabric"><option value="">선택</option><option>확정</option><option>미확정</option><option>공장 소싱 요청</option></select></div>
+              <div class="fl"><label for="f-styles">스타일 수 <i>*</i></label><input id="f-styles" type="number" min="1" max="99" step="1" value="1" /></div>
+              <div class="fl"><label for="f-colors">컬러 수 <i>*</i></label><input id="f-colors" type="number" min="1" max="99" step="1" value="1" /></div>
+              <div class="fl"><label for="f-sizes">사이즈 수 <i>*</i></label><input id="f-sizes" type="number" min="1" max="99" step="1" value="1" /></div>
+              <div class="fl"><label for="f-unit">컬러 · 사이즈당 수량 <i>*</i></label><input id="f-unit" type="number" min="100" max="100000" step="10" value="100" /><small>최소 100장부터 진행합니다.</small></div>
+              <div class="fl"><label for="f-due">최종 납기일 <i>*</i></label><input id="f-due" type="date" /></div>
+              <div class="fl"><label for="f-price">희망 단가</label><input id="f-price" maxlength="40" placeholder="예: 장당 8,000원 선" /></div>
+              <div class="fl full"><label for="f-fabric">원단 · 부자재 확정 여부</label><select id="f-fabric"><option value="">선택</option><option>확정</option><option>미확정</option><option>공장 소싱 요청</option></select></div>
             </div>
-            <div class="yj-sum" id="f-sum">총 발주 수량 <b>100장</b> — 1스타일 × 1컬러 × 1사이즈 × 100장</div>
+            <div class="sum" id="f-sum">총 발주 수량 <b>100장</b> — 1스타일 × 1컬러 × 1사이즈 × 100장</div>
           </fieldset>
 
-          <fieldset class="yj-fs">
+          <fieldset class="fs">
             <legend>04 · 작업지시 내용</legend>
-            <p class="yj-hint">아는 만큼만 적으셔도 됩니다. 비어 있는 항목은 상담하면서 같이 채웁니다.</p>
-            <div class="yj-fields">
-              <div class="yj-f full"><label for="f-material">주원자재 · 부자재 (소재 구성)</label><textarea id="f-material" maxlength="1900" placeholder="예: 겉감 레이온 65 / 폴리 35, 배색 면 100&#10;단추 4공 11mm, 밴딩 30mm, 케어라벨 별도 지급"></textarea></div>
-              <div class="yj-f full"><label for="f-detailspec">디테일 내용</label><textarea id="f-detailspec" maxlength="1900" placeholder="예: 앞판 절개 없음, 셔츠 카라, 소매 커프스 단추 1개, 밑단 곡선 처리"></textarea></div>
-              <div class="yj-f full"><label for="f-sizespec">사이즈 스펙</label><textarea id="f-sizespec" maxlength="1900" placeholder="예: M — 총장 72 / 가슴 54 / 어깨 46 / 소매 60&#10;L — 총장 74 / 가슴 56 / 어깨 48 / 소매 62 (편차 ±1cm)"></textarea></div>
-              <div class="yj-f full"><label for="f-sewing">부위별 봉제 · 가공 방식</label><textarea id="f-sewing" maxlength="1900" placeholder="예: 옆선 오버록 3본 + 인터록, 밑단 삼봉, 카라 시보리 없음&#10;가공 — 실켓 / 워싱 없음 / 자수 좌흉부 1개소"></textarea></div>
-              <div class="yj-f full"><label for="f-packing">포장 명세</label><textarea id="f-packing" maxlength="1900" placeholder="예: 개별 OPP 봉투 + 사이즈 스티커, 10장 1속, 폴리백 방습제 1개, 카톤 박스 60장 기준"></textarea></div>
-              <div class="yj-f full">
+            <p class="hint">아는 만큼만 적으셔도 됩니다. 비어 있는 항목은 상담하면서 같이 채웁니다.</p>
+            <div class="fields">
+              <div class="fl full"><label for="f-material">주원자재 · 부자재 (소재 구성)</label><textarea id="f-material" maxlength="1900" placeholder="예: 겉감 레이온 65 / 폴리 35, 배색 면 100&#10;단추 4공 11mm, 밴딩 30mm, 케어라벨 별도 지급"></textarea></div>
+              <div class="fl full"><label for="f-detailspec">디테일 내용</label><textarea id="f-detailspec" maxlength="1900" placeholder="예: 앞판 절개 없음, 셔츠 카라, 소매 커프스 단추 1개, 밑단 곡선 처리"></textarea></div>
+              <div class="fl full"><label for="f-sizespec">사이즈 스펙</label><textarea id="f-sizespec" maxlength="1900" placeholder="예: M — 총장 72 / 가슴 54 / 어깨 46 / 소매 60&#10;L — 총장 74 / 가슴 56 / 어깨 48 / 소매 62 (편차 ±1cm)"></textarea></div>
+              <div class="fl full"><label for="f-sewing">부위별 봉제 · 가공 방식</label><textarea id="f-sewing" maxlength="1900" placeholder="예: 옆선 오버록 3본 + 인터록, 밑단 삼봉, 카라 시보리 없음&#10;가공 — 실켓 / 워싱 없음 / 자수 좌흉부 1개소"></textarea></div>
+              <div class="fl full"><label for="f-packing">포장 명세</label><textarea id="f-packing" maxlength="1900" placeholder="예: 개별 OPP 봉투 + 사이즈 스티커, 10장 1속, 폴리백 방습제 1개, 카톤 박스 60장 기준"></textarea></div>
+              <div class="fl full">
                 <label>검사 방식</label>
-                <div class="yj-checks">
-                  <label class="yj-chip"><input type="checkbox" name="qcways" value="자체검사" />자체검사</label>
-                  <label class="yj-chip"><input type="checkbox" name="qcways" value="외부검사" />외부검사</label>
-                  <label class="yj-chip"><input type="checkbox" name="qcways" value="공장 기준 위임" />공장 기준 위임</label>
+                <div class="chips">
+                  <label class="chk"><input type="checkbox" name="qcways" value="자체검사" />자체검사</label>
+                  <label class="chk"><input type="checkbox" name="qcways" value="외부검사" />외부검사</label>
+                  <label class="chk"><input type="checkbox" name="qcways" value="공장 기준 위임" />공장 기준 위임</label>
                 </div>
               </div>
-              <div class="yj-f full"><label for="f-qc">QC 기준</label><textarea id="f-qc" maxlength="1900" placeholder="예: AQL 2.5 기준, 오염·봉제 불량 0 허용, 치수 편차 ±1cm 이내&#10;외부검사 시 검사기관과 비용 부담 주체를 적어주세요."></textarea></div>
-              <div class="yj-f"><label for="f-asset">보유 자료</label><select id="f-asset"><option value="">선택</option><option>실물 샘플</option><option>도식화·작업지시서</option><option>사진·이미지만</option><option>없음</option></select></div>
-              <div class="yj-f full"><label for="f-detail">그 외 전달사항</label><textarea id="f-detail" maxlength="1900" placeholder="참고 링크, 진행 일정, 궁금한 점을 자유롭게 적어주세요."></textarea></div>
+              <div class="fl full"><label for="f-qc">QC 기준</label><textarea id="f-qc" maxlength="1900" placeholder="예: AQL 2.5 기준, 오염·봉제 불량 0 허용, 치수 편차 ±1cm 이내&#10;외부검사 시 검사기관과 비용 부담 주체를 적어주세요."></textarea></div>
+              <div class="fl"><label for="f-asset">보유 자료</label><select id="f-asset"><option value="">선택</option><option>실물 샘플</option><option>도식화·작업지시서</option><option>사진·이미지만</option><option>없음</option></select></div>
+              <div class="fl full"><label for="f-detail">그 외 전달사항</label><textarea id="f-detail" maxlength="1900" placeholder="참고 링크, 진행 일정, 궁금한 점을 자유롭게 적어주세요."></textarea></div>
             </div>
           </fieldset>
 
-          <div class="yj-hp"><label>회사 주소<input type="text" name="company_addr" tabindex="-1" autocomplete="off" /></label></div>
-
-          <label class="yj-agree"><input type="checkbox" id="f-agree" /><span>상담 회신을 위해 입력하신 정보와 첨부 이미지를 수집·이용하는 데 동의합니다. 상담 종료 후 보관 목적이 끝나면 파기합니다.</span></label>
-
-          <div class="yj-submit">
-            <button type="submit" class="yj-btn yj-btn-mark" id="f-submit">문의 보내기</button>
-            <span class="yj-msg" id="f-msg"></span>
+          <div class="hp"><label>회사 주소<input type="text" name="company_addr" tabindex="-1" autocomplete="off" /></label></div>
+          <label class="agree"><input type="checkbox" id="f-agree" /><span>상담 회신을 위해 입력하신 정보와 첨부 이미지를 수집·이용하는 데 동의합니다. 상담 종료 후 보관 목적이 끝나면 파기합니다.</span></label>
+          <div class="submit">
+            <button type="submit" class="pill pill-dark" id="f-submit" style="background:#c9ef54;color:#1a2115">문의 보내기 →</button>
+            <span class="msg" id="f-msg"></span>
           </div>
         </form>
 
-        <div class="yj-done" id="yj-done">
+        <div class="done" id="yj-done">
           <h3>접수됐습니다</h3>
-          <div class="yj-no" id="done-no"></div>
+          <div class="no" id="done-no"></div>
           <p>영업팀이 1영업일 안에 연락드립니다. 접수번호를 기억해두시면 문의하실 때 빠릅니다.</p>
         </div>
       </div>
@@ -343,14 +455,44 @@ footer{background:var(--indigo-deep);color:#7e93aa;padding:var(--s4) 0;border-to
 </section>
 
 <footer>
-  <div class="yj-wrap yj-foot">
+  <div class="wrap foot">
     <span>Y&amp;J · 중국 후난성 용저우 의류공장</span>
-    <span class="yj-mono">Order Inquiry</span>
+    <span>Order Inquiry</span>
   </div>
 </footer>
 
 <script>
 (function(){
+  // ── 이미지 · 영상 슬롯 ──────────────────────────────
+  // assets 폴더에 파일을 올리고 아래 경로만 채우면 그대로 반영됩니다.
+  var ASSETS = {
+    hero:      'assets/hero.jpg',      // 히어로 세로 큰 이미지
+    heroVideo: '',                      // 예: 'assets/hero.mp4' (넣으면 이미지 대신 영상 재생)
+    sub:       'assets/product.jpg',   // 히어로 하단 가로 이미지
+    about:     'assets/about.jpg',     // 공장 소개 이미지
+    terms:     'assets/qc.jpg'         // 검품 이미지
+  };
+  function paint(id, url){
+    var el = document.getElementById(id);
+    if (!el || !url) return;
+    var probe = new Image();
+    probe.onload = function(){ el.style.backgroundImage = 'url(' + url + ')'; };
+    probe.src = url;
+  }
+  paint('m-hero', ASSETS.hero);
+  paint('m-sub', ASSETS.sub);
+  paint('m-about', ASSETS.about);
+  paint('m-terms', ASSETS.terms);
+  if (ASSETS.heroVideo) {
+    var box = document.getElementById('m-hero');
+    var v = document.createElement('video');
+    v.src = ASSETS.heroVideo; v.autoplay = true; v.muted = true; v.loop = true;
+    v.playsInline = true; v.setAttribute('playsinline',''); v.preload = 'metadata';
+    if (ASSETS.hero) v.poster = ASSETS.hero;
+    box.insertBefore(v, box.firstChild);
+  }
+
+  // ── 폼 ────────────────────────────────────────────
   var MIN_UNIT = 100;
   var $ = function(id){ return document.getElementById(id); };
   var f = $('yj-form');
@@ -362,16 +504,11 @@ footer{background:var(--indigo-deep);color:#7e93aa;padding:var(--s4) 0;border-to
     if (v > hi) v = hi;
     return v;
   }
-
   function calc(){
-    var s = iv($('f-styles'), 1, 99);
-    var c = iv($('f-colors'), 1, 99);
-    var z = iv($('f-sizes'), 1, 99);
-    var u = iv($('f-unit'), MIN_UNIT, 100000);
+    var s = iv($('f-styles'), 1, 99), c = iv($('f-colors'), 1, 99);
+    var z = iv($('f-sizes'), 1, 99), u = iv($('f-unit'), MIN_UNIT, 100000);
     var total = s * c * z * u;
-    $('c-style').textContent = s;
-    $('c-color').textContent = c;
-    $('c-size').textContent = z;
+    $('c-style').textContent = s; $('c-color').textContent = c; $('c-size').textContent = z;
     $('c-unit').textContent = u.toLocaleString() + '장';
     $('c-total').innerHTML = total.toLocaleString() + '<small>장</small>';
     $('c-formula').textContent = s + ' × ' + c + ' × ' + z + ' × ' + u.toLocaleString();
@@ -381,30 +518,22 @@ footer{background:var(--indigo-deep);color:#7e93aa;padding:var(--s4) 0;border-to
   ['f-styles','f-colors','f-sizes','f-unit'].forEach(function(id){
     $(id).addEventListener('input', calc);
     $(id).addEventListener('blur', function(){
-      var lo = (id === 'f-unit') ? MIN_UNIT : 1;
-      var hi = (id === 'f-unit') ? 100000 : 99;
-      $(id).value = iv($(id), lo, hi);
-      calc();
+      var lo = (id === 'f-unit') ? MIN_UNIT : 1, hi = (id === 'f-unit') ? 100000 : 99;
+      $(id).value = iv($(id), lo, hi); calc();
     });
   });
   calc();
 
   function renderThumbs(){
-    var box = $('f-thumbs');
-    box.innerHTML = '';
+    var box = $('f-thumbs'); box.innerHTML = '';
     images.forEach(function(img, i){
-      var d = document.createElement('div');
-      d.className = 'yj-thumb';
-      var im = document.createElement('img');
-      im.src = img.url;
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.textContent = '×';
+      var d = document.createElement('div'); d.className = 'thumb';
+      var im = document.createElement('img'); im.src = img.url;
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = '×';
       b.addEventListener('click', function(){ images.splice(i, 1); renderThumbs(); });
       d.appendChild(im); d.appendChild(b); box.appendChild(d);
     });
   }
-
   function shrink(file){
     return new Promise(function(resolve, reject){
       var fr = new FileReader();
@@ -413,11 +542,9 @@ footer{background:var(--indigo-deep);color:#7e93aa;padding:var(--s4) 0;border-to
         var im = new Image();
         im.onerror = reject;
         im.onload = function(){
-          var max = 1500;
-          var w = im.width, h = im.height;
+          var max = 1500, w = im.width, h = im.height;
           if (w > max || h > max) { var k = max / Math.max(w, h); w = Math.round(w * k); h = Math.round(h * k); }
-          var cv = document.createElement('canvas');
-          cv.width = w; cv.height = h;
+          var cv = document.createElement('canvas'); cv.width = w; cv.height = h;
           cv.getContext('2d').drawImage(im, 0, 0, w, h);
           var url = cv.toDataURL('image/jpeg', 0.78);
           var nm = String(file.name || 'image').split('.')[0].slice(0, 50) + '.jpg';
@@ -428,16 +555,13 @@ footer{background:var(--indigo-deep);color:#7e93aa;padding:var(--s4) 0;border-to
       fr.readAsDataURL(file);
     });
   }
-
   $('f-drop').addEventListener('click', function(){ $('f-img').click(); });
   $('f-img').addEventListener('change', function(e){
     var files = Array.prototype.slice.call(e.target.files || []);
     var room = 5 - images.length;
     if (room <= 0) { alert('이미지는 최대 5장까지 첨부할 수 있습니다.'); return; }
     Promise.all(files.slice(0, room).map(shrink)).then(function(list){
-      images = images.concat(list);
-      renderThumbs();
-      $('f-img').value = '';
+      images = images.concat(list); renderThumbs(); $('f-img').value = '';
     }).catch(function(){ alert('이미지를 읽지 못했습니다. 다른 파일로 시도해주세요.'); });
   });
 
@@ -451,9 +575,8 @@ footer{background:var(--indigo-deep);color:#7e93aa;padding:var(--s4) 0;border-to
 
   f.addEventListener('submit', function(e){
     e.preventDefault();
-    var msg = $('f-msg'); msg.className = 'yj-msg'; msg.textContent = '';
-    function fail(t, el){ msg.className = 'yj-msg err'; msg.textContent = t; if (el) el.focus(); }
-
+    var msg = $('f-msg'); msg.className = 'msg'; msg.textContent = '';
+    function fail(t, el){ msg.className = 'msg err'; msg.textContent = t; if (el) el.focus(); }
     var items = Array.prototype.slice.call(f.querySelectorAll('input[name="items"]:checked')).map(function(i){ return i.value; });
     var qcWays = Array.prototype.slice.call(f.querySelectorAll('input[name="qcways"]:checked')).map(function(i){ return i.value; });
     var req = [['f-brand','브랜드·회사명'],['f-name','담당자명'],['f-phone','연락처']];
@@ -467,27 +590,14 @@ footer{background:var(--indigo-deep);color:#7e93aa;padding:var(--s4) 0;border-to
     if (!$('f-agree').checked) return fail('정보 수집·이용 동의가 필요합니다.');
 
     var payload = {
-      brand: $('f-brand').value.trim(),
-      manager: $('f-name').value.trim(),
-      phone: $('f-phone').value.trim(),
-      email: $('f-email').value.trim(),
-      kakao: $('f-kakao').value.trim(),
-      channel: $('f-channel').value.trim(),
-      items: items,
-      styles: st.styles, colors: st.colors, sizes: st.sizes, perUnit: st.perUnit,
-      due: $('f-due').value || '',
-      price: $('f-price').value.trim(),
-      fabric: $('f-fabric').value,
-      asset: $('f-asset').value,
-      material: $('f-material').value.trim(),
-      detailSpec: $('f-detailspec').value.trim(),
-      sizeSpec: $('f-sizespec').value.trim(),
-      sewing: $('f-sewing').value.trim(),
-      packing: $('f-packing').value.trim(),
-      qc: $('f-qc').value.trim(),
-      qcWays: qcWays,
-      detail: $('f-detail').value.trim(),
-      grade: grade(st),
+      brand: $('f-brand').value.trim(), manager: $('f-name').value.trim(), phone: $('f-phone').value.trim(),
+      email: $('f-email').value.trim(), kakao: $('f-kakao').value.trim(), channel: $('f-channel').value.trim(),
+      items: items, styles: st.styles, colors: st.colors, sizes: st.sizes, perUnit: st.perUnit,
+      due: $('f-due').value || '', price: $('f-price').value.trim(), fabric: $('f-fabric').value, asset: $('f-asset').value,
+      material: $('f-material').value.trim(), detailSpec: $('f-detailspec').value.trim(),
+      sizeSpec: $('f-sizespec').value.trim(), sewing: $('f-sewing').value.trim(),
+      packing: $('f-packing').value.trim(), qc: $('f-qc').value.trim(), qcWays: qcWays,
+      detail: $('f-detail').value.trim(), grade: grade(st),
       source: new URLSearchParams(location.search).get('src') || '스레드',
       company_addr: f.company_addr.value,
       images: images.map(function(im){ return { name: im.name, mime: 'image/jpeg', data: im.data }; })
@@ -505,8 +615,8 @@ footer{background:var(--indigo-deep);color:#7e93aa;padding:var(--s4) 0;border-to
         $('yj-done').scrollIntoView({ block: 'center' });
       })
       .catch(function(err){
-        btn.disabled = false; btn.textContent = '문의 보내기';
-        msg.className = 'yj-msg err';
+        btn.disabled = false; btn.textContent = '문의 보내기 →';
+        msg.className = 'msg err';
         msg.textContent = '전송이 안 됐습니다. 잠시 후 다시 시도하시거나 스레드 DM으로 보내주세요.';
         console.error(err);
       });
