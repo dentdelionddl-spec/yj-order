@@ -96,9 +96,10 @@ export default async function handler(req, res) {
   const styles = clamp(b.styles, 1, 99);
   const colors = clamp(b.colors, 1, 99);
   const sizes = clamp(b.sizes, 1, 99);
-  const perUnit = clamp(b.perUnit, MIN_PER_UNIT, 100000);
+    const minUnit = (colors === 1 && sizes === 1) ? 200 : MIN_PER_UNIT; // 1컬러 1사이즈면 200장
+  const perUnit = clamp(b.perUnit, minUnit, 100000);
   const qty = styles * colors * sizes * perUnit;
-  const moqOk = perUnit >= MIN_PER_UNIT;
+  const moqOk = perUnit >= minUnit;
   const rowsText = styles + '스타일 × ' + colors + '컬러 × ' + sizes + '사이즈 × ' + perUnit.toLocaleString() + '장 = 총 ' + qty.toLocaleString() + '장';
 
   const email = txt(b.email, 60);
