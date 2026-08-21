@@ -5,6 +5,7 @@ const DB_ID = process.env.NOTION_DB_ID || 'b400cf41ae804765b1b15e3a4b004ba1';
 const NOTION_VERSION = '2022-06-28';
 const NOTION = 'https://api.notion.com/v1';
 const STATUS = ['상담 전', '보류', '거절', '샘플 진행', '미팅 예정', '진행', '완료'];
+const GRADE = ['A', 'B', 'C'];
 
 function headers() {
   return {
@@ -100,13 +101,16 @@ export default async function handler(req, res) {
     if (req.method === 'PATCH') {
     const b = (req.body && typeof req.body === 'object') ? req.body : {};
     const pid = (req.query && req.query.id) || b.id || '';
-    const st = (req.query && req.query.status) || b.status || '';
+        const st = (req.query && req.query.status) || b.status || '';
+    const gr = (req.query && req.query.grade) || b.grade || '';
     const hasMemo = Object.prototype.hasOwnProperty.call(b, 'memo');
     if (!pid) return res.status(400).json({ error: 'id required' });
-    if (!st && !hasMemo) return res.status(400).json({ error: 'nothing to update' });
+    if (!st && !gr && !hasMemo) return res.status(400).json({ error: 'nothing to update' });
     if (st && STATUS.indexOf(st) === -1) return res.status(400).json({ error: 'invalid status' });
+    if (gr && GRADE.indexOf(gr) === -1) return res.status(400).json({ error: 'invalid grade' });
     const props = {};
     if (st) props['진행 상태'] = { select: { name: st } };
+    if (gr) props['등급'] = { select: { name: gr } };
     if (hasMemo) {
       const memo = String(b.memo == null ? '' : b.memo).slice(0, 1900);
       props['메모'] = { rich_text: memo ? [{ text: { content: memo } }] : [] };
