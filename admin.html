@@ -105,6 +105,19 @@ button,input{font-family:var(--body)}
 .err{font-size:13px;color:var(--warn);margin-top:12px;display:none}
 .err.on{display:block}
 
+        .r-memo{grid-column:1/-1;grid-row:4;margin-top:2px}
+    .r-memo .pre{display:block;font-size:12.5px;line-height:1.55;color:var(--g600);background:var(--g50);border:1px solid var(--g200);border-left:2px solid var(--g300);border-radius:0 8px 8px 0;padding:8px 11px;white-space:pre-wrap;word-break:break-word}
+    .r-memo .pre.empty{display:none}
+    .r-memo .edit{display:none}
+    .row.on .r-memo .pre{display:none}
+    .row.on .r-memo .edit{display:block}
+    .r-memo textarea{width:100%;min-height:74px;resize:vertical;font-family:inherit;font-size:13px;line-height:1.6;color:var(--g900);background:#fff;border:1px solid var(--g300);border-radius:9px;padding:10px 12px;box-shadow:var(--sh-xs)}
+    .r-memo textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(46,107,230,.14)}
+    .r-memo textarea::placeholder{color:var(--g400)}
+    .r-memo .mst{display:block;margin-top:5px;font-size:11.5px;font-weight:600;color:var(--g400);min-height:14px}
+    .r-memo .mst.ok{color:var(--ok-700)}
+            .r-memo .mst.err{color:var(--warn)}
+
 @media (max-width:1040px){ .grid{grid-template-columns:1fr} .rows{max-height:none} }
 </style>
 </head>
@@ -126,6 +139,7 @@ button,input{font-family:var(--body)}
     <div class="sp">
       <span class="cnt" id="cnt"></span>
       <button class="btn ghost sm" id="reload">새로고침</button>
+        <button class="btn ghost sm" id="lock">잠금</button>
     </div>
   </div>
 
@@ -164,25 +178,42 @@ button,input{font-family:var(--body)}
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
-  var KEY = new URLSearchParams(location.search).get('k') || '';
-  var ORDERS = [];
-  var CUR = null;
+      // 접근키 — 주소창에 남기지 않고 세션에만 보관
+    var qk = new URLSearchParams(location.search).get('k') || '';
+    var KEY = qk || sessionStorage.getItem('yjk') || '';
+    if (qk) { try { sessionStorage.setItem('yjk', qk); } catch (e) {} }
+    if (location.search) history.replaceState(null, '', location.pathname);
+    var ORDERS = [];
+    var CUR = null;
 
-  function api(q){
-    return fetch('/api/orders?key=' + encodeURIComponent(KEY) + (q || ''))
-      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); });
-  }
-  function openApp(){ $('gate').style.display = 'none'; $('app').style.display = 'block'; load(); }
-  $('go').addEventListener('click', function(){
-    var v = $('k').value.trim(); if (!v) return; KEY = v;
-    api('').then(function(res){
-      if (!res.ok) { $('gerr').className = 'err on'; $('gerr').textContent = res.d.error === 'unauthorized' ? '접근키가 맞지 않습니다.' : ('오류: ' + res.d.error); return; }
-      history.replaceState(null, '', '?k=' + encodeURIComponent(KEY));
-      openApp();
+    function hdr(extra){
+      var h = { 'x-admin-key': KEY };
+      if (extra) for (var k in extra) h[k] = extra[k];
+      return h;
+    }
+    function api(q){
+      return fetch('/api/orders' + (q || ''), { headers: hdr() })
+        .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); });
+    }
+    function lock(){
+      try { sessionStorage.removeItem('yjk'); } catch (e) {}
+      KEY = '';
+      location.replace(location.pathname);
+    }
+    function openApp(){ $('gate').style.display = 'none'; $('app').style.display = 'block'; load(); }
+    $('go').addEventListener('click', function(){
+      var v = $('k').value.trim(); if (!v) return; KEY = v;
+      api('').then(function(res){
+        if (!res.ok) { $('gerr').className = 'err on'; $('gerr').textContent = res.d.error === 'unauthorized' ? '접근키가 맞지 않습니다.' : ('오류: ' + res.d.error); return; }
+        try { sessionStorage.setItem('yjk', KEY); } catch (e) {}
+        openApp();
+      });
     });
-  });
-  $('k').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('go').click(); });
-  if (KEY) openApp();
+    $('k').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('go').click(); });
+    $('lock').addEventListener('click', lock);
+    if (KEY) {
+      api('').then(function(res){ if (res.ok) openApp(); else { try { sessionStorage.removeItem('yjk'); } catch (e) {} KEY = ''; } });
+    }
 
   // 오더번호 — 20260821-YJ-01
   function ono(o){
@@ -261,6 +292,7 @@ button,input{font-family:var(--body)}
         if (o) el.classList.toggle('sel', !!SEL[o.id]);
       });
     }
+    function esc(s){ return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
     function render(){
       var box = $('rows');
       LIST = filtered();
@@ -278,6 +310,11 @@ button,input{font-family:var(--body)}
           '<span class="r-item">' + (o.items || '-') + '</span></div>' +
           '<div class="r-meta">' + (meta.join('  ·  ') || '&nbsp;') + '</div>' +
           '<div class="r-chips">' + badge(o) + '</div>' +
+          '<div class="r-memo">' +
+            '<span class="pre' + (o.memo ? '' : ' empty') + '">' + esc(o.memo || '') + '</span>' +
+            '<div class="edit"><textarea class="r-memoin" placeholder="메모 · 상담 내용, 특이사항">' + esc(o.memo || '') + '</textarea>' +
+            '<span class="mst"></span></div>' +
+          '</div>' +
           '</div>';
       }).join('');
       Array.prototype.forEach.call(box.querySelectorAll('.row'), function(el){
@@ -291,7 +328,7 @@ button,input{font-family:var(--body)}
             var v = stSel.value, prev = o.status;
             stSel.className = 'r-st ' + stCls(v);
             stSel.disabled = true;
-            fetch('/api/orders?key=' + encodeURIComponent(KEY) + '&id=' + encodeURIComponent(o.id) + '&status=' + encodeURIComponent(v), { method: 'PATCH' })
+                          fetch('/api/orders?id=' + encodeURIComponent(o.id) + '&status=' + encodeURIComponent(v), { method: 'PATCH', headers: hdr() })
               .then(function(r){ return r.json(); })
               .then(function(d){
                 stSel.disabled = false;
@@ -307,7 +344,7 @@ button,input{font-family:var(--body)}
             e.stopPropagation();
             var v = grSel.value, prev = o.grade;
             grSel.disabled = true;
-            fetch('/api/orders?key=' + encodeURIComponent(KEY) + '&id=' + encodeURIComponent(o.id) + '&grade=' + encodeURIComponent(v), { method: 'PATCH' })
+                          fetch('/api/orders?id=' + encodeURIComponent(o.id) + '&grade=' + encodeURIComponent(v), { method: 'PATCH', headers: hdr() })
               .then(function(r){ return r.json(); })
               .then(function(d){
                 grSel.disabled = false;
@@ -316,6 +353,33 @@ button,input{font-family:var(--body)}
                 if (CUR && CUR.id === o.id) draw(o, 1);
               })
               .catch(function(){ grSel.disabled = false; grSel.value = prev || 'B'; alert('등급 변경 중 오류가 발생했습니다.'); });
+          });
+        }
+        var mIn = el.querySelector('.r-memoin');
+        if (mIn) {
+          var mSt = el.querySelector('.r-memo .mst');
+          var mPre = el.querySelector('.r-memo .pre');
+          mIn.addEventListener('click', function(e){ e.stopPropagation(); });
+          mIn.addEventListener('change', function(e){
+            e.stopPropagation();
+            var v = mIn.value;
+            if (v === (o.memo || '')) return;
+            mSt.className = 'mst'; mSt.textContent = '저장 중…';
+            fetch('/api/orders', {
+              method: 'PATCH',
+              headers: hdr({ 'Content-Type': 'application/json' }),
+              body: JSON.stringify({ id: o.id, memo: v })
+            })
+              .then(function(r){ return r.json(); })
+              .then(function(d){
+                if (!d.ok) { mSt.className = 'mst err'; mSt.textContent = '저장 실패 · ' + (d.error || ''); return; }
+                o.memo = v;
+                mPre.textContent = v;
+                mPre.className = v ? 'pre' : 'pre empty';
+                mSt.className = 'mst ok'; mSt.textContent = '저장됨';
+                setTimeout(function(){ if (mSt.textContent === '저장됨') { mSt.className = 'mst'; mSt.textContent = ''; } }, 2000);
+              })
+              .catch(function(){ mSt.className = 'mst err'; mSt.textContent = '저장 중 오류'; });
           });
         }
         }
@@ -336,7 +400,7 @@ button,input{font-family:var(--body)}
       if (!confirm(ids.length + '건을 삭제합니다.' + String.fromCharCode(10) + '노션 휴지통으로 이동하며 복구할 수 있습니다.')) return;
       var btn = $('seldel');
       btn.disabled = true; btn.textContent = '삭제 중…';
-      fetch('/api/orders?key=' + encodeURIComponent(KEY) + '&ids=' + encodeURIComponent(ids.join(',')), { method: 'DELETE' })
+            fetch('/api/orders?ids=' + encodeURIComponent(ids.join(',')), { method: 'DELETE', headers: hdr() })
         .then(function(r){ return r.json(); })
         .then(function(d){
           btn.disabled = false; btn.textContent = '삭제';
