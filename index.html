@@ -14,7 +14,7 @@
   --page:#e9ebef; --app:#fff; --ink:#111418; --sub:#5c636e; --muted:#8b929d;
   --line:#e8eaee; --field:#f5f6f8; --blue:#2e6be6; --blue-d:#2159c9; --blue-soft:#eaf1ff;
   --ok:#1f9d55; --ok-bg:#eaf7ef; --ok-line:#b7e3c8;
-  --warn:#c8352c; --warn-bg:#fdecea; --warn-line:#f3c3bd;
+  --warn:#c8352c;
   --r:12px;
   --body:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
 }
@@ -24,11 +24,9 @@ body{margin:0;background:var(--app);color:var(--ink);font-family:var(--body);fon
 button,input,select,textarea{font-family:var(--body)}
 a{color:inherit}
 
-.device{display:contents}
 .app{width:100%;max-width:520px;margin:0 auto;background:var(--app);min-height:100dvh;display:flex;flex-direction:column;position:relative}
 .scroll{flex:1;padding:0 20px 24px}
 
-/* 상단 */
 .top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);padding:16px 20px 12px;border-bottom:1px solid var(--line)}
 .logo{display:inline-block;font-weight:900;font-size:15px;line-height:1;letter-spacing:-.05em;transform:skewX(-12deg) scaleX(.96);transform-origin:left center}
 .top .sub{display:block;margin-top:5px;font-size:11.5px;color:var(--muted);letter-spacing:.02em;font-weight:600}
@@ -36,14 +34,12 @@ a{color:inherit}
 h1{font-size:25px;font-weight:800;letter-spacing:-.035em;margin:26px 0 8px;line-height:1.25}
 .lead{font-size:13.5px;color:var(--sub);margin:0 0 22px;line-height:1.6}
 
-/* 안내 박스 */
 .tips{background:var(--field);border-radius:var(--r);padding:14px 16px;margin:0 0 24px}
-.tips li{list-style:none;font-size:12.5px;color:var(--sub);line-height:1.7;padding-left:12px;position:relative}
 .tips ul{margin:0;padding:0}
+.tips li{list-style:none;font-size:12.5px;color:var(--sub);line-height:1.7;padding-left:12px;position:relative}
 .tips li::before{content:'·';position:absolute;left:2px;color:var(--muted)}
 .tips b{color:var(--ink);font-weight:700}
 
-/* 섹션 */
 .sec{margin:0 0 26px}
 .sec-h{display:flex;align-items:baseline;gap:8px;margin:0 0 12px}
 .sec-h span{font-size:11px;font-weight:800;color:var(--blue);letter-spacing:.08em}
@@ -64,19 +60,16 @@ h1{font-size:25px;font-weight:800;letter-spacing:-.035em;margin:26px 0 8px;line-
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .row2 .f{margin-bottom:0}
 
-/* 칩 */
 .chips{display:flex;flex-wrap:wrap;gap:7px}
 .chip{display:inline-flex;align-items:center;gap:6px;background:var(--field);border:1px solid transparent;border-radius:999px;padding:9px 14px;font-size:13.5px;font-weight:600;color:var(--sub);cursor:pointer;transition:.14s}
 .chip input{position:absolute;opacity:0;width:0;height:0}
 .chip:has(input:checked){background:var(--blue);border-color:var(--blue);color:#fff}
 
-/* 수량 요약 */
 .total{margin-top:12px;background:var(--blue-soft);border:1px solid #cfe0ff;border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .total .k{font-size:11.5px;font-weight:700;color:#3a6fd0;letter-spacing:.04em}
 .total .v{font-size:24px;font-weight:900;letter-spacing:-.04em;color:var(--blue);line-height:1.1;margin-top:2px}
 .total .f2{font-size:11.5px;color:#5b7fc4;text-align:right;font-weight:600;line-height:1.5}
 
-/* 첨부 */
 .drop{border:1.5px dashed #d3d8e0;border-radius:var(--r);padding:22px;text-align:center;cursor:pointer;color:var(--sub);font-size:13.5px;font-weight:600;background:var(--field);transition:.15s}
 .drop:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
 .drop small{display:block;color:var(--muted);font-size:11.5px;margin-top:5px;font-weight:500}
@@ -85,7 +78,6 @@ h1{font-size:25px;font-weight:800;letter-spacing:-.035em;margin:26px 0 8px;line-
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .thumb button{position:absolute;top:3px;right:3px;width:19px;height:19px;border-radius:50%;border:0;background:rgba(17,20,24,.72);color:#fff;cursor:pointer;font-size:11px;line-height:1;padding:0}
 
-/* 접기 */
 details.more{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:2px}
 details.more summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;font-size:13.5px;font-weight:700;background:var(--field)}
 details.more summary::-webkit-details-marker{display:none}
@@ -94,7 +86,6 @@ details.more[open] summary::after{content:'–';color:var(--blue)}
 details.more .inner{padding:16px}
 details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:1.6}
 
-/* 동의 · 버튼 */
 .agree{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--sub);line-height:1.6;margin-top:4px}
 .agree input{margin-top:2px;accent-color:var(--blue);width:16px;height:16px;flex:none}
 .cta{position:sticky;bottom:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:12px 20px calc(12px + env(safe-area-inset-bottom))}
@@ -105,7 +96,6 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
 .msg{font-size:12.5px;font-weight:700;color:var(--warn);margin:0 0 10px;text-align:center;display:none}
 .msg.on{display:block}
 
-/* 완료 */
 .done{display:none;padding:0 20px 40px}
 .done-card{background:var(--ok-bg);border:1px solid var(--ok-line);border-radius:var(--r);padding:22px 18px;text-align:center;margin-top:26px}
 .done-card .ic{width:42px;height:42px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;margin:0 auto 12px;font-size:20px;font-weight:800}
@@ -121,13 +111,11 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
   .top{padding-top:20px}
   .cta{padding-bottom:16px}
 }
-.hint-pc{display:none}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
-<div class="device">
 <div class="app" id="app">
   <div class="top">
     <span class="logo">MISING.MAN</span>
@@ -136,12 +124,12 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
 
   <div class="scroll" id="scroll">
     <h1>오더문의</h1>
-    <p class="lead">아래 항목만 남겨주시면 영업팀이 1영업일 안에 연락드립니다. 자세한 작업지시는 상담하면서 같이 채웁니다.</p>
+    <p class="lead">아래 항목만 남겨주시면 담당자가 1영업일 안에 연락드립니다. 자세한 작업지시는 상담하면서 같이 채웁니다.</p>
 
     <div class="tips">
       <ul>
-        <li>최소 수량은 <b>컬러 · 사이즈당 100장</b>입니다.</li>
-        <li>잠옷 · 셔츠 · 밴딩슬랙스가 주력이고, <b>블라우스와 카피 제품은 받지 않습니다.</b></li>
+        <li>최소 수량은 <b>컬러 · 사이즈당 100장</b>이고, <b>1컬러 1사이즈는 200장</b>부터입니다.</li>
+        <li>잠옷 · 셔츠 · 밴딩슬랙스가 주력입니다. 그 외 블라우스 등 기타 품목은 추후 진행될 수 있도록 준비해놓겠습니다.</li>
         <li>상품 이미지가 있으면 견적이 가장 빠릅니다.</li>
       </ul>
     </div>
@@ -154,10 +142,6 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
         <div class="row2">
           <div class="f"><label for="f-name">담당자 <i>*</i></label><input id="f-name" maxlength="30" placeholder="이름" /></div>
           <div class="f"><label for="f-phone">연락처 <i>*</i></label><input id="f-phone" inputmode="tel" maxlength="30" placeholder="010-0000-0000" /></div>
-        </div>
-        <div class="row2" style="margin-top:10px">
-          <div class="f"><label for="f-kakao">카카오톡 ID</label><input id="f-kakao" maxlength="40" placeholder="선택" /></div>
-          <div class="f"><label for="f-email">이메일</label><input id="f-email" type="email" maxlength="60" placeholder="선택" /></div>
         </div>
       </div>
 
@@ -181,11 +165,11 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
         </div>
         <div class="row2" style="margin-top:10px">
           <div class="f"><label for="f-sizes">사이즈 수</label><input id="f-sizes" type="number" min="1" max="99" step="1" value="1" /></div>
-          <div class="f"><label for="f-unit">컬러·사이즈당 <i>*</i></label><input id="f-unit" type="number" min="100" max="100000" step="10" value="100" /></div>
+          <div class="f"><label for="f-unit">컬러·사이즈당 <i>*</i></label><input id="f-unit" type="number" min="200" max="100000" step="10" value="200" /><small id="unit-note">1컬러 1사이즈는 200장부터</small></div>
         </div>
         <div class="total">
-          <div><span class="k">총 발주 수량</span><div class="v" id="c-total">100장</div></div>
-          <div class="f2" id="c-formula">1 × 1 × 1 × 100</div>
+          <div><span class="k">총 발주 수량</span><div class="v" id="c-total">200장</div></div>
+          <div class="f2" id="c-formula">1 × 1 × 1 × 200</div>
         </div>
       </div>
 
@@ -246,22 +230,19 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
     <div class="done-card">
       <div class="ic">✓</div>
       <h2>접수됐습니다</h2>
-      <p>영업팀이 1영업일 안에 연락드립니다.</p>
+      <p>담당자가 1영업일 안에 연락드립니다.</p>
       <div class="done-no" id="done-no"></div>
     </div>
     <div class="done-tip">
       · 접수번호를 기억해두시면 문의하실 때 빠릅니다.<br>
       · 상품 이미지와 사이즈 스펙이 준비되면 상담 때 함께 전달해주세요.<br>
-      · 컬러 · 사이즈당 100장 미만은 진행이 어렵습니다.
+      · 컬러 · 사이즈당 100장(1컬러 1사이즈는 200장) 미만은 진행이 어렵습니다.
     </div>
   </div>
 </div>
-</div>
-<div class="hint-pc">MISING.MAN · ORDER INQUIRY</div>
 
 <script>
 (function(){
-  var MIN_UNIT = 100;
   var $ = function(id){ return document.getElementById(id); };
   var f = $('yj-form');
   var images = [];
@@ -272,18 +253,28 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
     if (v > hi) v = hi;
     return v;
   }
+  // 1컬러 1사이즈면 200장, 그 외에는 컬러·사이즈당 100장
+  function minUnit(){
+    var c = iv($('f-colors'),1,99), z = iv($('f-sizes'),1,99);
+    return (c === 1 && z === 1) ? 200 : 100;
+  }
   function calc(){
-    var s = iv($('f-styles'),1,99), c = iv($('f-colors'),1,99);
-    var z = iv($('f-sizes'),1,99), u = iv($('f-unit'),MIN_UNIT,100000);
+    var s = iv($('f-styles'),1,99), c = iv($('f-colors'),1,99), z = iv($('f-sizes'),1,99);
+    var mu = minUnit();
+    var uEl = $('f-unit');
+    uEl.min = mu;
+    if ((parseInt(uEl.value,10) || 0) < mu) uEl.value = mu;
+    var u = iv(uEl, mu, 100000);
     var total = s * c * z * u;
+    $('unit-note').textContent = (mu === 200) ? '1컬러 1사이즈는 200장부터' : '컬러 · 사이즈당 100장부터';
     $('c-total').textContent = total.toLocaleString() + '장';
     $('c-formula').innerHTML = s + '스타일 × ' + c + '컬러 × ' + z + '사이즈<br>× ' + u.toLocaleString() + '장';
-    return { styles:s, colors:c, sizes:z, perUnit:u, total:total };
+    return { styles:s, colors:c, sizes:z, perUnit:u, total:total, min:mu };
   }
   ['f-styles','f-colors','f-sizes','f-unit'].forEach(function(id){
     $(id).addEventListener('input', calc);
     $(id).addEventListener('blur', function(){
-      var lo = (id === 'f-unit') ? MIN_UNIT : 1, hi = (id === 'f-unit') ? 100000 : 99;
+      var lo = (id === 'f-unit') ? minUnit() : 1, hi = (id === 'f-unit') ? 100000 : 99;
       $(id).value = iv($(id), lo, hi); calc();
     });
   });
@@ -354,13 +345,14 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
     }
     if (!items.length) return fail('품목을 하나 이상 선택해주세요.');
     if (!$('f-due').value) return fail('최종 납기일을 선택해주세요.', $('f-due'));
-    if ((parseInt($('f-unit').value,10) || 0) < MIN_UNIT) return fail('컬러 · 사이즈당 최소 100장부터 진행합니다.', $('f-unit'));
+    var mu = minUnit();
+    if ((parseInt($('f-unit').value,10) || 0) < mu) return fail('컬러 · 사이즈당 최소 ' + mu + '장부터 진행합니다.', $('f-unit'));
     if (!$('f-agree').checked) return fail('정보 수집·이용 동의가 필요합니다.');
     var st = calc();
 
     var payload = {
       brand:$('f-brand').value.trim(), manager:$('f-name').value.trim(), phone:$('f-phone').value.trim(),
-      email:$('f-email').value.trim(), kakao:$('f-kakao').value.trim(), channel:$('f-channel').value.trim(),
+      email:'', kakao:'', channel:$('f-channel').value.trim(),
       items:items, styles:st.styles, colors:st.colors, sizes:st.sizes, perUnit:st.perUnit,
       due:$('f-due').value || '', price:$('f-price').value.trim(), fabric:$('f-fabric').value, asset:$('f-asset').value,
       material:$('f-material').value.trim(), detailSpec:$('f-detailspec').value.trim(),
@@ -382,7 +374,6 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
         $('cta').style.display = 'none';
         $('yj-done').style.display = 'block';
         $('done-no').textContent = res.d.no ? 'YJ-' + res.d.no : '접수 완료';
-        $('app').scrollTop = 0;
         window.scrollTo(0,0);
       })
       .catch(function(err){
