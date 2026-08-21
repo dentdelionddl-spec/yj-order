@@ -61,6 +61,13 @@ button,input{font-family:var(--body)}
     .r-item{font-size:12.5px;font-weight:500;color:var(--g500);letter-spacing:-.005em}
     .r-meta{grid-column:1;grid-row:3;align-self:end;font-size:12px;font-weight:500;color:var(--g400);letter-spacing:-.005em}
     .r-chips{grid-column:2;grid-row:3;justify-self:end;align-self:end;display:flex;gap:5px}
+    .r-st{appearance:none;-webkit-appearance:none;font-family:inherit;font-size:11px;font-weight:700;line-height:1;letter-spacing:-.01em;padding:5px 21px 5px 9px;border-radius:6px;border:1px solid transparent;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 11px) 52%,calc(100% - 7px) 52%;background-size:4px 4px,4px 4px;background-repeat:no-repeat}
+    .r-st:focus{outline:none;box-shadow:0 0 0 3px rgba(46,107,230,.18)}
+    .st-gray{background-color:var(--g50);color:var(--g600);border-color:var(--g200)}
+    .st-new{background-color:var(--blue-50);color:var(--blue-d);border-color:#cfe0ff}
+    .st-ok{background-color:var(--ok-50);color:var(--ok-700);border-color:#abefc6}
+    .st-warn{background-color:var(--warn-50);color:var(--warn);border-color:#fecdca}
+    .st-hold{background-color:#fffaeb;color:#b54708;border-color:#fedf89}
     .rows.pick .row{grid-template-columns:auto 1fr auto}
     .rows.pick .r-ck{display:block;grid-column:1;grid-row:1/4;align-self:center}
     .rows.pick .r-brand,.rows.pick .r-main,.rows.pick .r-meta{grid-column:2}
@@ -185,14 +192,24 @@ button,input{font-family:var(--body)}
     if (n.length === 1) n = '0' + n;
     return (d ? d + '-' : '') + 'YJ-' + (n || '00');
   }
-  function badge(o){
-    var st = o.status || '신규';
-    var cls = st === '신규' ? 't-new' : (st === '성사' ? 't-ok' : (st === '부적합·보류' ? 't-warn' : 't-gray'));
-    var s = '<span class="tag ' + cls + '">' + st + '</span>';
-    if (o.grade) s += '<span class="tag t-gray">' + o.grade + '등급</span>';
-    if (o.moqOk === false) s += '<span class="tag t-warn">MOQ 미달</span>';
-    return s;
-  }
+        var STATUS = ['상담 전', '보류', '거절', '샘플 진행', '미팅 예정', '진행', '완료'];
+      function stCls(st){
+        if (st === '완료' || st === '진행') return 'st-ok';
+        if (st === '거절') return 'st-warn';
+        if (st === '보류') return 'st-hold';
+        if (st === '샘플 진행' || st === '미팅 예정') return 'st-new';
+        return 'st-gray';
+      }
+      function badge(o){
+        var st = o.status || '상담 전';
+        if (STATUS.indexOf(st) === -1) st = '상담 전';
+        var s = '<select class="r-st ' + stCls(st) + '" data-id="' + o.id + '">';
+        STATUS.forEach(function(x){ s += '<option value="' + x + '"' + (x === st ? ' selected' : '') + '>' + x + '</option>'; });
+        s += '</select>';
+        if (o.grade) s += '<span class="tag t-gray">' + o.grade + '등급</span>';
+        if (o.moqOk === false) s += '<span class="tag t-warn">MOQ 미달</span>';
+        return s;
+      }
       // 월별 필터
     var MONTH = 'all';
     var LIST = [];
@@ -262,6 +279,24 @@ button,input{font-family:var(--body)}
       Array.prototype.forEach.call(box.querySelectorAll('.row'), function(el){
         var o = LIST[+el.getAttribute('data-i')];
         var ck = el.querySelector('.r-ck');
+        var stSel = el.querySelector('.r-st');
+        if (stSel) {
+          stSel.addEventListener('click', function(e){ e.stopPropagation(); });
+          stSel.addEventListener('change', function(e){
+            e.stopPropagation();
+            var v = stSel.value, prev = o.status;
+            stSel.className = 'r-st ' + stCls(v);
+            stSel.disabled = true;
+            fetch('/api/orders?key=' + encodeURIComponent(KEY) + '&id=' + encodeURIComponent(o.id) + '&status=' + encodeURIComponent(v), { method: 'PATCH' })
+              .then(function(r){ return r.json(); })
+              .then(function(d){
+                stSel.disabled = false;
+                if (!d.ok) { alert('상태 변경 실패: ' + (d.error || '')); stSel.value = prev || '상담 전'; stSel.className = 'r-st ' + stCls(prev); return; }
+                o.status = v;
+              })
+              .catch(function(){ stSel.disabled = false; stSel.value = prev || '상담 전'; stSel.className = 'r-st ' + stCls(prev); alert('상태 변경 중 오류가 발생했습니다.'); });
+          });
+        }
         ck.addEventListener('click', function(e){ e.stopPropagation(); });
         ck.addEventListener('change', function(){ SEL[o.id] = ck.checked; syncSel(); });
         el.addEventListener('click', function(){
@@ -484,7 +519,7 @@ button,input{font-family:var(--body)}
       if (tableH > maxTable) { var k2 = maxTable / tableH; tableH = 0; for (var b2 = 0; b2 < heights.length; b2++){ heights[b2] = Math.floor(heights[b2] * k2); tableH += heights[b2]; } }
 
       // 상품 이미지 · 도식화 — 남은 공간 전부
-      var ihY = bodyTop + hh, ihH = 30;
+              var ihY = bodyTop + hh, ihH = 38;
       var imgTop = ihY + ihH;
       var imgH = bodyBottom - tableH - imgTop;
       fillBox(c, X, ihY, LW, ihH, LB);
