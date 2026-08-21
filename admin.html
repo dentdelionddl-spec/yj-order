@@ -420,13 +420,11 @@ button,input{font-family:var(--body)}
     var bodyTop = y, bodyBottom = 1490, bodyH = bodyBottom - bodyTop;
     var hh = 34;
 
-    // 3-1. 좌: 작업 지시 내용
-    fillBox(c, X, bodyTop, LW, hh, LB);
-    c.fillStyle = BLUE; c.fillRect(X, bodyTop, 3, hh);
-    ctext(c, '작 업 지 시 내 용', X, bodyTop, LW, hh, F(700, 14), INK);
-    box(c, X, bodyTop + hh, LW, bodyH - hh);
+          // 3-1. 좌: 작업 지시 내용
+      fillBox(c, X, bodyTop, LW, hh, LB);
+      ctext(c, '작 업 지 시 내 용', X, bodyTop, LW, hh, F(700, 14), INK);
 
-                // 줄바꿈 계산 (그리지 않고 라인만 반환)
+      // 줄바꿈 계산 (그리지 않고 라인만 반환)
       function lines(txt, maxW){
         var src = String(txt == null || txt === '' ? '-' : txt).split(String.fromCharCode(10));
         var out = [];
@@ -447,32 +445,7 @@ button,input{font-family:var(--body)}
         return out;
       }
 
-      var iy = bodyTop + hh;
-      var ims = (o._im || []).filter(Boolean);
-      var slots = (o.images || []).slice(0, 3).length;
-
-      // 상품 이미지 · 도식화
-      if (slots) {
-        fillBox(c, X, iy, LW, 28, LB);
-        ctext(c, '상 품 이 미 지   ·   도 식 화', X, iy, LW, 28, F(600, 11.5), SUB);
-        var imgH = 430, iyy = iy + 28, cw = LW / slots;
-        box(c, X, iyy, LW, imgH);
-        for (var q = 0; q < slots; q++) {
-          var qx = X + cw * q;
-          if (q) { c.strokeStyle = SOFT; c.lineWidth = 1; c.beginPath(); c.moveTo(qx + 0.5, iyy); c.lineTo(qx + 0.5, iyy + imgH); c.stroke(); }
-          var im2 = ims[q];
-          if (im2 && im2.naturalWidth) {
-            var k = Math.min((cw - 30) / im2.naturalWidth, (imgH - 30) / im2.naturalHeight);
-            var dw = im2.naturalWidth * k, dh = im2.naturalHeight * k;
-            c.drawImage(im2, qx + (cw - dw) / 2, iyy + (imgH - dh) / 2, dw, dh);
-          } else {
-            ctext(c, '이미지 ' + (q + 1), qx, iyy, cw, imgH, F(400, 12), '#c4cad3');
-          }
-        }
-        iy = iyy + imgH;
-      }
-
-      // 작업지시 항목 표
+      // 하단 지시 항목 표 — 높이 먼저 계산해 바닥에 고정
       var blocks = [
         ['주원자재 · 부자재', o.material],
         ['디테일 내용', o.detailSpec],
@@ -482,25 +455,60 @@ button,input{font-family:var(--body)}
         ['QC 기준 · 검사', (o.qc || '-') + (o.qcWays ? String.fromCharCode(10) + '검사 방식 : ' + o.qcWays : '')]
       ];
       var labW = 148, valW = LW - labW, lh2 = 21;
+      c.font = F(400, 13.5);
+      var wrapped = [], heights = [], tableH = 0;
       for (var b = 0; b < blocks.length; b++){
-        c.font = F(400, 13.5);
         var ls = lines(blocks[b][1], valW - 34);
-        var rh2 = Math.max(52, ls.length * lh2 + 26);
-        if (iy + rh2 > bodyBottom) rh2 = bodyBottom - iy;
-        if (rh2 < 24) break;
-        fillBox(c, X, iy, labW, rh2, LB);
-        c.font = F(600, 12.5);
-        var lb = lines(blocks[b][0], labW - 20);
-        c.fillStyle = SUB; c.textAlign = 'center';
-        for (var m = 0; m < lb.length; m++) c.fillText(lb[m], X + labW / 2, iy + rh2 / 2 + 5 - (lb.length - 1) * 8 + m * 16);
-        c.textAlign = 'left';
-        box(c, X + labW, iy, valW, rh2);
-        c.font = F(400, 13.5); c.fillStyle = INK;
-        var ty = iy + (rh2 - ls.length * lh2) / 2 + 15;
-        for (var L2 = 0; L2 < ls.length; L2++) c.fillText(ls[L2], X + labW + 17, ty + L2 * lh2);
-        iy += rh2;
+        var rh2 = Math.max(58, ls.length * lh2 + 28);
+        wrapped.push(ls); heights.push(rh2); tableH += rh2;
       }
-      if (iy < bodyBottom) box(c, X, iy, LW, bodyBottom - iy);
+      var maxTable = bodyH - hh - 30 - 200;
+      if (tableH > maxTable) { var k2 = maxTable / tableH; tableH = 0; for (var b2 = 0; b2 < heights.length; b2++){ heights[b2] = Math.floor(heights[b2] * k2); tableH += heights[b2]; } }
+
+      // 상품 이미지 · 도식화 — 남은 공간 전부
+      var ihY = bodyTop + hh, ihH = 30;
+      var imgTop = ihY + ihH;
+      var imgH = bodyBottom - tableH - imgTop;
+      fillBox(c, X, ihY, LW, ihH, LB);
+      ctext(c, '상 품 이 미 지   ·   도 식 화', X, ihY, LW, ihH, F(600, 11.5), SUB);
+      box(c, X, imgTop, LW, imgH);
+      var ims = (o._im || []).filter(Boolean);
+      var slots = (o.images || []).slice(0, 3).length;
+      if (slots) {
+        var cw = LW / slots;
+        for (var q = 0; q < slots; q++) {
+          var qx = X + cw * q;
+          if (q) { c.strokeStyle = SOFT; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(qx) + 0.5, imgTop); c.lineTo(Math.round(qx) + 0.5, imgTop + imgH); c.stroke(); }
+          var im2 = ims[q];
+          if (im2 && im2.naturalWidth) {
+            var k = Math.min((cw - 34) / im2.naturalWidth, (imgH - 34) / im2.naturalHeight);
+            var dw = im2.naturalWidth * k, dh = im2.naturalHeight * k;
+            c.drawImage(im2, qx + (cw - dw) / 2, imgTop + (imgH - dh) / 2, dw, dh);
+          } else {
+            ctext(c, '이미지 ' + (q + 1), qx, imgTop, cw, imgH, F(400, 12), '#c4cad3');
+          }
+        }
+      } else {
+        ctext(c, '첨부된 상품 이미지가 없습니다', X, imgTop, LW, imgH, F(400, 13), '#c4cad3');
+      }
+
+      // 표 그리기
+      var ry = bodyBottom - tableH;
+      for (var b3 = 0; b3 < blocks.length; b3++){
+        var rh3 = heights[b3], ls3 = wrapped[b3];
+        fillBox(c, X, ry, labW, rh3, LB);
+        c.font = F(600, 12.5);
+        var lb = lines(blocks[b3][0], labW - 20);
+        c.fillStyle = SUB; c.textAlign = 'center';
+        for (var m = 0; m < lb.length; m++) c.fillText(lb[m], X + labW / 2, ry + rh3 / 2 + 5 - (lb.length - 1) * 8 + m * 16);
+        c.textAlign = 'left';
+        box(c, X + labW, ry, valW, rh3);
+        c.font = F(400, 13.5); c.fillStyle = INK;
+        var shown = Math.min(ls3.length, Math.floor((rh3 - 16) / lh2));
+        var ty = ry + (rh3 - shown * lh2) / 2 + 15;
+        for (var L3 = 0; L3 < shown; L3++) c.fillText(ls3[L3], X + labW + 17, ty + L3 * lh2);
+        ry += rh3;
+      }
 
     // 3-2. 우: 오더 사양
     var sx = RX, sw = RW;
