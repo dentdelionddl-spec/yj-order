@@ -338,7 +338,7 @@ button,input{font-family:var(--body)}
       var ims = (o._im || []).filter(Boolean);
       var slots = (o.images || []).slice(0, 3).length;
       if (slots) {
-        var gap = 12, cellW = (bw - gap * (slots - 1)) / slots, cellH = 250;
+                var gap = 12, cellW = (bw - gap * (slots - 1)) / slots, cellH = 450;
         for (var q = 0; q < slots; q++) {
           var qx = bx + (cellW + gap) * q;
           fillBox(c, qx, by - 6, cellW, cellH, '#fcfcfd');
