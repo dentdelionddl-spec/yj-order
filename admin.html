@@ -193,6 +193,7 @@ button,input{font-family:var(--body)}
     return (d ? d + '-' : '') + 'YJ-' + (n || '00');
   }
         var STATUS = ['상담 전', '보류', '거절', '샘플 진행', '미팅 예정', '진행', '완료'];
+      var GRADE = ['A', 'B', 'C'];
       function stCls(st){
         if (st === '완료' || st === '진행') return 'st-ok';
         if (st === '거절') return 'st-warn';
@@ -206,7 +207,10 @@ button,input{font-family:var(--body)}
         var s = '<select class="r-st ' + stCls(st) + '" data-id="' + o.id + '">';
         STATUS.forEach(function(x){ s += '<option value="' + x + '"' + (x === st ? ' selected' : '') + '>' + x + '</option>'; });
         s += '</select>';
-        if (o.grade) s += '<span class="tag t-gray">' + o.grade + '등급</span>';
+                var gr = o.grade || '';
+        s += '<select class="r-st r-gr st-gray" data-id="' + o.id + '">';
+        GRADE.forEach(function(x){ s += '<option value="' + x + '"' + (x === gr ? ' selected' : '') + '>' + x + '등급</option>'; });
+        s += '</select>';
         if (o.moqOk === false) s += '<span class="tag t-warn">MOQ 미달</span>';
         return s;
       }
@@ -296,6 +300,24 @@ button,input{font-family:var(--body)}
               })
               .catch(function(){ stSel.disabled = false; stSel.value = prev || '상담 전'; stSel.className = 'r-st ' + stCls(prev); alert('상태 변경 중 오류가 발생했습니다.'); });
           });
+        var grSel = el.querySelector('.r-gr');
+        if (grSel) {
+          grSel.addEventListener('click', function(e){ e.stopPropagation(); });
+          grSel.addEventListener('change', function(e){
+            e.stopPropagation();
+            var v = grSel.value, prev = o.grade;
+            grSel.disabled = true;
+            fetch('/api/orders?key=' + encodeURIComponent(KEY) + '&id=' + encodeURIComponent(o.id) + '&grade=' + encodeURIComponent(v), { method: 'PATCH' })
+              .then(function(r){ return r.json(); })
+              .then(function(d){
+                grSel.disabled = false;
+                if (!d.ok) { alert('등급 변경 실패: ' + (d.error || '')); grSel.value = prev || 'B'; return; }
+                o.grade = v;
+                if (CUR && CUR.id === o.id) draw(o, 1);
+              })
+              .catch(function(){ grSel.disabled = false; grSel.value = prev || 'B'; alert('등급 변경 중 오류가 발생했습니다.'); });
+          });
+        }
         }
         ck.addEventListener('click', function(e){ e.stopPropagation(); });
         ck.addEventListener('change', function(){ SEL[o.id] = ck.checked; syncSel(); });
