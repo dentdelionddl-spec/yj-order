@@ -61,7 +61,8 @@ button,input{font-family:var(--body)}
     .r-item{font-size:12.5px;font-weight:500;color:var(--g500);letter-spacing:-.005em}
     .r-meta{grid-column:1;grid-row:3;align-self:end;font-size:12px;font-weight:500;color:var(--g400);letter-spacing:-.005em}
     .r-chips{grid-column:2;grid-row:3;justify-self:end;align-self:end;display:flex;gap:5px}
-    .r-memo .mrow{display:flex;align-items:center;gap:9px;margin-top:7px}
+        .r-memo .mrow{display:none;align-items:center;gap:9px;margin-top:7px}
+    .r-memo .mrow.on{display:flex}
     .r-memo .r-memosave{flex:none;padding:6px 13px;font-size:12.5px}
     .r-st{appearance:none;-webkit-appearance:none;font-family:inherit;font-size:11px;font-weight:700;line-height:1;letter-spacing:-.01em;padding:5px 21px 5px 9px;border-radius:6px;border:1px solid transparent;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 11px) 52%,calc(100% - 7px) 52%;background-size:4px 4px,4px 4px;background-repeat:no-repeat}
     .r-st:focus{outline:none;box-shadow:0 0 0 3px rgba(46,107,230,.18)}
@@ -358,13 +359,17 @@ button,input{font-family:var(--body)}
               .catch(function(){ grSel.disabled = false; grSel.value = prev || 'B'; alert('등급 변경 중 오류가 발생했습니다.'); });
           });
         }
-                var mIn = el.querySelector('.r-memoin');
+                        var mIn = el.querySelector('.r-memoin');
         if (mIn) {
           var mSt = el.querySelector('.r-memo .mst');
           var mPre = el.querySelector('.r-memo .pre');
           var mBtn = el.querySelector('.r-memosave');
+          var mRow = el.querySelector('.r-memo .mrow');
           mIn.addEventListener('click', function(e){ e.stopPropagation(); });
-          mIn.addEventListener('input', function(){ mSt.className = 'mst'; mSt.textContent = mIn.value === (o.memo || '') ? '' : '저장 안 됨'; });
+          mIn.addEventListener('input', function(){
+            mRow.className = mIn.value !== (o.memo || '') ? 'mrow on' : 'mrow';
+            mSt.className = 'mst'; mSt.textContent = '';
+          });
           mBtn.addEventListener('click', function(e){
             e.stopPropagation();
             var v = mIn.value;
@@ -382,7 +387,10 @@ button,input{font-family:var(--body)}
                 o.memo = v;
                 mPre.textContent = v;
                 mPre.className = v ? 'pre' : 'pre empty';
-                mSt.className = 'mst ok'; mSt.textContent = '저장됨';
+                                mSt.className = 'mst ok'; mSt.textContent = '저장됨';
+                setTimeout(function(){
+                  if (mIn.value === (o.memo || '')) { mRow.className = 'mrow'; mSt.className = 'mst'; mSt.textContent = ''; }
+                }, 1200);
               })
               .catch(function(){ mBtn.disabled = false; mSt.className = 'mst err'; mSt.textContent = '저장 중 오류'; });
           });
