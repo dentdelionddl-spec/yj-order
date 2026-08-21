@@ -152,6 +152,14 @@ details.more .cap{font-size:12.5px;color:var(--g500);margin:0 0 18px;line-height
 /* iOS 대응 — 그리드 오버플로 · date 인풋 · 터치 hover 고착 */
 /* 스크롤 끝에서 튕김(고무줄) 제거 */
 html,body{overscroll-behavior:none;overscroll-behavior-y:none}
+
+/* 태그라인 */
+.pitch{margin:0 0 22px;padding-left:16px;border-left:2px solid var(--blue-100)}
+.pitch p{margin:0;font-size:14.5px;line-height:1.75;color:var(--g600);letter-spacing:-.008em}
+.pitch p + p{margin-top:12px}
+.pitch b{color:var(--g900);font-weight:700}
+.pitch .kicker{font-size:15px;font-weight:700;color:var(--g900);margin-bottom:10px;letter-spacing:-.015em}
+.pitch .close{margin-top:14px;font-size:15px;font-weight:600;color:var(--blue-d);letter-spacing:-.015em}
 .f{min-width:0}
 .row2 > *{min-width:0}
 .f input:not([type=file]),.f select{height:44px;padding-top:0;padding-bottom:0}
@@ -179,6 +187,12 @@ html,body{overscroll-behavior:none;overscroll-behavior-y:none}
   <div class="scroll" id="scroll">
     <div class="intro">
       <h1>오더문의</h1>
+      <div class="pitch">
+        <p class="kicker">저도 셀러였습니다.</p>
+        <p>셀러가 바라는 건 하나입니다. <b>좋은 물건을 안전하게 받아 보는 것.</b> 그 마음 그대로 중국에 직접 공장을 지었습니다.</p>
+        <p>문제가 생겼을 때 한국 사람과 바로 소통하고 풀 수 있다는 것, 그리고 이만큼 깨끗한 현장에서 옷이 나온다는 것. 한번 맡겨보시면 무엇이 다른지 아실 겁니다.</p>
+        <p class="close">결국 좋은 곳에서 좋은 물건이 나옵니다.</p>
+      </div>
       <p class="lead">아래 항목만 남겨주시면 담당자가 1영업일 안에 연락드립니다. 자세한 작업지시는 상담하면서 같이 채웁니다.</p>
       <div class="tips">
         <ul>
