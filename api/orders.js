@@ -67,12 +67,32 @@ function shape(page) {
 }
 
 export default async function handler(req, res) {
-  if (req.method !== 'GET') return res.status(405).json({ error: 'method not allowed' });
+    if (req.method !== 'GET' && req.method !== 'DELETE') return res.status(405).json({ error: 'method not allowed' });
   if (!process.env.NOTION_TOKEN) return res.status(500).json({ error: 'NOTION_TOKEN not set' });
   if (!process.env.ADMIN_KEY) return res.status(500).json({ error: 'ADMIN_KEY not set' });
 
   const key = (req.query && req.query.key) || '';
   if (key !== process.env.ADMIN_KEY) return res.status(401).json({ error: 'unauthorized' });
+
+  // 삭제 (노션 휴지통으로 보관 — 복구 가능)
+  if (req.method === 'DELETE') {
+    const raw = (req.query && req.query.ids) || '';
+    const ids = String(raw).split(',').map(function(s){ return s.trim(); }).filter(Boolean);
+    if (!ids.length) return res.status(400).json({ error: 'no ids' });
+    if (ids.length > 50) return res.status(400).json({ error: 'too many' });
+    let done = 0;
+    for (const pid of ids) {
+      try {
+        const r = await fetch(NOTION + '/pages/' + pid, {
+          method: 'PATCH',
+          headers: headers(),
+          body: JSON.stringify({ archived: true }),
+        });
+        if (r.ok) done++;
+      } catch (e) { console.error('archive failed', pid, e); }
+    }
+    return res.status(200).json({ ok: true, deleted: done, total: ids.length });
+  }
 
   const id = (req.query && req.query.id) || '';
 
