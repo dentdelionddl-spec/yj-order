@@ -38,7 +38,7 @@ a{color:inherit}
 
 /* 인트로 */
 .intro{padding:40px 0 32px}
-h1{font-size:30px;font-weight:700;letter-spacing:-.028em;margin:0 0 12px;line-height:1.27;color:var(--g900)}
+h1{font-size:30px;font-weight:700;letter-spacing:-.028em;margin:0 0 24px;line-height:1.27;color:var(--g900)}
 .lead{font-size:15px;color:var(--g600);margin:0;line-height:1.6;letter-spacing:-.005em}
 
 .tips{background:var(--g50);border:1px solid var(--g200);border-radius:var(--r-lg);padding:16px;margin-top:24px}
@@ -495,7 +495,7 @@ html,body{overscroll-behavior:none;overscroll-behavior-y:none}
         $('scroll').style.display = 'none';
         $('cta').style.display = 'none';
         $('yj-done').style.display = 'block';
-        $('done-no').textContent = res.d.no ? 'YJ-' + res.d.no : '접수 완료';
+                $('done-no').textContent = res.d.orderNo || (res.d.no ? 'YJ-' + res.d.no : '접수 완료');
         window.scrollTo(0,0);
       })
       .catch(function(err){
