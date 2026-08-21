@@ -347,17 +347,24 @@ html,body{overscroll-behavior:none;overscroll-behavior-y:none}
       var dots = $('gal-dots').querySelectorAll('i');
       function show(){
         gal.classList.add('on');
-        var figs = track.querySelectorAll('figure');
-        if (!('IntersectionObserver' in window)) return;
-        var io2 = new IntersectionObserver(function(es){
-          es.forEach(function(e){
-            if (e.isIntersecting && e.intersectionRatio > 0.55) {
-              var i = Array.prototype.indexOf.call(figs, e.target);
-              for (var k = 0; k < dots.length; k++) dots[k].className = (k === i) ? 'on' : '';
-            }
-          });
-        }, { root: track, threshold: [0.55, 0.9] });
-        for (var n = 0; n < figs.length; n++) io2.observe(figs[n]);
+        var last = -1;
+        function sync(){
+          var w = track.clientWidth;
+          if (!w) return;
+          var i = Math.round(track.scrollLeft / w);
+          if (i === last) return;
+          last = i;
+          for (var k = 0; k < dots.length; k++) dots[k].className = (k === i) ? 'on' : '';
+        }
+        for (var d = 0; d < dots.length; d++) {
+          (function(n){
+            dots[n].style.pointerEvents = 'auto';
+            dots[n].style.cursor = 'pointer';
+            dots[n].addEventListener('click', function(){ track.scrollTo({ left: track.clientWidth * n, behavior: 'smooth' }); });
+          })(d);
+        }
+        setInterval(sync, 180);
+        sync();
       }
       if (first.complete) { if (first.naturalWidth > 0) show(); }
       else { first.addEventListener('load', show); }
