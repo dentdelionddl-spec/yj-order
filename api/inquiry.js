@@ -159,8 +159,25 @@ export default async function handler(req, res) {
       console.error('notion error', data);
       return res.status(502).json({ error: data.message || 'notion error' });
     }
-    const no = data.properties?.['문의번호']?.unique_id?.number ?? null;
-    return res.status(200).json({ ok: true, no });
+        const no = data.properties?.['문의번호']?.unique_id?.number ?? null;
+
+    // 오더번호 = YYYYMMDD-YJ-01 형식으로 조합해 저장
+    let orderNo = null;
+    if (no != null) {
+      const ct = data.created_time ? new Date(data.created_time) : new Date();
+      const kst = new Date(ct.getTime() + 9 * 3600 * 1000);
+      const ymd = kst.getUTCFullYear() + String(kst.getUTCMonth() + 1).padStart(2, '0') + String(kst.getUTCDate()).padStart(2, '0');
+      orderNo = ymd + '-YJ-' + String(no).padStart(2, '0');
+      try {
+        await fetch(NOTION + '/pages/' + data.id, {
+          method: 'PATCH',
+          headers: headers(),
+          body: JSON.stringify({ properties: { '오더번호': rt(orderNo) } }),
+        });
+      } catch (e) { console.error('orderNo patch failed', e); }
+    }
+
+    return res.status(200).json({ ok: true, no, orderNo });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ error: 'server error' });
