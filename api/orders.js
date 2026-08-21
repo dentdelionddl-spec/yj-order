@@ -4,6 +4,7 @@
 const DB_ID = process.env.NOTION_DB_ID || 'b400cf41ae804765b1b15e3a4b004ba1';
 const NOTION_VERSION = '2022-06-28';
 const NOTION = 'https://api.notion.com/v1';
+const STATUS = ['상담 전', '보류', '거절', '샘플 진행', '미팅 예정', '진행', '완료'];
 
 function headers() {
   return {
@@ -67,7 +68,7 @@ function shape(page) {
 }
 
 export default async function handler(req, res) {
-    if (req.method !== 'GET' && req.method !== 'DELETE') return res.status(405).json({ error: 'method not allowed' });
+      var OK_M = ['GET', 'DELETE', 'PATCH'];  if (OK_M.indexOf(req.method) === -1) return res.status(405).json({ error: 'method not allowed' });
   if (!process.env.NOTION_TOKEN) return res.status(500).json({ error: 'NOTION_TOKEN not set' });
   if (!process.env.ADMIN_KEY) return res.status(500).json({ error: 'ADMIN_KEY not set' });
 
@@ -92,6 +93,27 @@ export default async function handler(req, res) {
       } catch (e) { console.error('archive failed', pid, e); }
     }
     return res.status(200).json({ ok: true, deleted: done, total: ids.length });
+  }
+
+  // 진행 현황 변경
+  if (req.method === 'PATCH') {
+    const pid = (req.query && req.query.id) || '';
+    const st = (req.query && req.query.status) || '';
+    if (!pid || !st) return res.status(400).json({ error: 'id and status required' });
+    if (STATUS.indexOf(st) === -1) return res.status(400).json({ error: 'invalid status' });
+    try {
+      const r = await fetch(NOTION + '/pages/' + pid, {
+        method: 'PATCH',
+        headers: headers(),
+        body: JSON.stringify({ properties: { '진행 상태': { select: { name: st } } } }),
+      });
+      const d = await r.json();
+      if (!r.ok) return res.status(502).json({ error: d.message || 'notion error' });
+      return res.status(200).json({ ok: true, status: st });
+    } catch (e) {
+      console.error(e);
+      return res.status(500).json({ error: 'server error' });
+    }
   }
 
   const id = (req.query && req.query.id) || '';
