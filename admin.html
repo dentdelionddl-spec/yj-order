@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>오더 관리 — MISING.MAN</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<style>
+:root{
+  --g25:#fcfcfd; --g50:#f9fafb; --g100:#f2f4f7; --g200:#eaecf0; --g300:#d0d5dd;
+  --g400:#98a2b3; --g500:#667085; --g600:#475467; --g700:#344054; --g900:#101828;
+  --blue:#2e6be6; --blue-d:#2159c9; --blue-50:#eff4ff; --blue-100:#d7e3fd;
+  --ok:#079455; --ok-50:#ecfdf3; --ok-200:#abefc6; --ok-700:#067647;
+  --warn:#d92d20; --warn-50:#fef3f2;
+  --sh-xs:0 1px 2px rgba(16,24,40,.05);
+  --sh-lg:0 12px 16px -4px rgba(16,24,40,.08),0 4px 6px -2px rgba(16,24,40,.03);
+  --body:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--g100);color:var(--g900);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select{font-family:var(--body)}
+.logo{display:inline-block;font-weight:900;font-size:15px;line-height:1;letter-spacing:-.05em;transform:skewX(-12deg) scaleX(.96);transform-origin:left center}
+
+.top{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--g200);padding:0 24px;height:60px;display:flex;align-items:center;gap:16px}
+.top .ttl{font-size:14px;font-weight:600;color:var(--g600);padding-left:14px;border-left:1px solid var(--g200)}
+.top .sp{margin-left:auto;display:flex;align-items:center;gap:10px}
+.cnt{font-size:12.5px;color:var(--g500);font-weight:500}
+.btn{border:1px solid var(--blue);border-radius:8px;background:var(--blue);color:#fff;font-size:14px;font-weight:600;padding:9px 16px;cursor:pointer;box-shadow:var(--sh-xs)}
+.btn:hover{background:var(--blue-d)}
+.btn:disabled{background:var(--g300);border-color:var(--g300);cursor:default}
+.btn.ghost{background:#fff;color:var(--g700);border-color:var(--g300)}
+.btn.ghost:hover{background:var(--g50)}
+.btn.sm{padding:7px 12px;font-size:13px}
+
+.wrap{max-width:1240px;margin:0 auto;padding:24px}
+.grid{display:grid;grid-template-columns:minmax(380px,1fr) minmax(420px,1.15fr);gap:20px;align-items:start}
+
+.panel{background:#fff;border:1px solid var(--g200);border-radius:12px;overflow:hidden}
+.panel-h{padding:14px 18px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:10px}
+.panel-h h2{font-size:14px;font-weight:600;margin:0}
+.panel-h .sub{font-size:12.5px;color:var(--g500);margin-left:auto}
+
+.rows{max-height:calc(100dvh - 220px);overflow-y:auto}
+.row{padding:14px 18px;border-bottom:1px solid var(--g200);cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:6px 12px;transition:background .12s}
+.row:hover{background:var(--g25)}
+.row.on{background:var(--blue-50);box-shadow:inset 3px 0 0 var(--blue)}
+.row .a{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.row .b{font-size:12.5px;color:var(--g500);grid-column:1}
+.row .r{grid-row:1/3;align-self:center;text-align:right;font-size:12.5px;color:var(--g600);white-space:nowrap}
+.row .r b{display:block;font-size:15px;color:var(--g900);letter-spacing:-.02em}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;margin-right:5px;letter-spacing:.01em}
+.t-new{background:var(--blue-50);color:var(--blue-d)}
+.t-ok{background:var(--ok-50);color:var(--ok-700)}
+.t-warn{background:var(--warn-50);color:var(--warn)}
+.t-gray{background:var(--g100);color:var(--g600)}
+
+.empty{padding:60px 24px;text-align:center;color:var(--g500);font-size:14px;line-height:1.7}
+.empty b{display:block;color:var(--g900);font-size:16px;margin-bottom:8px}
+
+.prev{padding:18px}
+.sheet-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:14px;overflow:auto}
+#sheet{width:100%;height:auto;display:block;background:#fff;box-shadow:var(--sh-lg);border-radius:4px}
+.acts{display:flex;gap:8px;padding:14px 18px;border-top:1px solid var(--g200);background:var(--g25);flex-wrap:wrap;align-items:center}
+.acts .note{font-size:12px;color:var(--g500);margin-left:auto}
+.imgs{display:flex;gap:8px;flex-wrap:wrap;padding:0 18px 16px}
+.imgs a{display:block;width:74px;height:74px;border-radius:8px;overflow:hidden;border:1px solid var(--g200)}
+.imgs img{width:100%;height:100%;object-fit:cover;display:block}
+
+.gate{max-width:400px;margin:80px auto;background:#fff;border:1px solid var(--g200);border-radius:12px;padding:28px;box-shadow:var(--sh-lg)}
+.gate h1{font-size:20px;margin:16px 0 6px;letter-spacing:-.02em}
+.gate p{font-size:13.5px;color:var(--g500);margin:0 0 20px;line-height:1.6}
+.gate input{width:100%;font-size:15px;border:1px solid var(--g300);border-radius:8px;padding:11px 14px;box-shadow:var(--sh-xs);margin-bottom:12px}
+.gate input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(46,107,230,.14)}
+.gate .btn{width:100%;padding:12px}
+.err{font-size:13px;color:var(--warn);margin-top:12px;display:none}
+.err.on{display:block}
+
+@media (max-width:980px){
+  .grid{grid-template-columns:1fr}
+  .rows{max-height:none}
+}
+</style>
+</head>
+<body>
+
+<div id="gate" class="gate">
+  <span class="logo">MISING.MAN</span>
+  <h1>오더 관리</h1>
+  <p>내부 전용 페이지입니다. 접근키를 입력해주세요.</p>
+  <input id="k" type="password" placeholder="접근키" autocomplete="off" />
+  <button class="btn" id="go">열기</button>
+  <div class="err" id="gerr"></div>
+</div>
+
+<div id="app" style="display:none">
+  <div class="top">
+    <span class="logo">MISING.MAN</span>
+    <span class="ttl">오더 관리</span>
+    <div class="sp">
+      <span class="cnt" id="cnt"></span>
+      <button class="btn ghost sm" id="reload">새로고침</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="grid">
+      <div class="panel">
+        <div class="panel-h"><h2>접수 목록</h2><span class="sub" id="lsub"></span></div>
+        <div class="rows" id="rows"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-h"><h2>작업지시서 미리보기</h2><span class="sub" id="psub">왼쪽에서 선택하세요</span></div>
+        <div class="prev"><div class="sheet-box"><canvas id="sheet" width="1240" height="1754"></canvas></div></div>
+        <div class="imgs" id="imgs"></div>
+        <div class="acts">
+          <button class="btn" id="dl" disabled>작업지시서 다운로드 (PNG)</button>
+          <button class="btn ghost" id="dl2" disabled>2배 고해상도</button>
+          <span class="note">A4 비율 · 인쇄 가능</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var KEY = new URLSearchParams(location.search).get('k') || '';
+  var ORDERS = [];
+  var CUR = null;
+
+  function api(q){
+    return fetch('/api/orders?key=' + encodeURIComponent(KEY) + (q || ''))
+      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); });
+  }
+
+  // ── 게이트 ──
+  function openApp(){
+    $('gate').style.display = 'none';
+    $('app').style.display = 'block';
+    load();
+  }
+  $('go').addEventListener('click', function(){
+    var v = $('k').value.trim();
+    if (!v) return;
+    KEY = v;
+    api('').then(function(res){
+      if (!res.ok) { $('gerr').className = 'err on'; $('gerr').textContent = res.d.error === 'unauthorized' ? '접근키가 맞지 않습니다.' : ('오류: ' + res.d.error); return; }
+      history.replaceState(null, '', '?k=' + encodeURIComponent(KEY));
+      openApp();
+    });
+  });
+  $('k').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('go').click(); });
+  if (KEY) openApp();
+
+  // ── 목록 ──
+  function badge(o){
+    var s = '';
+    var st = o.status || '신규';
+    var cls = st === '신규' ? 't-new' : (st === '성사' ? 't-ok' : (st === '부적합·보류' ? 't-warn' : 't-gray'));
+    s += '<span class="tag ' + cls + '">' + st + '</span>';
+    if (o.grade) s += '<span class="tag t-gray">' + o.grade + '등급</span>';
+    if (o.moqOk === false) s += '<span class="tag t-warn">MOQ 미달</span>';
+    return s;
+  }
+  function fmtDate(v){
+    if (!v) return '';
+    var d = new Date(v);
+    if (isNaN(d)) return v;
+    return (d.getMonth()+1) + '/' + d.getDate();
+  }
+  function render(){
+    var box = $('rows');
+    if (!ORDERS.length) {
+      box.innerHTML = '<div class="empty"><b>접수된 오더가 없습니다</b>사이트에서 문의가 들어오면 여기에 쌓입니다.</div>';
+      return;
+    }
+    box.innerHTML = ORDERS.map(function(o, i){
+      return '<div class="row" data-i="' + i + '">' +
+        '<div class="a">' + (o.brand || '(회사명 없음)') + '</div>' +
+        '<div class="b">' + (o.no || '-') + ' · ' + (o.items || '-') + '</div>' +
+        '<div class="r"><b>' + (o.qty ? Number(o.qty).toLocaleString() + '장' : '-') + '</b>' + badge(o) + '</div>' +
+        '</div>';
+    }).join('');
+    Array.prototype.forEach.call(box.querySelectorAll('.row'), function(el){
+      el.addEventListener('click', function(){
+        Array.prototype.forEach.call(box.querySelectorAll('.row'), function(x){ x.classList.remove('on'); });
+        el.classList.add('on');
+        select(ORDERS[+el.getAttribute('data-i')]);
+      });
+    });
+  }
+  function load(){
+    $('cnt').textContent = '불러오는 중…';
+    api('').then(function(res){
+      if (!res.ok) { $('cnt').textContent = '오류: ' + res.d.error; return; }
+      ORDERS = res.d.orders || [];
+      $('cnt').textContent = '총 ' + ORDERS.length + '건';
+      $('lsub').textContent = '최신순';
+      render();
+    });
+  }
+  $('reload').addEventListener('click', load);
+
+  // ── 상세 · 작업지시서 ──
+  function select(o){
+    CUR = o;
+    $('psub').textContent = (o.no || '') + ' · ' + (o.brand || '');
+    $('dl').disabled = false;
+    $('dl2').disabled = false;
+    $('imgs').innerHTML = (o.images || []).map(function(u){
+      return '<a href="' + u + '" target="_blank" rel="noopener"><img src="' + u + '" alt="" /></a>';
+    }).join('');
+    draw(o, 1);
+  }
+
+  function wrap(ctx, text, x, y, maxW, lh){
+    var lines = String(text || '-').split(String.fromCharCode(10));
+    var cy = y;
+    for (var li = 0; li < lines.length; li++) {
+      var words = lines[li].split(' ');
+      var line = '';
+      for (var i = 0; i < words.length; i++) {
+        var test = line ? line + ' ' + words[i] : words[i];
+        if (ctx.measureText(test).width > maxW && line) {
+          ctx.fillText(line, x, cy); cy += lh; line = words[i];
+        } else { line = test; }
+        while (ctx.measureText(line).width > maxW && line.length > 1) {
+          var cut = line.length;
+          while (cut > 1 && ctx.measureText(line.slice(0, cut)).width > maxW) cut--;
+          ctx.fillText(line.slice(0, cut), x, cy); cy += lh; line = line.slice(cut);
+        }
+      }
+      ctx.fillText(line, x, cy); cy += lh;
+    }
+    return cy;
+  }
+
+  function draw(o, scale){
+    var cv = $('sheet');
+    var W = 1240, H = 1754;
+    cv.width = W * scale; cv.height = H * scale;
+    var c = cv.getContext('2d');
+    c.setTransform(scale, 0, 0, scale, 0, 0);
+    c.fillStyle = '#fff'; c.fillRect(0, 0, W, H);
+
+    var M = 64, x = M, w = W - M * 2, y = 0;
+    var INK = '#101828', SUB = '#667085', LINE = '#eaecf0', BLUE = '#2e6be6';
+
+    // 헤더
+    c.fillStyle = '#101828'; c.fillRect(0, 0, W, 128);
+    c.save();
+    c.translate(M, 76); c.transform(1, 0, -0.21, 1, 0, 0);
+    c.fillStyle = '#fff'; c.font = '900 30px Pretendard Variable, Pretendard, sans-serif';
+    c.fillText('MISING.MAN', 0, 0);
+    c.restore();
+    c.fillStyle = '#98a2b3'; c.font = '500 15px Pretendard Variable, sans-serif';
+    c.fillText('작업지시서 / WORK ORDER', M, 104);
+    c.textAlign = 'right';
+    c.fillStyle = '#fff'; c.font = '700 26px Pretendard Variable, sans-serif';
+    c.fillText(o.no || '-', W - M, 68);
+    c.fillStyle = '#98a2b3'; c.font = '500 14px Pretendard Variable, sans-serif';
+    c.fillText('접수 ' + (o.created ? String(o.created).slice(0, 10) : '-'), W - M, 96);
+    c.textAlign = 'left';
+    y = 128;
+
+    function sect(title){
+      y += 34;
+      c.fillStyle = BLUE; c.fillRect(x, y - 13, 4, 16);
+      c.fillStyle = INK; c.font = '700 17px Pretendard Variable, sans-serif';
+      c.fillText(title, x + 14, y);
+      y += 14;
+      c.strokeStyle = LINE; c.lineWidth = 1;
+      c.beginPath(); c.moveTo(x, y + 0.5); c.lineTo(x + w, y + 0.5); c.stroke();
+      y += 10;
+    }
+    function kv(pairs){
+      var colW = w / pairs.length;
+      var top = y;
+      for (var i = 0; i < pairs.length; i++) {
+        var cx = x + colW * i;
+        c.fillStyle = SUB; c.font = '500 12.5px Pretendard Variable, sans-serif';
+        c.fillText(pairs[i][0], cx, top + 20);
+        c.fillStyle = INK; c.font = '600 16px Pretendard Variable, sans-serif';
+        c.fillText(String(pairs[i][1] == null || pairs[i][1] === '' ? '-' : pairs[i][1]), cx, top + 44);
+      }
+      y = top + 62;
+    }
+    function block(label, val){
+      c.fillStyle = SUB; c.font = '600 12.5px Pretendard Variable, sans-serif';
+      c.fillText(label, x, y + 16);
+      c.fillStyle = INK; c.font = '400 14.5px Pretendard Variable, sans-serif';
+      var endY = wrap(c, val || '-', x, y + 42, w, 22);
+      y = endY + 12;
+      c.strokeStyle = '#f2f4f7';
+      c.beginPath(); c.moveTo(x, y + 0.5); c.lineTo(x + w, y + 0.5); c.stroke();
+      y += 8;
+    }
+
+    sect('발주처');
+    kv([['브랜드 · 회사명', o.brand], ['담당자', o.manager], ['연락처', o.phone]]);
+    kv([['판매 채널 · 현황', o.channel], ['유입 경로', o.source], ['등급', o.grade ? o.grade + '등급' : '-']]);
+
+    sect('오더 개요');
+    kv([['품목', o.items], ['최종 납기일', o.due], ['희망 단가', o.price]]);
+    kv([['스타일', o.styles ? o.styles + '개' : '-'], ['컬러', o.colors ? o.colors + '개' : '-'], ['사이즈', o.sizes ? o.sizes + '개' : '-'], ['총 수량', o.qty ? Number(o.qty).toLocaleString() + '장' : '-']]);
+    kv([['발주 구성', o.compose], ['원단 · 부자재', o.fabric], ['보유 자료', o.asset]]);
+
+    sect('작업지시');
+    block('주원자재 · 부자재 (소재 구성)', o.material);
+    block('디테일 내용', o.detailSpec);
+    block('사이즈 스펙', o.sizeSpec);
+    block('부위별 봉제 · 가공 방식', o.sewing);
+    block('포장 명세', o.packing);
+    block('QC 기준 · 검사 방식', (o.qc || '-') + (o.qcWays ? String.fromCharCode(10) + '검사 방식: ' + o.qcWays : ''));
+    block('그 외 전달사항', o.detail);
+
+    // 푸터
+    c.strokeStyle = LINE;
+    c.beginPath(); c.moveTo(x, H - 78.5); c.lineTo(x + w, H - 78.5); c.stroke();
+    c.fillStyle = SUB; c.font = '500 12.5px Pretendard Variable, sans-serif';
+    c.fillText('첨부 이미지 ' + ((o.images || []).length) + '장 · 진행 상태 ' + (o.status || '-'), x, H - 50);
+    c.textAlign = 'right';
+    c.fillText('MISING.MAN · 중국 후난성 용저우 의류공장', W - M, H - 50);
+    c.textAlign = 'left';
+  }
+
+  function download(scale){
+    if (!CUR) return;
+    draw(CUR, scale);
+    var cv = $('sheet');
+    var url = cv.toDataURL('image/png');
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = '작업지시서_' + (CUR.no || 'YJ') + '_' + (CUR.brand || '').replace(/[^가-힣a-zA-Z0-9]/g, '') + '.png';
+    document.body.appendChild(a); a.click(); a.remove();
+    if (scale !== 1) draw(CUR, 1);
+  }
+  $('dl').addEventListener('click', function(){ download(1); });
+  $('dl2').addEventListener('click', function(){ download(2); });
+})();
+</script>
+</body>
+</html>
