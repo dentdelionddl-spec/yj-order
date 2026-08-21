@@ -49,17 +49,25 @@ button,input{font-family:var(--body)}
     .mo b{font-weight:700;margin-left:6px;opacity:.55;font-size:11.5px}
 
     .rows{max-height:calc(100dvh - 282px);overflow-y:auto}
-    .row{position:relative;padding:16px 18px 14px;border-bottom:1px solid var(--g200);cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:7px 12px;transition:background .12s}
+        .row{position:relative;padding:16px 18px 14px;border-bottom:1px solid var(--g200);cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:7px 12px;transition:background .12s}
     .row:hover{background:var(--g25)}
     .row.on{background:var(--blue-50)}
     .row.on::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue)}
-    .r-brand{grid-column:1;grid-row:1;font-size:16px;font-weight:700;letter-spacing:-.025em;line-height:1.3;color:var(--g900)}
-    .r-no{grid-column:2;grid-row:1;align-self:center;font-size:11.5px;font-weight:600;color:var(--g400);letter-spacing:.01em}
-    .r-main{grid-column:1;grid-row:2;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+    .row.sel{background:#fff8f7}
+    .r-ck{grid-column:1;grid-row:1/4;align-self:center;width:17px;height:17px;accent-color:var(--blue);cursor:pointer;margin:0 2px 0 0}
+    .r-brand{grid-column:2;grid-row:1;font-size:16px;font-weight:700;letter-spacing:-.025em;line-height:1.3;color:var(--g900)}
+    .r-no{grid-column:3;grid-row:1;align-self:center;font-size:11.5px;font-weight:600;color:var(--g400);letter-spacing:.01em}
+    .r-main{grid-column:2;grid-row:2;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
     .r-qty{font-size:21px;font-weight:800;letter-spacing:-.035em;line-height:1;color:var(--g900)}
     .r-item{font-size:12.5px;font-weight:500;color:var(--g500);letter-spacing:-.005em}
-    .r-meta{grid-column:1;grid-row:3;align-self:end;font-size:12px;font-weight:500;color:var(--g400);letter-spacing:-.005em}
-    .r-chips{grid-column:2;grid-row:3;justify-self:end;align-self:end;display:flex;gap:5px}
+    .r-meta{grid-column:2;grid-row:3;align-self:end;font-size:12px;font-weight:500;color:var(--g400);letter-spacing:-.005em}
+    .r-chips{grid-column:3;grid-row:3;justify-self:end;align-self:end;display:flex;gap:5px}
+    .btn.danger{background:var(--warn);border-color:var(--warn)}
+    .btn.danger:hover{background:#b42318;border-color:#b42318}
+    .selbar{display:none;align-items:center;gap:10px;padding:11px 18px;background:var(--warn-50);border-bottom:1px solid #fecdca}
+    .selbar.on{display:flex}
+    .selbar span{font-size:13px;font-weight:600;color:var(--warn)}
+    .selbar .sp2{margin-left:auto;display:flex;gap:7px}
     .tag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;line-height:1;letter-spacing:-.01em;border:1px solid transparent}
     .t-new{background:var(--blue-50);color:var(--blue-d);border-color:#cfe0ff}
     .t-ok{background:var(--ok-50);color:var(--ok-700);border-color:#abefc6}
@@ -116,6 +124,13 @@ button,input{font-family:var(--body)}
       <div class="panel">
         <div class="panel-h"><h2>접수 목록</h2><span class="sub" id="lsub"></span></div>
             <div class="months" id="months"></div>
+            <div class="selbar" id="selbar">
+              <span id="selcnt"></span>
+              <div class="sp2">
+                <button class="btn ghost sm" id="selclear">선택 해제</button>
+                <button class="btn danger sm" id="seldel">삭제</button>
+              </div>
+            </div>
         <div class="rows" id="rows"></div>
       </div>
 
@@ -195,16 +210,29 @@ button,input{font-family:var(--body)}
       });
     }
 
+        // 선택 삭제
+    var SEL = {};
+    function selIds(){ return Object.keys(SEL).filter(function(k){ return SEL[k]; }); }
+    function syncSel(){
+      var ids = selIds();
+      $('selbar').className = ids.length ? 'selbar on' : 'selbar';
+      $('selcnt').textContent = ids.length + '건 선택됨';
+      Array.prototype.forEach.call($('rows').querySelectorAll('.row'), function(el){
+        var o = LIST[+el.getAttribute('data-i')];
+        if (o) el.classList.toggle('sel', !!SEL[o.id]);
+      });
+    }
     function render(){
       var box = $('rows');
       LIST = filtered();
       $('lsub').textContent = MONTH === 'all' ? '전체 ' + LIST.length + '건' : LIST.length + '건';
-      if (!LIST.length) { box.innerHTML = '<div class="empty"><b>접수된 오더가 없습니다</b>' + (MONTH === 'all' ? '사이트에서 문의가 들어오면 여기에 쌓입니다.' : '이 달에는 접수된 건이 없습니다.') + '</div>'; return; }
+      if (!LIST.length) { box.innerHTML = '<div class="empty"><b>접수된 오더가 없습니다</b>' + (MONTH === 'all' ? '사이트에서 문의가 들어오면 여기에 쌓입니다.' : '이 달에는 접수된 건이 없습니다.') + '</div>'; syncSel(); return; }
       box.innerHTML = LIST.map(function(o, i){
         var meta = [];
         if (o.due) meta.push('납기 ' + o.due);
         if (o.created) meta.push('접수 ' + String(o.created).slice(5, 10).replace('-', '.'));
         return '<div class="row" data-i="' + i + '">' +
+          '<input type="checkbox" class="r-ck"' + (SEL[o.id] ? ' checked' : '') + ' />' +
           '<div class="r-brand">' + (o.brand || '(회사명 없음)') + '</div>' +
           '<div class="r-no">' + ono(o) + '</div>' +
           '<div class="r-main"><span class="r-qty">' + (o.qty ? Number(o.qty).toLocaleString() + '장' : '-') + '</span>' +
@@ -214,13 +242,38 @@ button,input{font-family:var(--body)}
           '</div>';
       }).join('');
       Array.prototype.forEach.call(box.querySelectorAll('.row'), function(el){
+        var o = LIST[+el.getAttribute('data-i')];
+        var ck = el.querySelector('.r-ck');
+        ck.addEventListener('click', function(e){ e.stopPropagation(); });
+        ck.addEventListener('change', function(){ SEL[o.id] = ck.checked; syncSel(); });
         el.addEventListener('click', function(){
           Array.prototype.forEach.call(box.querySelectorAll('.row'), function(x){ x.classList.remove('on'); });
           el.classList.add('on');
-          select(LIST[+el.getAttribute('data-i')]);
+          select(o);
         });
       });
+      syncSel();
     }
+    $('selclear').addEventListener('click', function(){ SEL = {}; render(); });
+    $('seldel').addEventListener('click', function(){
+      var ids = selIds();
+      if (!ids.length) return;
+      if (!confirm(ids.length + '건을 삭제합니다.' + String.fromCharCode(10) + '노션 휴지통으로 이동하며 복구할 수 있습니다.')) return;
+      var btn = $('seldel');
+      btn.disabled = true; btn.textContent = '삭제 중…';
+      fetch('/api/orders?key=' + encodeURIComponent(KEY) + '&ids=' + encodeURIComponent(ids.join(',')), { method: 'DELETE' })
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          btn.disabled = false; btn.textContent = '삭제';
+          if (!d.ok) { alert('삭제 실패: ' + (d.error || '')); return; }
+          SEL = {}; CUR = null;
+          $('psub').textContent = '왼쪽에서 선택하세요';
+          $('dl').disabled = true; $('dl2').disabled = true; $('imgs').innerHTML = '';
+          var cv = $('sheet'); cv.getContext('2d').clearRect(0, 0, cv.width, cv.height);
+          load();
+        })
+        .catch(function(){ btn.disabled = false; btn.textContent = '삭제'; alert('삭제 중 오류가 발생했습니다.'); });
+    });
     function load(){
       $('cnt').textContent = '불러오는 중…';
       api('').then(function(res){
