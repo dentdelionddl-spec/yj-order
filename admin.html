@@ -10,8 +10,8 @@
 :root{
   --g25:#fcfcfd; --g50:#f9fafb; --g100:#f2f4f7; --g200:#eaecf0; --g300:#d0d5dd;
   --g400:#98a2b3; --g500:#667085; --g600:#475467; --g700:#344054; --g900:#101828;
-  --blue:#2e6be6; --blue-d:#2159c9; --blue-50:#eff4ff; --blue-100:#d7e3fd;
-  --ok:#079455; --ok-50:#ecfdf3; --ok-200:#abefc6; --ok-700:#067647;
+  --blue:#2e6be6; --blue-d:#2159c9; --blue-50:#eff4ff;
+  --ok:#079455; --ok-50:#ecfdf3; --ok-700:#067647;
   --warn:#d92d20; --warn-50:#fef3f2;
   --sh-xs:0 1px 2px rgba(16,24,40,.05);
   --sh-lg:0 12px 16px -4px rgba(16,24,40,.08),0 4px 6px -2px rgba(16,24,40,.03);
@@ -19,7 +19,7 @@
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--g100);color:var(--g900);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
-button,input,select{font-family:var(--body)}
+button,input{font-family:var(--body)}
 .logo{display:inline-block;font-weight:900;font-size:15px;line-height:1;letter-spacing:-.05em;transform:skewX(-12deg) scaleX(.96);transform-origin:left center}
 
 .top{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--g200);padding:0 24px;height:60px;display:flex;align-items:center;gap:16px}
@@ -33,8 +33,8 @@ button,input,select{font-family:var(--body)}
 .btn.ghost:hover{background:var(--g50)}
 .btn.sm{padding:7px 12px;font-size:13px}
 
-.wrap{max-width:1240px;margin:0 auto;padding:24px}
-.grid{display:grid;grid-template-columns:minmax(380px,1fr) minmax(420px,1.15fr);gap:20px;align-items:start}
+.wrap{max-width:1300px;margin:0 auto;padding:24px}
+.grid{display:grid;grid-template-columns:minmax(340px,.85fr) minmax(460px,1.3fr);gap:20px;align-items:start}
 
 .panel{background:#fff;border:1px solid var(--g200);border-radius:12px;overflow:hidden}
 .panel-h{padding:14px 18px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:10px}
@@ -49,7 +49,7 @@ button,input,select{font-family:var(--body)}
 .row .b{font-size:12.5px;color:var(--g500);grid-column:1}
 .row .r{grid-row:1/3;align-self:center;text-align:right;font-size:12.5px;color:var(--g600);white-space:nowrap}
 .row .r b{display:block;font-size:15px;color:var(--g900);letter-spacing:-.02em}
-.tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;margin-right:5px;letter-spacing:.01em}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;margin-left:5px}
 .t-new{background:var(--blue-50);color:var(--blue-d)}
 .t-ok{background:var(--ok-50);color:var(--ok-700)}
 .t-warn{background:var(--warn-50);color:var(--warn)}
@@ -60,7 +60,7 @@ button,input,select{font-family:var(--body)}
 
 .prev{padding:18px}
 .sheet-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:14px;overflow:auto}
-#sheet{width:100%;height:auto;display:block;background:#fff;box-shadow:var(--sh-lg);border-radius:4px}
+#sheet{width:100%;height:auto;display:block;background:#fff;box-shadow:var(--sh-lg)}
 .acts{display:flex;gap:8px;padding:14px 18px;border-top:1px solid var(--g200);background:var(--g25);flex-wrap:wrap;align-items:center}
 .acts .note{font-size:12px;color:var(--g500);margin-left:auto}
 .imgs{display:flex;gap:8px;flex-wrap:wrap;padding:0 18px 16px}
@@ -76,10 +76,7 @@ button,input,select{font-family:var(--body)}
 .err{font-size:13px;color:var(--warn);margin-top:12px;display:none}
 .err.on{display:block}
 
-@media (max-width:980px){
-  .grid{grid-template-columns:1fr}
-  .rows{max-height:none}
-}
+@media (max-width:1040px){ .grid{grid-template-columns:1fr} .rows{max-height:none} }
 </style>
 </head>
 <body>
@@ -111,7 +108,7 @@ button,input,select{font-family:var(--body)}
       </div>
 
       <div class="panel">
-        <div class="panel-h"><h2>작업지시서 미리보기</h2><span class="sub" id="psub">왼쪽에서 선택하세요</span></div>
+        <div class="panel-h"><h2>작업 지시서</h2><span class="sub" id="psub">왼쪽에서 선택하세요</span></div>
         <div class="prev"><div class="sheet-box"><canvas id="sheet" width="1240" height="1754"></canvas></div></div>
         <div class="imgs" id="imgs"></div>
         <div class="acts">
@@ -135,17 +132,9 @@ button,input,select{font-family:var(--body)}
     return fetch('/api/orders?key=' + encodeURIComponent(KEY) + (q || ''))
       .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); });
   }
-
-  // ── 게이트 ──
-  function openApp(){
-    $('gate').style.display = 'none';
-    $('app').style.display = 'block';
-    load();
-  }
+  function openApp(){ $('gate').style.display = 'none'; $('app').style.display = 'block'; load(); }
   $('go').addEventListener('click', function(){
-    var v = $('k').value.trim();
-    if (!v) return;
-    KEY = v;
+    var v = $('k').value.trim(); if (!v) return; KEY = v;
     api('').then(function(res){
       if (!res.ok) { $('gerr').className = 'err on'; $('gerr').textContent = res.d.error === 'unauthorized' ? '접근키가 맞지 않습니다.' : ('오류: ' + res.d.error); return; }
       history.replaceState(null, '', '?k=' + encodeURIComponent(KEY));
@@ -155,32 +144,29 @@ button,input,select{font-family:var(--body)}
   $('k').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('go').click(); });
   if (KEY) openApp();
 
-  // ── 목록 ──
+  // 오더번호 — 20260821-YJ-01
+  function ono(o){
+    if (o.orderNo) return o.orderNo;
+    var d = o.created ? String(o.created).slice(0,10).replace(/-/g, '') : '';
+    var n = String(o.no == null ? '' : o.no).replace(/[^0-9]/g, '');
+    if (n.length === 1) n = '0' + n;
+    return (d ? d + '-' : '') + 'YJ-' + (n || '00');
+  }
   function badge(o){
-    var s = '';
     var st = o.status || '신규';
     var cls = st === '신규' ? 't-new' : (st === '성사' ? 't-ok' : (st === '부적합·보류' ? 't-warn' : 't-gray'));
-    s += '<span class="tag ' + cls + '">' + st + '</span>';
+    var s = '<span class="tag ' + cls + '">' + st + '</span>';
     if (o.grade) s += '<span class="tag t-gray">' + o.grade + '등급</span>';
     if (o.moqOk === false) s += '<span class="tag t-warn">MOQ 미달</span>';
     return s;
   }
-  function fmtDate(v){
-    if (!v) return '';
-    var d = new Date(v);
-    if (isNaN(d)) return v;
-    return (d.getMonth()+1) + '/' + d.getDate();
-  }
   function render(){
     var box = $('rows');
-    if (!ORDERS.length) {
-      box.innerHTML = '<div class="empty"><b>접수된 오더가 없습니다</b>사이트에서 문의가 들어오면 여기에 쌓입니다.</div>';
-      return;
-    }
+    if (!ORDERS.length) { box.innerHTML = '<div class="empty"><b>접수된 오더가 없습니다</b>사이트에서 문의가 들어오면 여기에 쌓입니다.</div>'; return; }
     box.innerHTML = ORDERS.map(function(o, i){
       return '<div class="row" data-i="' + i + '">' +
         '<div class="a">' + (o.brand || '(회사명 없음)') + '</div>' +
-        '<div class="b">' + (o.no || '-') + ' · ' + (o.items || '-') + '</div>' +
+        '<div class="b">' + ono(o) + ' · ' + (o.items || '-') + '</div>' +
         '<div class="r"><b>' + (o.qty ? Number(o.qty).toLocaleString() + '장' : '-') + '</b>' + badge(o) + '</div>' +
         '</div>';
     }).join('');
@@ -204,137 +190,223 @@ button,input,select{font-family:var(--body)}
   }
   $('reload').addEventListener('click', load);
 
-  // ── 상세 · 작업지시서 ──
   function select(o){
     CUR = o;
-    $('psub').textContent = (o.no || '') + ' · ' + (o.brand || '');
-    $('dl').disabled = false;
-    $('dl2').disabled = false;
+    $('psub').textContent = ono(o) + ' · ' + (o.brand || '');
+    $('dl').disabled = false; $('dl2').disabled = false;
     $('imgs').innerHTML = (o.images || []).map(function(u){
       return '<a href="' + u + '" target="_blank" rel="noopener"><img src="' + u + '" alt="" /></a>';
     }).join('');
     draw(o, 1);
   }
 
-  function wrap(ctx, text, x, y, maxW, lh){
-    var lines = String(text || '-').split(String.fromCharCode(10));
+  // ── 캔버스 유틸 ──
+  var INK = '#101828', SUB = '#667085', LINE = '#98a2b3', SOFT = '#d0d5dd', LB = '#f2f4f7', BLUE = '#2e6be6';
+  function F(w, s){ return w + ' ' + s + 'px "Pretendard Variable", Pretendard, sans-serif'; }
+
+  function box(c, x, y, w, h, lw){
+    c.strokeStyle = LINE; c.lineWidth = lw || 1;
+    c.strokeRect(x + 0.5, y + 0.5, w, h);
+  }
+  function fillBox(c, x, y, w, h, bg){
+    c.fillStyle = bg; c.fillRect(x, y, w, h); box(c, x, y, w, h);
+  }
+  function ctext(c, t, x, y, w, h, font, color){
+    c.font = font; c.fillStyle = color; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillText(String(t == null ? '' : t), x + w / 2, y + h / 2 + 1);
+    c.textAlign = 'left'; c.textBaseline = 'alphabetic';
+  }
+  function ltext(c, t, x, y, w, h, font, color){
+    c.font = font; c.fillStyle = color; c.textBaseline = 'middle';
+    var s = String(t == null || t === '' ? '-' : t);
+    while (c.measureText(s).width > w - 20 && s.length > 2) s = s.slice(0, -2);
+    c.fillText(s, x + 10, y + h / 2 + 1);
+    c.textBaseline = 'alphabetic';
+  }
+  function wrapText(c, text, x, y, maxW, lh){
+    var lines = String(text == null || text === '' ? '-' : text).split(String.fromCharCode(10));
     var cy = y;
-    for (var li = 0; li < lines.length; li++) {
-      var words = lines[li].split(' ');
-      var line = '';
-      for (var i = 0; i < words.length; i++) {
+    for (var li = 0; li < lines.length; li++){
+      var words = lines[li].split(' '), line = '';
+      for (var i = 0; i < words.length; i++){
         var test = line ? line + ' ' + words[i] : words[i];
-        if (ctx.measureText(test).width > maxW && line) {
-          ctx.fillText(line, x, cy); cy += lh; line = words[i];
-        } else { line = test; }
-        while (ctx.measureText(line).width > maxW && line.length > 1) {
+        if (c.measureText(test).width > maxW && line){ c.fillText(line, x, cy); cy += lh; line = words[i]; }
+        else line = test;
+        while (c.measureText(line).width > maxW && line.length > 1){
           var cut = line.length;
-          while (cut > 1 && ctx.measureText(line.slice(0, cut)).width > maxW) cut--;
-          ctx.fillText(line.slice(0, cut), x, cy); cy += lh; line = line.slice(cut);
+          while (cut > 1 && c.measureText(line.slice(0, cut)).width > maxW) cut--;
+          c.fillText(line.slice(0, cut), x, cy); cy += lh; line = line.slice(cut);
         }
       }
-      ctx.fillText(line, x, cy); cy += lh;
+      c.fillText(line, x, cy); cy += lh;
     }
     return cy;
   }
 
   function draw(o, scale){
-    var cv = $('sheet');
-    var W = 1240, H = 1754;
+    var cv = $('sheet'), W = 1240, H = 1754;
     cv.width = W * scale; cv.height = H * scale;
     var c = cv.getContext('2d');
     c.setTransform(scale, 0, 0, scale, 0, 0);
     c.fillStyle = '#fff'; c.fillRect(0, 0, W, H);
 
-    var M = 64, x = M, w = W - M * 2, y = 0;
-    var INK = '#101828', SUB = '#667085', LINE = '#eaecf0', BLUE = '#2e6be6';
+    var M = 50, X = M, CW = W - M * 2;      // 1140
+    var LW = 700, RW = CW - LW;             // 좌 700 / 우 440
+    var RX = X + LW;
 
-    // 헤더
-    c.fillStyle = '#101828'; c.fillRect(0, 0, W, 128);
-    c.save();
-    c.translate(M, 76); c.transform(1, 0, -0.21, 1, 0, 0);
-    c.fillStyle = '#fff'; c.font = '900 30px Pretendard Variable, Pretendard, sans-serif';
-    c.fillText('MISING.MAN', 0, 0);
-    c.restore();
-    c.fillStyle = '#98a2b3'; c.font = '500 15px Pretendard Variable, sans-serif';
-    c.fillText('작업지시서 / WORK ORDER', M, 104);
-    c.textAlign = 'right';
-    c.fillStyle = '#fff'; c.font = '700 26px Pretendard Variable, sans-serif';
-    c.fillText(o.no || '-', W - M, 68);
-    c.fillStyle = '#98a2b3'; c.font = '500 14px Pretendard Variable, sans-serif';
-    c.fillText('접수 ' + (o.created ? String(o.created).slice(0, 10) : '-'), W - M, 96);
-    c.textAlign = 'left';
-    y = 128;
+    // ── 1. 타이틀 + 결재란 ──
+    var y = M, th = 110;
+    box(c, X, y, LW, th, 1.6);
+    ctext(c, '작업 지시서', X, y, LW, th - 26, F(700, 34), INK);
+    ctext(c, 'WORK ORDER · MISING.MAN', X, y + th - 34, LW, 26, F(500, 12), SUB);
 
-    function sect(title){
-      y += 34;
-      c.fillStyle = BLUE; c.fillRect(x, y - 13, 4, 16);
-      c.fillStyle = INK; c.font = '700 17px Pretendard Variable, sans-serif';
-      c.fillText(title, x + 14, y);
-      y += 14;
-      c.strokeStyle = LINE; c.lineWidth = 1;
-      c.beginPath(); c.moveTo(x, y + 0.5); c.lineTo(x + w, y + 0.5); c.stroke();
-      y += 10;
+    var ax = RX, aw = RW, alw = 56;
+    box(c, ax, y, aw, th, 1.6);
+    fillBox(c, ax, y, alw, th, LB);
+    ctext(c, '결재', ax, y, alw, th, F(600, 13), SUB);
+    var cw3 = (aw - alw) / 3;
+    var names = ['담당', '실장', '사장'];
+    for (var i = 0; i < 3; i++){
+      var cx = ax + alw + cw3 * i;
+      fillBox(c, cx, y, cw3, 30, LB);
+      ctext(c, names[i], cx, y, cw3, 30, F(600, 12.5), SUB);
+      box(c, cx, y + 30, cw3, th - 30);
     }
-    function kv(pairs){
-      var colW = w / pairs.length;
-      var top = y;
-      for (var i = 0; i < pairs.length; i++) {
-        var cx = x + colW * i;
-        c.fillStyle = SUB; c.font = '500 12.5px Pretendard Variable, sans-serif';
-        c.fillText(pairs[i][0], cx, top + 20);
-        c.fillStyle = INK; c.font = '600 16px Pretendard Variable, sans-serif';
-        c.fillText(String(pairs[i][1] == null || pairs[i][1] === '' ? '-' : pairs[i][1]), cx, top + 44);
+    y += th;
+
+    // ── 2. 기본 정보 ──
+    var rh = 42;
+    function infoRow(ry, pairs){
+      var lw = 108, vw = (LW - lw * 2) / 2;
+      var cx = X;
+      for (var i = 0; i < pairs.length; i++){
+        fillBox(c, cx, ry, lw, rh, LB);
+        ctext(c, pairs[i][0], cx, ry, lw, rh, F(600, 12.5), SUB);
+        cx += lw;
+        box(c, cx, ry, vw, rh);
+        ltext(c, pairs[i][1], cx, ry, vw, rh, F(500, 14), INK);
+        cx += vw;
       }
-      y = top + 62;
     }
-    function block(label, val){
-      c.fillStyle = SUB; c.font = '600 12.5px Pretendard Variable, sans-serif';
-      c.fillText(label, x, y + 16);
-      c.fillStyle = INK; c.font = '400 14.5px Pretendard Variable, sans-serif';
-      var endY = wrap(c, val || '-', x, y + 42, w, 22);
-      y = endY + 12;
-      c.strokeStyle = '#f2f4f7';
-      c.beginPath(); c.moveTo(x, y + 0.5); c.lineTo(x + w, y + 0.5); c.stroke();
-      y += 8;
+    infoRow(y, [['브랜드', o.brand], ['담당자', o.manager]]);
+    infoRow(y + rh, [['연락처', o.phone], ['접수일', o.created ? String(o.created).slice(0, 10) : '-']]);
+    infoRow(y + rh * 2, [['판매 채널', o.channel], ['유입 경로', o.source]]);
+
+    var olw = 130, ovw = RW - olw;
+    fillBox(c, RX, y, olw, rh, LB);
+    ctext(c, 'ORDER NO', RX, y, olw, rh, F(700, 12), SUB);
+    box(c, RX + olw, y, ovw, rh);
+    ltext(c, ono(o), RX + olw, y, ovw, rh, F(700, 16), BLUE);
+
+    fillBox(c, RX, y + rh, olw, rh, LB);
+    ctext(c, 'NAME', RX, y + rh, olw, rh, F(700, 12), SUB);
+    box(c, RX + olw, y + rh, ovw, rh);
+    ltext(c, (o.items || '-'), RX + olw, y + rh, ovw, rh, F(600, 14), INK);
+
+    fillBox(c, RX, y + rh * 2, olw, rh, LB);
+    ctext(c, '납기일', RX, y + rh * 2, olw, rh, F(700, 12), SUB);
+    box(c, RX + olw, y + rh * 2, ovw, rh);
+    ltext(c, o.due, RX + olw, y + rh * 2, ovw, rh, F(700, 15), INK);
+
+    y += rh * 3;
+
+    // ── 3. 본문 ──
+    var bodyTop = y, bodyBottom = 1490, bodyH = bodyBottom - bodyTop;
+    var hh = 34;
+
+    // 3-1. 좌: 작업 지시 내용
+    fillBox(c, X, bodyTop, LW, hh, LB);
+    c.fillStyle = BLUE; c.fillRect(X, bodyTop, 3, hh);
+    ctext(c, '작 업 지 시 내 용', X, bodyTop, LW, hh, F(700, 14), INK);
+    box(c, X, bodyTop + hh, LW, bodyH - hh);
+
+    var by = bodyTop + hh + 26, bx = X + 22, bw = LW - 44;
+    var blocks = [
+      ['주원자재 · 부자재', o.material],
+      ['디테일 내용', o.detailSpec],
+      ['사이즈 스펙', o.sizeSpec],
+      ['부위별 봉제 · 가공 방식', o.sewing],
+      ['포장 명세', o.packing],
+      ['QC 기준 · 검사 방식', (o.qc || '-') + (o.qcWays ? String.fromCharCode(10) + '검사 방식 : ' + o.qcWays : '')]
+    ];
+    for (var b = 0; b < blocks.length; b++){
+      c.font = F(700, 12.5); c.fillStyle = BLUE;
+      c.fillText('■ ' + blocks[b][0], bx, by);
+      c.font = F(400, 14); c.fillStyle = INK;
+      by = wrapText(c, blocks[b][1], bx + 14, by + 24, bw - 14, 22) + 14;
+      c.strokeStyle = '#eaecf0'; c.lineWidth = 1;
+      c.beginPath(); c.moveTo(bx, by - 6.5); c.lineTo(bx + bw, by - 6.5); c.stroke();
+      by += 12;
     }
 
-    sect('발주처');
-    kv([['브랜드 · 회사명', o.brand], ['담당자', o.manager], ['연락처', o.phone]]);
-    kv([['판매 채널 · 현황', o.channel], ['유입 경로', o.source], ['등급', o.grade ? o.grade + '등급' : '-']]);
+    // 3-2. 우: 오더 사양
+    var sx = RX, sw = RW;
+    fillBox(c, sx, bodyTop, sw, hh, LB);
+    ctext(c, '오 더 사 양', sx, bodyTop, sw, hh, F(700, 14), INK);
+    var specs = [
+      ['품목', o.items],
+      ['스타일 수', o.styles ? o.styles + '개' : '-'],
+      ['컬러 수', o.colors ? o.colors + '개' : '-'],
+      ['사이즈 수', o.sizes ? o.sizes + '개' : '-'],
+      ['컬러·사이즈당', o.colors && o.sizes && o.styles && o.qty ? Math.round(o.qty / (o.colors * o.sizes * o.styles)).toLocaleString() + '장' : '-'],
+      ['총 수량', o.qty ? Number(o.qty).toLocaleString() + '장' : '-'],
+      ['최종 납기일', o.due],
+      ['희망 단가', o.price],
+      ['원단·부자재', o.fabric],
+      ['보유 자료', o.asset],
+      ['등급', o.grade ? o.grade + '등급' : '-'],
+      ['MOQ 충족', o.moqOk === true ? '충족' : (o.moqOk === false ? '미달' : '-')],
+      ['진행 상태', o.status]
+    ];
+    var srh = 38, slw = 130;
+    for (var s2 = 0; s2 < specs.length; s2++){
+      var sy = bodyTop + hh + srh * s2;
+      fillBox(c, sx, sy, slw, srh, LB);
+      ctext(c, specs[s2][0], sx, sy, slw, srh, F(600, 12), SUB);
+      box(c, sx + slw, sy, sw - slw, srh);
+      var big = (specs[s2][0] === '총 수량');
+      ltext(c, specs[s2][1], sx + slw, sy, sw - slw, srh, F(big ? 700 : 500, big ? 16 : 13.5), big ? BLUE : INK);
+    }
+    var afterSpec = bodyTop + hh + srh * specs.length;
 
-    sect('오더 개요');
-    kv([['품목', o.items], ['최종 납기일', o.due], ['희망 단가', o.price]]);
-    kv([['스타일', o.styles ? o.styles + '개' : '-'], ['컬러', o.colors ? o.colors + '개' : '-'], ['사이즈', o.sizes ? o.sizes + '개' : '-'], ['총 수량', o.qty ? Number(o.qty).toLocaleString() + '장' : '-']]);
-    kv([['발주 구성', o.compose], ['원단 · 부자재', o.fabric], ['보유 자료', o.asset]]);
+    // 3-3. 우 하단: 발주 구성 / 첨부
+    fillBox(c, sx, afterSpec, sw, hh, LB);
+    ctext(c, '발 주 구 성', sx, afterSpec, sw, hh, F(700, 13), INK);
+    var nh = bodyBottom - afterSpec - hh;
+    box(c, sx, afterSpec + hh, sw, nh);
+    c.font = F(400, 13.5); c.fillStyle = INK;
+    var ny = wrapText(c, o.compose, sx + 16, afterSpec + hh + 26, sw - 32, 21);
+    c.font = F(400, 13); c.fillStyle = SUB;
+    wrapText(c, '첨부 상품 이미지 ' + ((o.images || []).length) + '장', sx + 16, ny + 12, sw - 32, 20);
 
-    sect('작업지시');
-    block('주원자재 · 부자재 (소재 구성)', o.material);
-    block('디테일 내용', o.detailSpec);
-    block('사이즈 스펙', o.sizeSpec);
-    block('부위별 봉제 · 가공 방식', o.sewing);
-    block('포장 명세', o.packing);
-    block('QC 기준 · 검사 방식', (o.qc || '-') + (o.qcWays ? String.fromCharCode(10) + '검사 방식: ' + o.qcWays : ''));
-    block('그 외 전달사항', o.detail);
+    // ── 4. 하단 ──
+    var fy = bodyBottom, fh = 1704 - bodyBottom;
+    fillBox(c, X, fy, LW, hh, LB);
+    ctext(c, '작 업 시 주 의 사 항', X, fy, LW, hh, F(700, 13), INK);
+    box(c, X, fy + hh, LW, fh - hh);
+    c.font = F(400, 13.5); c.fillStyle = INK;
+    wrapText(c, o.detail, X + 22, fy + hh + 26, LW - 44, 21);
 
-    // 푸터
-    c.strokeStyle = LINE;
-    c.beginPath(); c.moveTo(x, H - 78.5); c.lineTo(x + w, H - 78.5); c.stroke();
-    c.fillStyle = SUB; c.font = '500 12.5px Pretendard Variable, sans-serif';
-    c.fillText('첨부 이미지 ' + ((o.images || []).length) + '장 · 진행 상태 ' + (o.status || '-'), x, H - 50);
-    c.textAlign = 'right';
-    c.fillText('MISING.MAN · 중국 후난성 용저우 의류공장', W - M, H - 50);
-    c.textAlign = 'left';
+    fillBox(c, RX, fy, RW, hh, LB);
+    ctext(c, 'SWATCH · 원단', RX, fy, RW, hh, F(700, 13), INK);
+    box(c, RX, fy + hh, RW, fh - hh);
+    c.fillStyle = LB; c.fillRect(RX + 16, fy + hh + 18, 96, 96); box(c, RX + 16, fy + hh + 18, 96, 96);
+    c.font = F(400, 13); c.fillStyle = SUB;
+    ctext(c, '원단 스와치', RX + 16, fy + hh + 18, 96, 96, F(400, 11.5), SUB);
+    c.font = F(500, 13.5); c.fillStyle = INK;
+    wrapText(c, '원단 · 부자재 : ' + (o.fabric || '-'), RX + 126, fy + hh + 42, RW - 142, 21);
+    c.font = F(400, 13); c.fillStyle = SUB;
+    wrapText(c, '보유 자료 : ' + (o.asset || '-'), RX + 126, fy + hh + 72, RW - 142, 20);
+
+    box(c, X, M, CW, 1704 - M, 1.6);
   }
 
   function download(scale){
     if (!CUR) return;
     draw(CUR, scale);
-    var cv = $('sheet');
-    var url = cv.toDataURL('image/png');
     var a = document.createElement('a');
-    a.href = url;
-    a.download = '작업지시서_' + (CUR.no || 'YJ') + '_' + (CUR.brand || '').replace(/[^가-힣a-zA-Z0-9]/g, '') + '.png';
+    a.href = $('sheet').toDataURL('image/png');
+    a.download = '작업지시서_' + ono(CUR) + '_' + String(CUR.brand || '').replace(/[^가-힣a-zA-Z0-9]/g, '') + '.png';
     document.body.appendChild(a); a.click(); a.remove();
     if (scale !== 1) draw(CUR, 1);
   }
