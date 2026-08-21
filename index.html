@@ -150,6 +150,8 @@ details.more .cap{font-size:12.5px;color:var(--g500);margin:0 0 18px;line-height
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
 /* iOS 대응 — 그리드 오버플로 · date 인풋 · 터치 hover 고착 */
+/* 스크롤 끝에서 튕김(고무줄) 제거 */
+html,body{overscroll-behavior:none;overscroll-behavior-y:none}
 .f{min-width:0}
 .row2 > *{min-width:0}
 .f input:not([type=file]),.f select{height:44px;padding-top:0;padding-bottom:0}
