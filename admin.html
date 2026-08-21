@@ -41,27 +41,30 @@ button,input{font-family:var(--body)}
 .panel-h h2{font-size:14px;font-weight:600;margin:0}
 .panel-h .sub{font-size:12.5px;color:var(--g500);margin-left:auto}
 
-    .months{display:flex;gap:6px;padding:12px 18px;border-bottom:1px solid var(--g200);background:var(--g25);overflow-x:auto;scrollbar-width:none}
-    .months::-webkit-scrollbar{display:none}
-    .mo{flex:none;border:1px solid var(--g200);background:#fff;border-radius:999px;padding:7px 13px;font-size:12.5px;font-weight:600;color:var(--g600);cursor:pointer;white-space:nowrap;transition:.14s;font-family:inherit}
-    .mo:hover{border-color:var(--g300);background:var(--g50);color:var(--g900)}
-    .mo.on{background:var(--g900);border-color:var(--g900);color:#fff}
-    .mo b{font-weight:700;margin-left:6px;opacity:.55;font-size:11.5px}
+        .tools{display:flex;align-items:center;gap:10px;padding:11px 18px;border-bottom:1px solid var(--g200);background:var(--g25)}
+    .msel{appearance:none;-webkit-appearance:none;border:1px solid var(--g300);background:#fff;border-radius:8px;padding:8px 32px 8px 12px;font-size:13px;font-weight:600;color:var(--g700);cursor:pointer;font-family:inherit;box-shadow:var(--sh-xs);background-image:linear-gradient(45deg,transparent 50%,var(--g400) 50%),linear-gradient(135deg,var(--g400) 50%,transparent 50%);background-position:calc(100% - 16px) 51%,calc(100% - 11px) 51%;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+    .msel:hover{border-color:var(--g400)}
+    .msel:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(46,107,230,.14)}
+    .tools .rt{margin-left:auto;display:flex;gap:7px}
 
     .rows{max-height:calc(100dvh - 282px);overflow-y:auto}
-        .row{position:relative;padding:16px 18px 14px;border-bottom:1px solid var(--g200);cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:7px 12px;transition:background .12s}
+    .row{position:relative;padding:16px 18px 14px;border-bottom:1px solid var(--g200);cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:7px 12px;transition:background .12s}
     .row:hover{background:var(--g25)}
     .row.on{background:var(--blue-50)}
     .row.on::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue)}
     .row.sel{background:#fff8f7}
-    .r-ck{grid-column:1;grid-row:1/4;align-self:center;width:17px;height:17px;accent-color:var(--blue);cursor:pointer;margin:0 2px 0 0}
-    .r-brand{grid-column:2;grid-row:1;font-size:16px;font-weight:700;letter-spacing:-.025em;line-height:1.3;color:var(--g900)}
-    .r-no{grid-column:3;grid-row:1;align-self:center;font-size:11.5px;font-weight:600;color:var(--g400);letter-spacing:.01em}
-    .r-main{grid-column:2;grid-row:2;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+    .r-ck{display:none;width:17px;height:17px;accent-color:var(--blue);cursor:pointer;margin:0 2px 0 0}
+    .r-brand{grid-column:1;grid-row:1;font-size:16px;font-weight:700;letter-spacing:-.025em;line-height:1.3;color:var(--g900)}
+    .r-no{grid-column:2;grid-row:1;align-self:center;font-size:11.5px;font-weight:600;color:var(--g400);letter-spacing:.01em}
+    .r-main{grid-column:1;grid-row:2;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
     .r-qty{font-size:21px;font-weight:800;letter-spacing:-.035em;line-height:1;color:var(--g900)}
     .r-item{font-size:12.5px;font-weight:500;color:var(--g500);letter-spacing:-.005em}
-    .r-meta{grid-column:2;grid-row:3;align-self:end;font-size:12px;font-weight:500;color:var(--g400);letter-spacing:-.005em}
-    .r-chips{grid-column:3;grid-row:3;justify-self:end;align-self:end;display:flex;gap:5px}
+    .r-meta{grid-column:1;grid-row:3;align-self:end;font-size:12px;font-weight:500;color:var(--g400);letter-spacing:-.005em}
+    .r-chips{grid-column:2;grid-row:3;justify-self:end;align-self:end;display:flex;gap:5px}
+    .rows.pick .row{grid-template-columns:auto 1fr auto}
+    .rows.pick .r-ck{display:block;grid-column:1;grid-row:1/4;align-self:center}
+    .rows.pick .r-brand,.rows.pick .r-main,.rows.pick .r-meta{grid-column:2}
+    .rows.pick .r-no,.rows.pick .r-chips{grid-column:3}
     .btn.danger{background:var(--warn);border-color:var(--warn)}
     .btn.danger:hover{background:#b42318;border-color:#b42318}
     .selbar{display:none;align-items:center;gap:10px;padding:11px 18px;background:var(--warn-50);border-bottom:1px solid #fecdca}
@@ -123,7 +126,10 @@ button,input{font-family:var(--body)}
     <div class="grid">
       <div class="panel">
         <div class="panel-h"><h2>접수 목록</h2><span class="sub" id="lsub"></span></div>
-            <div class="months" id="months"></div>
+                        <div class="tools">
+              <select class="msel" id="mosel"></select>
+              <div class="rt"><button class="btn ghost sm" id="pick">선택</button></div>
+            </div>
             <div class="selbar" id="selbar">
               <span id="selcnt"></span>
               <div class="sp2">
@@ -195,27 +201,39 @@ button,input{font-family:var(--body)}
       if (MONTH === 'all') return ORDERS.slice();
       return ORDERS.filter(function(o){ return monthOf(o) === MONTH; });
     }
-    function renderMonths(){
-      var ms = {};
-      ORDERS.forEach(function(o){ var m = monthOf(o); if (m) ms[m] = (ms[m] || 0) + 1; });
-      var keys = Object.keys(ms).sort().reverse();
-      var h = '<button class="mo' + (MONTH === 'all' ? ' on' : '') + '" data-m="all">전체<b>' + ORDERS.length + '</b></button>';
-      keys.forEach(function(k){
-        var lbl = k.slice(0, 4) + '. ' + Number(k.slice(5, 7)) + '월';
-        h += '<button class="mo' + (MONTH === k ? ' on' : '') + '" data-m="' + k + '">' + lbl + '<b>' + ms[k] + '</b></button>';
+          function renderMonths(){
+        var ms = {};
+        ORDERS.forEach(function(o){ var m = monthOf(o); if (m) ms[m] = (ms[m] || 0) + 1; });
+        var keys = Object.keys(ms).sort().reverse();
+        var h = '<option value="all">전체 · ' + ORDERS.length + '건</option>';
+        keys.forEach(function(k){
+          var lbl = k.slice(0, 4) + '년 ' + Number(k.slice(5, 7)) + '월';
+          h += '<option value="' + k + '">' + lbl + ' · ' + ms[k] + '건</option>';
+        });
+        var sel = $('mosel');
+        sel.innerHTML = h;
+        if (keys.indexOf(MONTH) === -1 && MONTH !== 'all') MONTH = 'all';
+        sel.value = MONTH;
+      }
+      $('mosel').addEventListener('change', function(){ MONTH = $('mosel').value; render(); });
+
+      // 선택 모드
+      var PICK = false;
+      $('pick').addEventListener('click', function(){
+        PICK = !PICK;
+        $('rows').classList.toggle('pick', PICK);
+        $('pick').textContent = PICK ? '선택 종료' : '선택';
+        $('pick').className = PICK ? 'btn sm' : 'btn ghost sm';
+        if (!PICK) SEL = {};
+        render();
       });
-      $('months').innerHTML = h;
-      Array.prototype.forEach.call($('months').querySelectorAll('.mo'), function(el){
-        el.addEventListener('click', function(){ MONTH = el.getAttribute('data-m'); renderMonths(); render(); });
-      });
-    }
 
         // 선택 삭제
     var SEL = {};
     function selIds(){ return Object.keys(SEL).filter(function(k){ return SEL[k]; }); }
     function syncSel(){
       var ids = selIds();
-      $('selbar').className = ids.length ? 'selbar on' : 'selbar';
+              $('selbar').className = (PICK && ids.length) ? 'selbar on' : 'selbar';
       $('selcnt').textContent = ids.length + '건 선택됨';
       Array.prototype.forEach.call($('rows').querySelectorAll('.row'), function(el){
         var o = LIST[+el.getAttribute('data-i')];
