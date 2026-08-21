@@ -268,8 +268,7 @@ button,input{font-family:var(--body)}
     // ── 1. 타이틀 + 결재란 ──
     var y = M, th = 110;
     box(c, X, y, LW, th, 1.6);
-    ctext(c, '작업 지시서', X, y, LW, th - 26, F(700, 34), INK);
-    ctext(c, 'WORK ORDER · MISING.MAN', X, y + th - 34, LW, 26, F(500, 12), SUB);
+          ctext(c, '작 업 지 시 서', X, y, LW, th, F(700, 36), INK);
 
     var ax = RX, aw = RW, alw = 56;
     box(c, ax, y, aw, th, 1.6);
@@ -331,47 +330,81 @@ button,input{font-family:var(--body)}
     ctext(c, '작 업 지 시 내 용', X, bodyTop, LW, hh, F(700, 14), INK);
     box(c, X, bodyTop + hh, LW, bodyH - hh);
 
-          var bx = X + 22, bw = LW - 44;
-      var by = bodyTop + hh + 26;
+                // 줄바꿈 계산 (그리지 않고 라인만 반환)
+      function lines(txt, maxW){
+        var src = String(txt == null || txt === '' ? '-' : txt).split(String.fromCharCode(10));
+        var out = [];
+        for (var li = 0; li < src.length; li++){
+          var words = src[li].split(' '), line = '';
+          for (var i = 0; i < words.length; i++){
+            var test = line ? line + ' ' + words[i] : words[i];
+            if (c.measureText(test).width > maxW && line){ out.push(line); line = words[i]; }
+            else line = test;
+            while (c.measureText(line).width > maxW && line.length > 1){
+              var cut = line.length;
+              while (cut > 1 && c.measureText(line.slice(0, cut)).width > maxW) cut--;
+              out.push(line.slice(0, cut)); line = line.slice(cut);
+            }
+          }
+          out.push(line);
+        }
+        return out;
+      }
 
-      // 상품 이미지 (도식화) — 지시 내용 상단
+      var iy = bodyTop + hh;
       var ims = (o._im || []).filter(Boolean);
       var slots = (o.images || []).slice(0, 3).length;
+
+      // 상품 이미지 · 도식화
       if (slots) {
-                var gap = 12, cellW = (bw - gap * (slots - 1)) / slots, cellH = 450;
+        fillBox(c, X, iy, LW, 28, LB);
+        ctext(c, '상 품 이 미 지   ·   도 식 화', X, iy, LW, 28, F(600, 11.5), SUB);
+        var imgH = 430, iyy = iy + 28, cw = LW / slots;
+        box(c, X, iyy, LW, imgH);
         for (var q = 0; q < slots; q++) {
-          var qx = bx + (cellW + gap) * q;
-          fillBox(c, qx, by - 6, cellW, cellH, '#fcfcfd');
+          var qx = X + cw * q;
+          if (q) { c.strokeStyle = SOFT; c.lineWidth = 1; c.beginPath(); c.moveTo(qx + 0.5, iyy); c.lineTo(qx + 0.5, iyy + imgH); c.stroke(); }
           var im2 = ims[q];
           if (im2 && im2.naturalWidth) {
-            var k = Math.min((cellW - 16) / im2.naturalWidth, (cellH - 16) / im2.naturalHeight);
+            var k = Math.min((cw - 30) / im2.naturalWidth, (imgH - 30) / im2.naturalHeight);
             var dw = im2.naturalWidth * k, dh = im2.naturalHeight * k;
-            c.drawImage(im2, qx + (cellW - dw) / 2, by - 6 + (cellH - dh) / 2, dw, dh);
+            c.drawImage(im2, qx + (cw - dw) / 2, iyy + (imgH - dh) / 2, dw, dh);
           } else {
-            ctext(c, '이미지 ' + (q + 1), qx, by - 6, cellW, cellH, F(400, 12), SUB);
+            ctext(c, '이미지 ' + (q + 1), qx, iyy, cw, imgH, F(400, 12), '#c4cad3');
           }
         }
-        c.font = F(700, 12.5); c.fillStyle = BLUE;
-        c.fillText('■ 상품 이미지 · 도식화', bx, by - 16);
-        by += cellH + 26;
+        iy = iyy + imgH;
       }
-    var blocks = [
-      ['주원자재 · 부자재', o.material],
-      ['디테일 내용', o.detailSpec],
-      ['사이즈 스펙', o.sizeSpec],
-      ['부위별 봉제 · 가공 방식', o.sewing],
-      ['포장 명세', o.packing],
-      ['QC 기준 · 검사 방식', (o.qc || '-') + (o.qcWays ? String.fromCharCode(10) + '검사 방식 : ' + o.qcWays : '')]
-    ];
-    for (var b = 0; b < blocks.length; b++){
-      c.font = F(700, 12.5); c.fillStyle = BLUE;
-      c.fillText('■ ' + blocks[b][0], bx, by);
-      c.font = F(400, 14); c.fillStyle = INK;
-      by = wrapText(c, blocks[b][1], bx + 14, by + 24, bw - 14, 22) + 14;
-      c.strokeStyle = '#eaecf0'; c.lineWidth = 1;
-      c.beginPath(); c.moveTo(bx, by - 6.5); c.lineTo(bx + bw, by - 6.5); c.stroke();
-      by += 12;
-    }
+
+      // 작업지시 항목 표
+      var blocks = [
+        ['주원자재 · 부자재', o.material],
+        ['디테일 내용', o.detailSpec],
+        ['사이즈 스펙', o.sizeSpec],
+        ['부위별 봉제 · 가공', o.sewing],
+        ['포장 명세', o.packing],
+        ['QC 기준 · 검사', (o.qc || '-') + (o.qcWays ? String.fromCharCode(10) + '검사 방식 : ' + o.qcWays : '')]
+      ];
+      var labW = 148, valW = LW - labW, lh2 = 21;
+      for (var b = 0; b < blocks.length; b++){
+        c.font = F(400, 13.5);
+        var ls = lines(blocks[b][1], valW - 34);
+        var rh2 = Math.max(52, ls.length * lh2 + 26);
+        if (iy + rh2 > bodyBottom) rh2 = bodyBottom - iy;
+        if (rh2 < 24) break;
+        fillBox(c, X, iy, labW, rh2, LB);
+        c.font = F(600, 12.5);
+        var lb = lines(blocks[b][0], labW - 20);
+        c.fillStyle = SUB; c.textAlign = 'center';
+        for (var m = 0; m < lb.length; m++) c.fillText(lb[m], X + labW / 2, iy + rh2 / 2 + 5 - (lb.length - 1) * 8 + m * 16);
+        c.textAlign = 'left';
+        box(c, X + labW, iy, valW, rh2);
+        c.font = F(400, 13.5); c.fillStyle = INK;
+        var ty = iy + (rh2 - ls.length * lh2) / 2 + 15;
+        for (var L2 = 0; L2 < ls.length; L2++) c.fillText(ls[L2], X + labW + 17, ty + L2 * lh2);
+        iy += rh2;
+      }
+      if (iy < bodyBottom) box(c, X, iy, LW, bodyBottom - iy);
 
     // 3-2. 우: 오더 사양
     var sx = RX, sw = RW;
