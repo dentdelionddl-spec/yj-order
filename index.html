@@ -11,105 +11,141 @@
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
 <style>
 :root{
-  --page:#e9ebef; --app:#fff; --ink:#111418; --sub:#5c636e; --muted:#8b929d;
-  --line:#e8eaee; --field:#f5f6f8; --blue:#2e6be6; --blue-d:#2159c9; --blue-soft:#eaf1ff;
-  --ok:#1f9d55; --ok-bg:#eaf7ef; --ok-line:#b7e3c8;
-  --warn:#c8352c;
-  --r:12px;
+  --g25:#fcfcfd; --g50:#f9fafb; --g100:#f2f4f7; --g200:#eaecf0; --g300:#d0d5dd;
+  --g400:#98a2b3; --g500:#667085; --g600:#475467; --g700:#344054; --g900:#101828;
+  --blue:#2e6be6; --blue-d:#2159c9; --blue-50:#eff4ff; --blue-100:#d7e3fd;
+  --ok:#079455; --ok-50:#ecfdf3; --ok-200:#abefc6; --ok-700:#067647;
+  --warn:#d92d20;
+  --sh-xs:0 1px 2px rgba(16,24,40,.05);
+  --sh-sm:0 1px 3px rgba(16,24,40,.10),0 1px 2px rgba(16,24,40,.06);
+  --sh-lg:0 12px 16px -4px rgba(16,24,40,.08),0 4px 6px -2px rgba(16,24,40,.03);
+  --r-sm:8px; --r-md:10px; --r-lg:12px;
   --body:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--app);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{margin:0;background:#fff;color:var(--g900);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;font-feature-settings:'tnum' 0}
 button,input,select,textarea{font-family:var(--body)}
 a{color:inherit}
 
-.app{width:100%;max-width:520px;margin:0 auto;background:var(--app);min-height:100dvh;display:flex;flex-direction:column;position:relative}
-.scroll{flex:1;padding:0 20px 24px}
+.app{width:100%;max-width:520px;margin:0 auto;background:#fff;min-height:100dvh;display:flex;flex-direction:column;position:relative}
+.scroll{flex:1;padding:0 24px 32px}
 
-.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);padding:16px 20px 12px;border-bottom:1px solid var(--line)}
+/* 헤더 */
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.88);backdrop-filter:saturate(1.8) blur(12px);padding:0 24px;border-bottom:1px solid var(--g200);height:64px;display:flex;flex-direction:column;justify-content:center}
 .logo{display:inline-block;font-weight:900;font-size:15px;line-height:1;letter-spacing:-.05em;transform:skewX(-12deg) scaleX(.96);transform-origin:left center}
-.top .sub{display:block;margin-top:5px;font-size:11.5px;color:var(--muted);letter-spacing:.02em;font-weight:600}
+.top .sub{display:block;margin-top:6px;font-size:12px;color:var(--g500);font-weight:500;letter-spacing:-.005em}
 
-h1{font-size:25px;font-weight:800;letter-spacing:-.035em;margin:26px 0 8px;line-height:1.25}
-.lead{font-size:13.5px;color:var(--sub);margin:0 0 22px;line-height:1.6}
+/* 인트로 */
+.intro{padding:40px 0 32px}
+h1{font-size:30px;font-weight:700;letter-spacing:-.028em;margin:0 0 12px;line-height:1.27;color:var(--g900)}
+.lead{font-size:15px;color:var(--g600);margin:0;line-height:1.6;letter-spacing:-.005em}
 
-.tips{background:var(--field);border-radius:var(--r);padding:14px 16px;margin:0 0 24px}
-.tips ul{margin:0;padding:0}
-.tips li{list-style:none;font-size:12.5px;color:var(--sub);line-height:1.7;padding-left:12px;position:relative}
-.tips li::before{content:'·';position:absolute;left:2px;color:var(--muted)}
-.tips b{color:var(--ink);font-weight:700}
+.tips{background:var(--g50);border:1px solid var(--g200);border-radius:var(--r-lg);padding:16px;margin-top:24px}
+.tips ul{margin:0;padding:0;display:grid;gap:10px}
+.tips li{list-style:none;font-size:13px;color:var(--g600);line-height:1.6;padding-left:16px;position:relative;letter-spacing:-.005em}
+.tips li::before{content:'';position:absolute;left:2px;top:8px;width:4px;height:4px;border-radius:50%;background:var(--g300)}
+.tips b{color:var(--g700);font-weight:600}
 
-.sec{margin:0 0 26px}
-.sec-h{display:flex;align-items:baseline;gap:8px;margin:0 0 12px}
-.sec-h span{font-size:11px;font-weight:800;color:var(--blue);letter-spacing:.08em}
-.sec-h h2{font-size:15px;font-weight:800;letter-spacing:-.02em;margin:0}
-.sec-h em{font-style:normal;font-size:11.5px;color:var(--muted);font-weight:600;margin-left:auto}
+/* 섹션 */
+.sec{padding-top:32px;margin-top:32px;border-top:1px solid var(--g200)}
+.sec:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.sec-h{display:flex;align-items:center;gap:10px;margin:0 0 20px}
+.num{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;border-radius:6px;background:var(--blue-50);color:var(--blue);font-size:11px;font-weight:700;letter-spacing:.02em}
+.sec-h h2{font-size:16px;font-weight:600;letter-spacing:-.015em;margin:0;color:var(--g900)}
+.sec-h em{font-style:normal;font-size:12px;color:var(--g400);font-weight:500;margin-left:auto}
 
-.f{margin:0 0 10px}
-.f label{display:block;font-size:12px;font-weight:700;color:var(--sub);margin:0 0 6px}
-.f label i{font-style:normal;color:var(--blue)}
+/* 필드 */
+.f{margin:0}
+.f + .f{margin-top:16px}
+.f label{display:block;font-size:13px;font-weight:500;color:var(--g700);margin:0 0 6px;letter-spacing:-.005em}
+.f label i{font-style:normal;color:var(--blue);margin-left:1px}
+.f label em{font-style:normal;color:var(--g400);font-weight:500;margin-left:4px}
 .f input,.f select,.f textarea{
-  width:100%;font-size:15px;color:var(--ink);background:var(--field);
-  border:1px solid transparent;border-radius:var(--r);padding:13px 14px;transition:border-color .15s,background .15s;
+  width:100%;font-size:15px;color:var(--g900);background:#fff;
+  border:1px solid var(--g300);border-radius:var(--r-sm);padding:11px 14px;
+  box-shadow:var(--sh-xs);transition:border-color .15s,box-shadow .15s;letter-spacing:-.005em;
 }
-.f input::placeholder,.f textarea::placeholder{color:#b3b9c2}
-.f input:focus,.f select:focus,.f textarea:focus{outline:none;background:#fff;border-color:var(--blue)}
-.f textarea{min-height:88px;resize:vertical;line-height:1.6}
-.f small{display:block;margin-top:6px;font-size:11.5px;color:var(--muted)}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.row2 .f{margin-bottom:0}
+.f input::placeholder,.f textarea::placeholder{color:var(--g400)}
+.f input:hover,.f select:hover,.f textarea:hover{border-color:var(--g400)}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(46,107,230,.14)}
+.f textarea{min-height:92px;resize:vertical;line-height:1.6;padding-top:10px}
+.f small{display:block;margin-top:6px;font-size:12.5px;color:var(--g500);letter-spacing:-.005em}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row2 .f + .f{margin-top:0}
+.sec .row2 + .row2,.sec .row2 + .f,.sec .f + .row2{margin-top:16px}
 
-.chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{display:inline-flex;align-items:center;gap:6px;background:var(--field);border:1px solid transparent;border-radius:999px;padding:9px 14px;font-size:13.5px;font-weight:600;color:var(--sub);cursor:pointer;transition:.14s}
+/* 칩 */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;background:#fff;border:1px solid var(--g300);border-radius:var(--r-sm);padding:9px 14px;font-size:14px;font-weight:500;color:var(--g700);cursor:pointer;box-shadow:var(--sh-xs);transition:.15s;letter-spacing:-.005em}
+.chip:hover{border-color:var(--g400);background:var(--g25)}
 .chip input{position:absolute;opacity:0;width:0;height:0}
-.chip:has(input:checked){background:var(--blue);border-color:var(--blue);color:#fff}
+.chip:has(input:checked){background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:none;font-weight:600}
+.chip:has(input:focus-visible){box-shadow:0 0 0 4px rgba(46,107,230,.14)}
 
-.total{margin-top:12px;background:var(--blue-soft);border:1px solid #cfe0ff;border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.total .k{font-size:11.5px;font-weight:700;color:#3a6fd0;letter-spacing:.04em}
-.total .v{font-size:24px;font-weight:900;letter-spacing:-.04em;color:var(--blue);line-height:1.1;margin-top:2px}
-.total .f2{font-size:11.5px;color:#5b7fc4;text-align:right;font-weight:600;line-height:1.5}
+/* 수량 요약 */
+.total{margin-top:16px;background:var(--blue-50);border:1px solid var(--blue-100);border-radius:var(--r-lg);padding:16px;display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.total .k{display:block;font-size:12.5px;font-weight:500;color:#4a72c4;letter-spacing:-.005em}
+.total .v{font-size:26px;font-weight:700;letter-spacing:-.035em;color:var(--blue-d);line-height:1.15;margin-top:4px}
+.total .f2{font-size:12.5px;color:#5b7fc4;text-align:right;font-weight:500;line-height:1.55;letter-spacing:-.005em}
 
-.drop{border:1.5px dashed #d3d8e0;border-radius:var(--r);padding:22px;text-align:center;cursor:pointer;color:var(--sub);font-size:13.5px;font-weight:600;background:var(--field);transition:.15s}
-.drop:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
-.drop small{display:block;color:var(--muted);font-size:11.5px;margin-top:5px;font-weight:500}
-.thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.thumb{position:relative;width:66px;height:66px;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+/* 첨부 */
+.drop{border:1px dashed var(--g300);border-radius:var(--r-lg);padding:24px 20px;text-align:center;cursor:pointer;color:var(--g600);font-size:14px;font-weight:600;background:#fff;transition:.15s;letter-spacing:-.005em}
+.drop:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-50)}
+.drop small{display:block;color:var(--g500);font-size:12.5px;margin-top:6px;font-weight:400}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.thumb{position:relative;width:68px;height:68px;border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--g200);box-shadow:var(--sh-xs)}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.thumb button{position:absolute;top:3px;right:3px;width:19px;height:19px;border-radius:50%;border:0;background:rgba(17,20,24,.72);color:#fff;cursor:pointer;font-size:11px;line-height:1;padding:0}
+.thumb button{position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;border:0;background:rgba(16,24,40,.68);color:#fff;cursor:pointer;font-size:12px;line-height:1;padding:0;display:grid;place-items:center}
+.thumb button:hover{background:rgba(16,24,40,.88)}
 
-details.more{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:2px}
-details.more summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;font-size:13.5px;font-weight:700;background:var(--field)}
+/* 접기 */
+details.more{border:1px solid var(--g200);border-radius:var(--r-lg);overflow:hidden;background:#fff;box-shadow:var(--sh-xs)}
+details.more summary{list-style:none;cursor:pointer;padding:16px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:600;color:var(--g700);letter-spacing:-.005em}
 details.more summary::-webkit-details-marker{display:none}
-details.more summary::after{content:'+';font-size:17px;color:var(--muted);font-weight:500}
-details.more[open] summary::after{content:'–';color:var(--blue)}
-details.more .inner{padding:16px}
-details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:1.6}
+details.more summary::after{content:'';width:9px;height:9px;border-right:1.6px solid var(--g400);border-bottom:1.6px solid var(--g400);transform:rotate(45deg) translate(-2px,-2px);transition:transform .2s}
+details.more[open] summary{border-bottom:1px solid var(--g200);background:var(--g50)}
+details.more[open] summary::after{transform:rotate(225deg) translate(-2px,-2px);border-color:var(--blue)}
+details.more .inner{padding:20px 16px}
+details.more .cap{font-size:12.5px;color:var(--g500);margin:0 0 18px;line-height:1.6;letter-spacing:-.005em}
 
-.agree{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--sub);line-height:1.6;margin-top:4px}
-.agree input{margin-top:2px;accent-color:var(--blue);width:16px;height:16px;flex:none}
-.cta{position:sticky;bottom:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:12px 20px calc(12px + env(safe-area-inset-bottom))}
-.btn{width:100%;border:0;border-radius:var(--r);background:var(--blue);color:#fff;font-size:16px;font-weight:700;padding:16px;cursor:pointer;transition:background .15s,transform .1s}
-.btn:hover{background:var(--blue-d)}
-.btn:active{transform:scale(.99)}
-.btn:disabled{background:#a9bee8;cursor:default}
-.msg{font-size:12.5px;font-weight:700;color:var(--warn);margin:0 0 10px;text-align:center;display:none}
+/* 동의 · 버튼 */
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--g600);line-height:1.6;margin-top:28px;background:var(--g50);border:1px solid var(--g200);border-radius:var(--r-lg);padding:14px 16px;letter-spacing:-.005em}
+.agree input{margin-top:1px;accent-color:var(--blue);width:16px;height:16px;flex:none}
+.cta{position:sticky;bottom:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:saturate(1.8) blur(12px);border-top:1px solid var(--g200);padding:16px 24px calc(16px + env(safe-area-inset-bottom))}
+.btn{width:100%;border:1px solid var(--blue);border-radius:var(--r-sm);background:var(--blue);color:#fff;font-size:16px;font-weight:600;padding:13px 18px;cursor:pointer;box-shadow:var(--sh-xs);transition:background .15s,border-color .15s,transform .1s;letter-spacing:-.01em}
+.btn:hover{background:var(--blue-d);border-color:var(--blue-d)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:none;box-shadow:0 0 0 4px rgba(46,107,230,.2)}
+.btn:disabled{background:var(--g300);border-color:var(--g300);color:#fff;cursor:default;transform:none}
+.msg{font-size:13px;font-weight:500;color:var(--warn);margin:0 0 12px;text-align:center;display:none;letter-spacing:-.005em}
 .msg.on{display:block}
 
-.done{display:none;padding:0 20px 40px}
-.done-card{background:var(--ok-bg);border:1px solid var(--ok-line);border-radius:var(--r);padding:22px 18px;text-align:center;margin-top:26px}
-.done-card .ic{width:42px;height:42px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;margin:0 auto 12px;font-size:20px;font-weight:800}
-.done-card h2{font-size:19px;margin:0 0 6px;letter-spacing:-.03em;font-weight:800}
-.done-card p{margin:0;font-size:13px;color:#3f7b57}
-.done-no{margin-top:16px;background:#fff;border:1px solid var(--ok-line);border-radius:10px;padding:12px;font-size:20px;font-weight:900;letter-spacing:.06em;color:var(--ok)}
-.done-tip{background:var(--field);border-radius:var(--r);padding:14px 16px;margin-top:16px;font-size:12.5px;color:var(--sub);line-height:1.7}
+/* 완료 */
+.done{display:none;padding:0 24px 48px}
+.done-card{background:#fff;border:1px solid var(--g200);border-radius:var(--r-lg);padding:32px 24px;text-align:center;margin-top:40px;box-shadow:var(--sh-lg)}
+.done-card .ic{width:48px;height:48px;border-radius:50%;background:var(--ok-50);border:8px solid #f6fef9;color:var(--ok);display:grid;place-items:center;margin:0 auto 20px;font-size:20px;font-weight:700}
+.done-card h2{font-size:20px;margin:0 0 8px;letter-spacing:-.02em;font-weight:600;color:var(--g900)}
+.done-card p{margin:0;font-size:14px;color:var(--g500);line-height:1.6}
+.done-no{margin-top:20px;background:var(--ok-50);border:1px solid var(--ok-200);border-radius:var(--r-sm);padding:14px;font-size:20px;font-weight:700;letter-spacing:.04em;color:var(--ok-700)}
+.done-tip{background:var(--g50);border:1px solid var(--g200);border-radius:var(--r-lg);padding:16px;margin-top:16px;font-size:12.5px;color:var(--g600);line-height:1.85;letter-spacing:-.005em}
 
 /* PC — 가운데 정렬 단일 컬럼 */
 @media (min-width:820px){
-  body{background:var(--page)}
-  .app{width:440px;max-width:440px;min-height:100dvh;box-shadow:0 0 0 1px rgba(17,20,24,.05),0 18px 50px rgba(14,17,22,.07)}
-  .top{padding-top:20px}
-  .cta{padding-bottom:16px}
+  body{background:var(--g100)}
+  .app{width:480px;max-width:480px;min-height:100dvh;border-left:1px solid var(--g200);border-right:1px solid var(--g200);box-shadow:0 0 40px rgba(16,24,40,.05)}
+  .scroll{padding:0 32px 40px}
+  .top{padding:0 32px}
+  .cta{padding:16px 32px 20px}
+  .done{padding:0 32px 48px}
+  .intro{padding:48px 0 32px}
+}
+@media (max-width:400px){
+  .scroll{padding:0 20px 32px}
+  .top{padding:0 20px}
+  .cta{padding:14px 20px calc(14px + env(safe-area-inset-bottom))}
+  .done{padding:0 20px 40px}
+  h1{font-size:27px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -123,21 +159,22 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
   </div>
 
   <div class="scroll" id="scroll">
-    <h1>오더문의</h1>
-    <p class="lead">아래 항목만 남겨주시면 담당자가 1영업일 안에 연락드립니다. 자세한 작업지시는 상담하면서 같이 채웁니다.</p>
-
-    <div class="tips">
-      <ul>
-        <li>최소 수량은 <b>컬러 · 사이즈당 100장</b>이고, <b>1컬러 1사이즈는 200장</b>부터입니다.</li>
-        <li>잠옷 · 셔츠 · 밴딩슬랙스가 주력입니다. 그 외 블라우스 등 기타 품목은 추후 진행될 수 있도록 준비해놓겠습니다.</li>
-        <li>상품 이미지가 있으면 견적이 가장 빠릅니다.</li>
-      </ul>
+    <div class="intro">
+      <h1>오더문의</h1>
+      <p class="lead">아래 항목만 남겨주시면 담당자가 1영업일 안에 연락드립니다. 자세한 작업지시는 상담하면서 같이 채웁니다.</p>
+      <div class="tips">
+        <ul>
+          <li>최소 수량은 <b>컬러 · 사이즈당 100장</b>이고, <b>1컬러 1사이즈는 200장</b>부터입니다.</li>
+          <li>잠옷 · 셔츠 · 밴딩슬랙스가 주력입니다. 그 외 블라우스 등 기타 품목은 추후 진행될 수 있도록 준비해놓겠습니다.</li>
+          <li>상품 이미지가 있으면 견적이 가장 빠릅니다.</li>
+        </ul>
+      </div>
     </div>
 
     <form id="yj-form" novalidate>
 
       <div class="sec">
-        <div class="sec-h"><span>01</span><h2>연락처</h2></div>
+        <div class="sec-h"><span class="num">01</span><h2>연락처</h2></div>
         <div class="f"><label for="f-brand">브랜드 · 회사명 <i>*</i></label><input id="f-brand" maxlength="60" placeholder="예: 미싱맨" /></div>
         <div class="row2">
           <div class="f"><label for="f-name">담당자 <i>*</i></label><input id="f-name" maxlength="30" placeholder="이름" /></div>
@@ -146,7 +183,7 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
       </div>
 
       <div class="sec">
-        <div class="sec-h"><span>02</span><h2>품목</h2><em>중복 선택 가능</em></div>
+        <div class="sec-h"><span class="num">02</span><h2>품목</h2><em>중복 선택 가능</em></div>
         <div class="chips">
           <label class="chip"><input type="checkbox" name="items" value="잠옷·파자마" />잠옷·파자마</label>
           <label class="chip"><input type="checkbox" name="items" value="잠옷원피스" />잠옷원피스</label>
@@ -158,12 +195,12 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
       </div>
 
       <div class="sec">
-        <div class="sec-h"><span>03</span><h2>수량</h2></div>
+        <div class="sec-h"><span class="num">03</span><h2>수량</h2></div>
         <div class="row2">
           <div class="f"><label for="f-styles">스타일 수</label><input id="f-styles" type="number" min="1" max="99" step="1" value="1" /></div>
           <div class="f"><label for="f-colors">컬러 수</label><input id="f-colors" type="number" min="1" max="99" step="1" value="1" /></div>
         </div>
-        <div class="row2" style="margin-top:10px">
+        <div class="row2">
           <div class="f"><label for="f-sizes">사이즈 수</label><input id="f-sizes" type="number" min="1" max="99" step="1" value="1" /></div>
           <div class="f"><label for="f-unit">컬러·사이즈당 <i>*</i></label><input id="f-unit" type="number" min="200" max="100000" step="10" value="200" /><small id="unit-note">1컬러 1사이즈는 200장부터</small></div>
         </div>
@@ -174,13 +211,13 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
       </div>
 
       <div class="sec">
-        <div class="sec-h"><span>04</span><h2>납기 · 이미지</h2></div>
+        <div class="sec-h"><span class="num">04</span><h2>납기 · 이미지</h2></div>
         <div class="row2">
           <div class="f"><label for="f-due">최종 납기일 <i>*</i></label><input id="f-due" type="date" /></div>
           <div class="f"><label for="f-price">희망 단가</label><input id="f-price" maxlength="40" placeholder="선택" /></div>
         </div>
-        <div class="f" style="margin-top:12px">
-          <label>상품 이미지 <em style="font-style:normal;color:#8b929d;font-weight:600">최대 5장</em></label>
+        <div class="f">
+          <label>상품 이미지 <em>최대 5장</em></label>
           <div class="drop" id="f-drop">이미지 선택하기<small>완성 이미지 · 도식화 · 레퍼런스 사진</small></div>
           <input type="file" id="f-img" accept="image/*" multiple style="display:none" />
           <div class="thumbs" id="f-thumbs"></div>
@@ -204,12 +241,12 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
                 <label class="chip"><input type="checkbox" name="qcways" value="공장 기준 위임" />공장 위임</label>
               </div>
             </div>
-            <div class="f" style="margin-top:10px"><label for="f-qc">QC 기준</label><textarea id="f-qc" maxlength="1900" placeholder="예: AQL 2.5, 치수 편차 ±1cm 이내"></textarea></div>
-            <div class="row2" style="margin-top:10px">
+            <div class="f"><label for="f-qc">QC 기준</label><textarea id="f-qc" maxlength="1900" placeholder="예: AQL 2.5, 치수 편차 ±1cm 이내"></textarea></div>
+            <div class="row2" style="margin-top:16px">
               <div class="f"><label for="f-fabric">원단 확정</label><select id="f-fabric"><option value="">선택</option><option>확정</option><option>미확정</option><option>공장 소싱 요청</option></select></div>
               <div class="f"><label for="f-asset">보유 자료</label><select id="f-asset"><option value="">선택</option><option>실물 샘플</option><option>도식화·작업지시서</option><option>사진·이미지만</option><option>없음</option></select></div>
             </div>
-            <div class="f" style="margin-top:10px"><label for="f-channel">판매 채널 · 현황</label><input id="f-channel" maxlength="60" placeholder="예: 자사몰 + 지그재그" /></div>
+            <div class="f" style="margin-top:16px"><label for="f-channel">판매 채널 · 현황</label><input id="f-channel" maxlength="60" placeholder="예: 자사몰 + 지그재그" /></div>
             <div class="f"><label for="f-detail">그 외 전달사항</label><textarea id="f-detail" maxlength="1900" placeholder="참고 링크, 진행 일정, 궁금한 점"></textarea></div>
           </div>
         </details>
@@ -253,7 +290,6 @@ details.more .cap{font-size:12px;color:var(--muted);margin:0 0 14px;line-height:
     if (v > hi) v = hi;
     return v;
   }
-  // 1컬러 1사이즈면 200장, 그 외에는 컬러·사이즈당 100장
   function minUnit(){
     var c = iv($('f-colors'),1,99), z = iv($('f-sizes'),1,99);
     return (c === 1 && z === 1) ? 200 : 100;
