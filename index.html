@@ -150,6 +150,19 @@ details.more .cap{font-size:12.5px;color:var(--g500);margin:0 0 18px;line-height
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
 /* iOS 대응 — 그리드 오버플로 · date 인풋 · 터치 hover 고착 */
+
+/* 상단 사진 슬라이드 */
+.gal{display:none;position:relative;background:var(--g100)}
+.gal.on{display:block}
+.gal-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.gal-track::-webkit-scrollbar{display:none}
+.gal-track figure{flex:0 0 100%;scroll-snap-align:center;margin:0;position:relative;aspect-ratio:5/3;background:var(--g200)}
+.gal-track img{width:100%;height:100%;object-fit:cover;display:block}
+.gal-track figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 20px 14px;color:#fff;font-size:12.5px;font-weight:600;letter-spacing:-.005em;background:linear-gradient(180deg,rgba(16,24,40,0),rgba(16,24,40,.62))}
+.gal-dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:6px;pointer-events:none}
+.gal-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45);transition:width .22s,background .22s}
+.gal-dots i.on{width:18px;border-radius:3px;background:#fff}
+
 /* 스크롤 끝에서 튕김(고무줄) 제거 */
 html,body{overscroll-behavior:none;overscroll-behavior-y:none}
 
@@ -182,6 +195,16 @@ html,body{overscroll-behavior:none;overscroll-behavior-y:none}
   <div class="top">
     <span class="logo">MISING.MAN</span>
     <span class="sub">잠옷 · 셔츠 · 밴딩슬랙스 생산 공장</span>
+  </div>
+
+  <div class="gal" id="gal">
+    <div class="gal-track" id="gal-track">
+      <figure><img src="assets/hero-1.jpg" alt="용저우 봉제 라인" loading="eager" width="1000" height="600" /><figcaption>봉제 라인 · 용저우 자체 공장</figcaption></figure>
+      <figure><img src="assets/hero-2.jpg" alt="재단실" loading="lazy" width="1000" height="600" /><figcaption>재단실 · 작업대 전경</figcaption></figure>
+      <figure><img src="assets/hero-3.jpg" alt="다림질 · 마무리 라인" loading="lazy" width="1000" height="600" /><figcaption>다림질 · 마무리 라인</figcaption></figure>
+      <figure><img src="assets/hero-4.jpg" alt="현장 직원" loading="lazy" width="1000" height="600" /><figcaption>매일 아침 조회로 하루를 시작합니다</figcaption></figure>
+    </div>
+    <div class="gal-dots" id="gal-dots"><i class="on"></i><i></i><i></i><i></i></div>
   </div>
 
   <div class="scroll" id="scroll">
@@ -315,6 +338,27 @@ html,body{overscroll-behavior:none;overscroll-behavior-y:none}
   var $ = function(id){ return document.getElementById(id); };
   var f = $('yj-form');
   var images = [];
+
+    // 상단 사진 슬라이드 — 이미지가 실제로 있을 때만 노출
+    (function(){
+      var gal = $('gal'); if (!gal) return;
+      var track = $('gal-track');
+      var first = track.querySelector('img');
+      var dots = $('gal-dots').querySelectorAll('i');
+      function show(){
+        gal.classList.add('on');
+        var t2 = null;
+        track.addEventListener('scroll', function(){
+          if (t2) clearTimeout(t2);
+          t2 = setTimeout(function(){
+            var i = Math.round(track.scrollLeft / track.clientWidth);
+            for (var k = 0; k < dots.length; k++) dots[k].className = (k === i) ? 'on' : '';
+          }, 60);
+        }, { passive: true });
+      }
+      if (first.complete) { if (first.naturalWidth > 0) show(); }
+      else { first.addEventListener('load', show); }
+    })();
 
   function iv(el, lo, hi){
     var v = parseInt(el.value, 10);
