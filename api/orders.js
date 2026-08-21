@@ -68,6 +68,12 @@ function shape(page) {
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'method not allowed' });
+  if (req.query && req.query.diag === '1') {
+    const nt = process.env.NOTION_TOKEN || '';
+    const ak = process.env.ADMIN_KEY || '';
+    const names = Object.keys(process.env).filter(function(k){ return k.indexOf('NOTION') > -1 || k.indexOf('ADMIN') > -1; });
+    return res.status(200).json({ notionLen: nt.length, adminLen: ak.length, names: names, node: process.version });
+  }
   if (!process.env.NOTION_TOKEN) return res.status(500).json({ error: 'NOTION_TOKEN not set' });
   if (!process.env.ADMIN_KEY) return res.status(500).json({ error: 'ADMIN_KEY not set' });
 
