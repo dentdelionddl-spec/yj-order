@@ -41,19 +41,30 @@ button,input{font-family:var(--body)}
 .panel-h h2{font-size:14px;font-weight:600;margin:0}
 .panel-h .sub{font-size:12.5px;color:var(--g500);margin-left:auto}
 
-.rows{max-height:calc(100dvh - 220px);overflow-y:auto}
-.row{padding:14px 18px;border-bottom:1px solid var(--g200);cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:6px 12px;transition:background .12s}
-.row:hover{background:var(--g25)}
-.row.on{background:var(--blue-50);box-shadow:inset 3px 0 0 var(--blue)}
-.row .a{font-size:15px;font-weight:600;letter-spacing:-.01em}
-.row .b{font-size:12.5px;color:var(--g500);grid-column:1}
-.row .r{grid-row:1/3;align-self:center;text-align:right;font-size:12.5px;color:var(--g600);white-space:nowrap}
-.row .r b{display:block;font-size:15px;color:var(--g900);letter-spacing:-.02em}
-.tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;margin-left:5px}
-.t-new{background:var(--blue-50);color:var(--blue-d)}
-.t-ok{background:var(--ok-50);color:var(--ok-700)}
-.t-warn{background:var(--warn-50);color:var(--warn)}
-.t-gray{background:var(--g100);color:var(--g600)}
+    .months{display:flex;gap:6px;padding:12px 18px;border-bottom:1px solid var(--g200);background:var(--g25);overflow-x:auto;scrollbar-width:none}
+    .months::-webkit-scrollbar{display:none}
+    .mo{flex:none;border:1px solid var(--g200);background:#fff;border-radius:999px;padding:7px 13px;font-size:12.5px;font-weight:600;color:var(--g600);cursor:pointer;white-space:nowrap;transition:.14s;font-family:inherit}
+    .mo:hover{border-color:var(--g300);background:var(--g50);color:var(--g900)}
+    .mo.on{background:var(--g900);border-color:var(--g900);color:#fff}
+    .mo b{font-weight:700;margin-left:6px;opacity:.55;font-size:11.5px}
+
+    .rows{max-height:calc(100dvh - 282px);overflow-y:auto}
+    .row{position:relative;padding:16px 18px 14px;border-bottom:1px solid var(--g200);cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:7px 12px;transition:background .12s}
+    .row:hover{background:var(--g25)}
+    .row.on{background:var(--blue-50)}
+    .row.on::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue)}
+    .r-brand{grid-column:1;grid-row:1;font-size:16px;font-weight:700;letter-spacing:-.025em;line-height:1.3;color:var(--g900)}
+    .r-no{grid-column:2;grid-row:1;align-self:center;font-size:11.5px;font-weight:600;color:var(--g400);letter-spacing:.01em}
+    .r-main{grid-column:1;grid-row:2;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+    .r-qty{font-size:21px;font-weight:800;letter-spacing:-.035em;line-height:1;color:var(--g900)}
+    .r-item{font-size:12.5px;font-weight:500;color:var(--g500);letter-spacing:-.005em}
+    .r-meta{grid-column:1;grid-row:3;align-self:end;font-size:12px;font-weight:500;color:var(--g400);letter-spacing:-.005em}
+    .r-chips{grid-column:2;grid-row:3;justify-self:end;align-self:end;display:flex;gap:5px}
+    .tag{display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;line-height:1;letter-spacing:-.01em;border:1px solid transparent}
+    .t-new{background:var(--blue-50);color:var(--blue-d);border-color:#cfe0ff}
+    .t-ok{background:var(--ok-50);color:var(--ok-700);border-color:#abefc6}
+    .t-warn{background:var(--warn-50);color:var(--warn);border-color:#fecdca}
+    .t-gray{background:var(--g50);color:var(--g600);border-color:var(--g200)}
 
 .empty{padding:60px 24px;text-align:center;color:var(--g500);font-size:14px;line-height:1.7}
 .empty b{display:block;color:var(--g900);font-size:16px;margin-bottom:8px}
@@ -104,6 +115,7 @@ button,input{font-family:var(--body)}
     <div class="grid">
       <div class="panel">
         <div class="panel-h"><h2>접수 목록</h2><span class="sub" id="lsub"></span></div>
+            <div class="months" id="months"></div>
         <div class="rows" id="rows"></div>
       </div>
 
@@ -160,34 +172,65 @@ button,input{font-family:var(--body)}
     if (o.moqOk === false) s += '<span class="tag t-warn">MOQ 미달</span>';
     return s;
   }
-  function render(){
-    var box = $('rows');
-    if (!ORDERS.length) { box.innerHTML = '<div class="empty"><b>접수된 오더가 없습니다</b>사이트에서 문의가 들어오면 여기에 쌓입니다.</div>'; return; }
-    box.innerHTML = ORDERS.map(function(o, i){
-      return '<div class="row" data-i="' + i + '">' +
-        '<div class="a">' + (o.brand || '(회사명 없음)') + '</div>' +
-        '<div class="b">' + ono(o) + ' · ' + (o.items || '-') + '</div>' +
-        '<div class="r"><b>' + (o.qty ? Number(o.qty).toLocaleString() + '장' : '-') + '</b>' + badge(o) + '</div>' +
-        '</div>';
-    }).join('');
-    Array.prototype.forEach.call(box.querySelectorAll('.row'), function(el){
-      el.addEventListener('click', function(){
-        Array.prototype.forEach.call(box.querySelectorAll('.row'), function(x){ x.classList.remove('on'); });
-        el.classList.add('on');
-        select(ORDERS[+el.getAttribute('data-i')]);
+      // 월별 필터
+    var MONTH = 'all';
+    var LIST = [];
+    function monthOf(o){ return o.created ? String(o.created).slice(0, 7) : ''; }
+    function filtered(){
+      if (MONTH === 'all') return ORDERS.slice();
+      return ORDERS.filter(function(o){ return monthOf(o) === MONTH; });
+    }
+    function renderMonths(){
+      var ms = {};
+      ORDERS.forEach(function(o){ var m = monthOf(o); if (m) ms[m] = (ms[m] || 0) + 1; });
+      var keys = Object.keys(ms).sort().reverse();
+      var h = '<button class="mo' + (MONTH === 'all' ? ' on' : '') + '" data-m="all">전체<b>' + ORDERS.length + '</b></button>';
+      keys.forEach(function(k){
+        var lbl = k.slice(0, 4) + '. ' + Number(k.slice(5, 7)) + '월';
+        h += '<button class="mo' + (MONTH === k ? ' on' : '') + '" data-m="' + k + '">' + lbl + '<b>' + ms[k] + '</b></button>';
       });
-    });
-  }
-  function load(){
-    $('cnt').textContent = '불러오는 중…';
-    api('').then(function(res){
-      if (!res.ok) { $('cnt').textContent = '오류: ' + res.d.error; return; }
-      ORDERS = res.d.orders || [];
-      $('cnt').textContent = '총 ' + ORDERS.length + '건';
-      $('lsub').textContent = '최신순';
-      render();
-    });
-  }
+      $('months').innerHTML = h;
+      Array.prototype.forEach.call($('months').querySelectorAll('.mo'), function(el){
+        el.addEventListener('click', function(){ MONTH = el.getAttribute('data-m'); renderMonths(); render(); });
+      });
+    }
+
+    function render(){
+      var box = $('rows');
+      LIST = filtered();
+      $('lsub').textContent = MONTH === 'all' ? '전체 ' + LIST.length + '건' : LIST.length + '건';
+      if (!LIST.length) { box.innerHTML = '<div class="empty"><b>접수된 오더가 없습니다</b>' + (MONTH === 'all' ? '사이트에서 문의가 들어오면 여기에 쌓입니다.' : '이 달에는 접수된 건이 없습니다.') + '</div>'; return; }
+      box.innerHTML = LIST.map(function(o, i){
+        var meta = [];
+        if (o.due) meta.push('납기 ' + o.due);
+        if (o.created) meta.push('접수 ' + String(o.created).slice(5, 10).replace('-', '.'));
+        return '<div class="row" data-i="' + i + '">' +
+          '<div class="r-brand">' + (o.brand || '(회사명 없음)') + '</div>' +
+          '<div class="r-no">' + ono(o) + '</div>' +
+          '<div class="r-main"><span class="r-qty">' + (o.qty ? Number(o.qty).toLocaleString() + '장' : '-') + '</span>' +
+          '<span class="r-item">' + (o.items || '-') + '</span></div>' +
+          '<div class="r-meta">' + (meta.join('  ·  ') || '&nbsp;') + '</div>' +
+          '<div class="r-chips">' + badge(o) + '</div>' +
+          '</div>';
+      }).join('');
+      Array.prototype.forEach.call(box.querySelectorAll('.row'), function(el){
+        el.addEventListener('click', function(){
+          Array.prototype.forEach.call(box.querySelectorAll('.row'), function(x){ x.classList.remove('on'); });
+          el.classList.add('on');
+          select(LIST[+el.getAttribute('data-i')]);
+        });
+      });
+    }
+    function load(){
+      $('cnt').textContent = '불러오는 중…';
+      api('').then(function(res){
+        if (!res.ok) { $('cnt').textContent = '오류: ' + res.d.error; return; }
+        ORDERS = res.d.orders || [];
+        $('cnt').textContent = '총 ' + ORDERS.length + '건';
+        renderMonths();
+        render();
+      });
+    }
   $('reload').addEventListener('click', load);
 
   function select(o){
