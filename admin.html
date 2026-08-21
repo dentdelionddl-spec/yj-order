@@ -197,7 +197,18 @@ button,input{font-family:var(--body)}
     $('imgs').innerHTML = (o.images || []).map(function(u){
       return '<a href="' + u + '" target="_blank" rel="noopener"><img src="' + u + '" alt="" /></a>';
     }).join('');
+        o._im = [];
     draw(o, 1);
+    var urls = (o.images || []).slice(0, 3);
+    if (urls.length) {
+      var left = urls.length;
+      urls.forEach(function(u, i){
+        var im = new Image();
+        im.onload = function(){ o._im[i] = im; if (--left === 0 && CUR === o) draw(o, 1); };
+        im.onerror = function(){ if (--left === 0 && CUR === o) draw(o, 1); };
+        im.src = '/api/img?key=' + encodeURIComponent(KEY) + '&url=' + encodeURIComponent(u);
+      });
+    }
   }
 
   // ── 캔버스 유틸 ──
@@ -320,7 +331,30 @@ button,input{font-family:var(--body)}
     ctext(c, '작 업 지 시 내 용', X, bodyTop, LW, hh, F(700, 14), INK);
     box(c, X, bodyTop + hh, LW, bodyH - hh);
 
-    var by = bodyTop + hh + 26, bx = X + 22, bw = LW - 44;
+          var bx = X + 22, bw = LW - 44;
+      var by = bodyTop + hh + 26;
+
+      // 상품 이미지 (도식화) — 지시 내용 상단
+      var ims = (o._im || []).filter(Boolean);
+      var slots = (o.images || []).slice(0, 3).length;
+      if (slots) {
+        var gap = 12, cellW = (bw - gap * (slots - 1)) / slots, cellH = 250;
+        for (var q = 0; q < slots; q++) {
+          var qx = bx + (cellW + gap) * q;
+          fillBox(c, qx, by - 6, cellW, cellH, '#fcfcfd');
+          var im2 = ims[q];
+          if (im2 && im2.naturalWidth) {
+            var k = Math.min((cellW - 16) / im2.naturalWidth, (cellH - 16) / im2.naturalHeight);
+            var dw = im2.naturalWidth * k, dh = im2.naturalHeight * k;
+            c.drawImage(im2, qx + (cellW - dw) / 2, by - 6 + (cellH - dh) / 2, dw, dh);
+          } else {
+            ctext(c, '이미지 ' + (q + 1), qx, by - 6, cellW, cellH, F(400, 12), SUB);
+          }
+        }
+        c.font = F(700, 12.5); c.fillStyle = BLUE;
+        c.fillText('■ 상품 이미지 · 도식화', bx, by - 16);
+        by += cellH + 26;
+      }
     var blocks = [
       ['주원자재 · 부자재', o.material],
       ['디테일 내용', o.detailSpec],
