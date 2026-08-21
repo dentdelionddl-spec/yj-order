@@ -148,6 +148,21 @@ details.more .cap{font-size:12.5px;color:var(--g500);margin:0 0 18px;line-height
   h1{font-size:27px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* iOS 대응 — 그리드 오버플로 · date 인풋 · 터치 hover 고착 */
+.f{min-width:0}
+.row2 > *{min-width:0}
+.f input[type=date]{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%;height:44px;line-height:1.2;padding:0 14px;display:block}
+.f input[type=date]::-webkit-date-and-time-value{text-align:left;margin:0;padding:0}
+.f input[type=date]::-webkit-calendar-picker-indicator{margin:0 0 0 auto;padding:0;opacity:.55}
+.f input[type=date]::-webkit-datetime-edit{padding:0}
+@media (hover:none){
+  .f input:hover,.f select:hover,.f textarea:hover{border-color:var(--g300)}
+  .chip:hover{border-color:var(--g300);background:#fff}
+  .drop:hover{border-color:var(--g300);color:var(--g600);background:#fff}
+  .btn:hover{background:var(--blue);border-color:var(--blue)}
+  .thumb button:hover{background:rgba(16,24,40,.68)}
+}
 </style>
 </head>
 <body>
