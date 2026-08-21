@@ -64,6 +64,7 @@ function shape(page) {
     source: txt(P['유입 경로']),
     created: txt(P['접수일시']),
     images: txt(P['상품 이미지']) || [],
+    memo: txt(P['메모']),
   };
 }
 
@@ -72,7 +73,7 @@ export default async function handler(req, res) {
   if (!process.env.NOTION_TOKEN) return res.status(500).json({ error: 'NOTION_TOKEN not set' });
   if (!process.env.ADMIN_KEY) return res.status(500).json({ error: 'ADMIN_KEY not set' });
 
-  const key = (req.query && req.query.key) || '';
+    const key = (req.headers && req.headers['x-admin-key']) || (req.query && req.query.key) || '';
   if (key !== process.env.ADMIN_KEY) return res.status(401).json({ error: 'unauthorized' });
 
   // 삭제 (노션 휴지통으로 보관 — 복구 가능)
@@ -96,24 +97,34 @@ export default async function handler(req, res) {
   }
 
   // 진행 현황 변경
-  if (req.method === 'PATCH') {
-    const pid = (req.query && req.query.id) || '';
-    const st = (req.query && req.query.status) || '';
-    if (!pid || !st) return res.status(400).json({ error: 'id and status required' });
-    if (STATUS.indexOf(st) === -1) return res.status(400).json({ error: 'invalid status' });
+    if (req.method === 'PATCH') {
+    const b = (req.body && typeof req.body === 'object') ? req.body : {};
+    const pid = (req.query && req.query.id) || b.id || '';
+    const st = (req.query && req.query.status) || b.status || '';
+    const hasMemo = Object.prototype.hasOwnProperty.call(b, 'memo');
+    if (!pid) return res.status(400).json({ error: 'id required' });
+    if (!st && !hasMemo) return res.status(400).json({ error: 'nothing to update' });
+    if (st && STATUS.indexOf(st) === -1) return res.status(400).json({ error: 'invalid status' });
+    const props = {};
+    if (st) props['진행 상태'] = { select: { name: st } };
+    if (hasMemo) {
+      const memo = String(b.memo == null ? '' : b.memo).slice(0, 1900);
+      props['메모'] = { rich_text: memo ? [{ text: { content: memo } }] : [] };
+    }
     try {
       const r = await fetch(NOTION + '/pages/' + pid, {
         method: 'PATCH',
         headers: headers(),
-        body: JSON.stringify({ properties: { '진행 상태': { select: { name: st } } } }),
+        body: JSON.stringify({ properties: props }),
       });
       const d = await r.json();
       if (!r.ok) return res.status(502).json({ error: d.message || 'notion error' });
-      return res.status(200).json({ ok: true, status: st });
+      return res.status(200).json({ ok: true, status: st || null });
     } catch (e) {
       console.error(e);
       return res.status(500).json({ error: 'server error' });
     }
+  }
   }
 
   const id = (req.query && req.query.id) || '';
