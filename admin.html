@@ -124,6 +124,49 @@ button,input{font-family:var(--body)}
             .r-memo .mst.err{color:var(--warn)}
 
 @media (max-width:1040px){ .grid{grid-template-columns:1fr} .rows{max-height:none} }
+
+    /* 스크롤 고정 — 상하 튕김·좌우 이동 방지 */
+    html,body{overscroll-behavior:none;overscroll-behavior-y:none;overscroll-behavior-x:none;overflow-x:hidden;max-width:100%}
+    .wrap,.grid,.panel,.row{max-width:100%;min-width:0}
+
+    /* 모바일 */
+    @media (max-width:720px){
+      .top{min-height:56px;height:auto;padding:9px 14px;gap:8px}
+      .logo{font-size:14px}
+      .top .ttl{padding-left:10px;font-size:13px;white-space:nowrap}
+      .cnt{display:none}
+      .top .sp{gap:6px}
+      .btn.sm{padding:7px 11px;font-size:12px;white-space:nowrap}
+      .wrap{padding:12px}
+      .grid{gap:12px}
+      .panel{border-radius:10px}
+      .panel-h{padding:12px 14px}
+      .panel-h h2{font-size:13.5px}
+      .panel-h .sub{font-size:11.5px}
+      .tools{padding:10px 14px;gap:8px}
+      .msel{padding:8px 28px 8px 11px;font-size:12.5px}
+      .selbar{padding:10px 14px;gap:8px}
+      .selbar span{font-size:12.5px}
+      .row{padding:14px 14px 12px;gap:6px 10px}
+      .r-brand{font-size:15px}
+      .r-no{font-size:11px}
+      .r-qty{font-size:19px}
+      .r-item{font-size:12px}
+      .r-meta{font-size:11.5px}
+      .r-chips{gap:4px}
+      .r-st{font-size:10.5px;padding:5px 19px 5px 8px}
+      .tag{font-size:10.5px;padding:4px 8px}
+      .r-memo .pre{font-size:12px;padding:7px 10px}
+      .r-memo textarea{font-size:16px;min-height:66px;padding:9px 11px}
+      .r-memo .r-memosave{padding:7px 12px;font-size:12.5px}
+      .prev{padding:12px}
+      .sheet-box{padding:10px;border-radius:8px}
+      .acts{padding:12px 14px;gap:6px}
+      .acts .note{display:none}
+      .imgs{padding:0 14px 14px}
+      .imgs a{width:64px;height:64px}
+      .gate{margin:44px 16px;padding:24px}
+    }
 </style>
 </head>
 <body>
