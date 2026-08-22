@@ -115,6 +115,7 @@ export default async function handler(req, res) {
     if (hasMemo) {
       const memo = String(b.memo == null ? '' : b.memo).slice(0, 1900);
       props['메모'] = { rich_text: memo ? [{ text: { content: memo } }] : [] };
+    }
 
     // 작업지시서 항목 편집
     const F = b.fields && typeof b.fields === 'object' ? b.fields : null;
@@ -160,7 +161,6 @@ export default async function handler(req, res) {
           props[name] = { multi_select: arr.map(function(n2){ return { name: n2 }; }) };
         }
       }
-    }
     }
     try {
       const r = await fetch(NOTION + '/pages/' + pid, {
