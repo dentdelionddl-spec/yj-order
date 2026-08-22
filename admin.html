@@ -126,8 +126,8 @@ button,input{font-family:var(--body)}
 @media (max-width:1040px){ .grid{grid-template-columns:1fr} .rows{max-height:none} }
 
     /* 스크롤 고정 — 상하 튕김·좌우 이동 방지 */
-    html,body{overscroll-behavior:none;overscroll-behavior-y:none;overscroll-behavior-x:none;overflow-x:hidden;max-width:100%}
-    .wrap,.grid,.panel,.row{max-width:100%;min-width:0}
+        html,body{overscroll-behavior-y:none;overscroll-behavior-x:none}
+    .wrap,.grid,.panel,.row{min-width:0}
 
     /* 모바일 */
     @media (max-width:720px){
