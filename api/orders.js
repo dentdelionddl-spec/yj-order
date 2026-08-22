@@ -105,7 +105,8 @@ export default async function handler(req, res) {
     const gr = (req.query && req.query.grade) || b.grade || '';
     const hasMemo = Object.prototype.hasOwnProperty.call(b, 'memo');
     if (!pid) return res.status(400).json({ error: 'id required' });
-    if (!st && !gr && !hasMemo) return res.status(400).json({ error: 'nothing to update' });
+        const hasF = b.fields && typeof b.fields === 'object' && Object.keys(b.fields).length > 0;
+    if (!st && !gr && !hasMemo && !hasF) return res.status(400).json({ error: 'nothing to update' });
     if (st && STATUS.indexOf(st) === -1) return res.status(400).json({ error: 'invalid status' });
     if (gr && GRADE.indexOf(gr) === -1) return res.status(400).json({ error: 'invalid grade' });
     const props = {};
@@ -114,6 +115,52 @@ export default async function handler(req, res) {
     if (hasMemo) {
       const memo = String(b.memo == null ? '' : b.memo).slice(0, 1900);
       props['메모'] = { rich_text: memo ? [{ text: { content: memo } }] : [] };
+
+    // 작업지시서 항목 편집
+    const F = b.fields && typeof b.fields === 'object' ? b.fields : null;
+    if (F) {
+      const MAP = {
+        brand: ['브랜드·회사명', 'title'],
+        manager: ['담당자', 'rich_text'],
+        phone: ['연락처', 'phone_number'],
+        channel: ['판매 채널·현황', 'rich_text'],
+        source: ['유입 경로', 'select'],
+        items: ['품목', 'multi_select'],
+        styles: ['스타일 수', 'number'],
+        colors: ['컬러 수', 'number'],
+        sizes: ['사이즈 수', 'number'],
+        qty: ['총 수량', 'number'],
+        compose: ['발주 구성', 'rich_text'],
+        due: ['최종 납기일', 'date'],
+        price: ['희망 단가', 'rich_text'],
+        fabric: ['원단·부자재', 'select'],
+        asset: ['보유 자료', 'select'],
+        material: ['소재 구성', 'rich_text'],
+        detailSpec: ['디테일 내용', 'rich_text'],
+        sizeSpec: ['사이즈 스펙', 'rich_text'],
+        sewing: ['봉제·가공 방식', 'rich_text'],
+        packing: ['포장 명세', 'rich_text'],
+        qc: ['QC 기준', 'rich_text'],
+        qcWays: ['검사 방식', 'multi_select'],
+        detail: ['상세 내용', 'rich_text'],
+      };
+      for (const k in F) {
+        if (!MAP[k]) continue;
+        const name = MAP[k][0], type = MAP[k][1];
+        const raw = F[k];
+        const v = raw == null ? '' : String(raw).trim();
+        if (type === 'title') { if (!v) continue; props[name] = { title: [{ text: { content: v.slice(0, 200) } }] }; }
+        else if (type === 'rich_text') props[name] = { rich_text: v ? [{ text: { content: v.slice(0, 1900) } }] : [] };
+        else if (type === 'phone_number') props[name] = { phone_number: v || null };
+        else if (type === 'number') { const n = parseInt(v, 10); props[name] = { number: isNaN(n) ? null : n }; }
+        else if (type === 'date') props[name] = { date: /^\d{4}-\d{2}-\d{2}$/.test(v) ? { start: v } : null };
+        else if (type === 'select') props[name] = { select: v ? { name: v.slice(0, 90) } : null };
+        else if (type === 'multi_select') {
+          const arr = v ? v.split(',').map(function(x){ return x.trim().slice(0, 90); }).filter(Boolean).slice(0, 20) : [];
+          props[name] = { multi_select: arr.map(function(n2){ return { name: n2 }; }) };
+        }
+      }
+    }
     }
     try {
       const r = await fetch(NOTION + '/pages/' + pid, {
