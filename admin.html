@@ -210,6 +210,66 @@ button,input{font-family:var(--body)}
       .prev,.ed{padding-left:12px;padding-right:12px}
       .imgs{padding-left:12px;padding-right:12px}
     }
+
+    /* ── 디자인 마감 ── */
+    body{background:#f4f5f7;color:var(--g900)}
+    .top{height:62px;background:rgba(255,255,255,.86);backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px);border-bottom:1px solid rgba(16,24,40,.07);box-shadow:0 1px 2px rgba(16,24,40,.03)}
+    .top .ttl{color:var(--g500);font-weight:600;letter-spacing:-.01em}
+    .cnt{font-weight:600;color:var(--g400);letter-spacing:-.01em}
+    .wrap{padding:22px 24px 40px}
+    .grid{gap:16px}
+
+    .panel{border:1px solid rgba(16,24,40,.08);border-radius:14px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 12px 28px -18px rgba(16,24,40,.22);overflow:hidden}
+    .panel-h{padding:15px 18px;border-bottom:1px solid var(--g100);background:linear-gradient(180deg,#fff,#fcfcfd)}
+    .panel-h h2{font-size:14.5px;font-weight:650;letter-spacing:-.02em;color:var(--g900);display:flex;align-items:center;gap:7px}
+    .panel-h h2::before{content:'';width:3px;height:13px;border-radius:2px;background:var(--g300)}
+    .panel:first-child .panel-h h2::before{background:var(--blue)}
+    .panel-h .sub{font-size:12px;font-weight:500;color:var(--g400);letter-spacing:-.01em}
+
+    .btn{border-radius:9px;font-weight:600;letter-spacing:-.01em;transition:background .14s,border-color .14s,transform .06s,box-shadow .14s}
+    .btn:active{transform:translateY(1px)}
+    .btn.ghost{color:var(--g600);border-color:var(--g200);box-shadow:0 1px 1.5px rgba(16,24,40,.04)}
+    .btn.ghost:hover{border-color:var(--g300);background:#fff;color:var(--g900)}
+    .btn:not(.ghost):not(.danger):not(:disabled):hover{box-shadow:0 3px 10px -3px rgba(46,107,230,.5)}
+
+    .tools{background:linear-gradient(180deg,#fcfcfd,#fafbfc);border-bottom-color:var(--g100)}
+    .msel{border-radius:9px;box-shadow:0 1px 1.5px rgba(16,24,40,.04)}
+
+    .rows{scrollbar-width:thin;scrollbar-color:var(--g200) transparent}
+    .rows::-webkit-scrollbar,.ed::-webkit-scrollbar{width:9px}
+    .rows::-webkit-scrollbar-thumb,.ed::-webkit-scrollbar-thumb{background:var(--g200);border:3px solid #fff;border-radius:9px}
+    .rows::-webkit-scrollbar-thumb:hover,.ed::-webkit-scrollbar-thumb:hover{background:var(--g300)}
+    .row{border-bottom-color:var(--g100);transition:background .14s}
+    .row:last-child{border-bottom:0}
+    .row.on{background:linear-gradient(90deg,var(--blue-50),rgba(239,244,255,.35))}
+    .row.on::before{width:3px;background:linear-gradient(180deg,var(--blue),#5b8def)}
+    .r-brand{letter-spacing:-.03em}
+    .r-qty{font-variant-numeric:tabular-nums}
+    .r-no{font-variant-numeric:tabular-nums;font-size:11px;color:var(--g300)}
+    .row.on .r-no{color:var(--blue-d)}
+    .r-st{box-shadow:0 1px 1.5px rgba(16,24,40,.04)}
+    .tag{box-shadow:0 1px 1.5px rgba(16,24,40,.04)}
+    .r-memo .pre{background:#fbfcfd;border-color:var(--g100);border-left-color:var(--g200)}
+
+    .ed{scrollbar-width:thin;scrollbar-color:var(--g200) transparent}
+    .ed .gh{font-size:11px;letter-spacing:.06em;color:var(--g400);text-transform:none}
+    .ed .gh::after{background:var(--g100)}
+    .ed input,.ed select,.ed textarea{background:#fcfcfd;border-color:var(--g200);border-radius:9px;transition:border-color .14s,background .14s,box-shadow .14s}
+    .ed input:hover,.ed select:hover,.ed textarea:hover{border-color:var(--g300);background:#fff}
+    .ed input:focus,.ed select:focus,.ed textarea:focus{background:#fff}
+    .ed .fd.dirty input,.ed .fd.dirty select,.ed .fd.dirty textarea{background:#f7faff;border-color:#b9cffb}
+    .esave-bar{background:linear-gradient(180deg,#fcfcfd,#f7f8fa);border-top-color:var(--g100)}
+
+    .prev{background:#f7f8fa;padding:16px}
+    .sheet-box{background:#fff;border-color:var(--g200);border-radius:12px;padding:12px;box-shadow:inset 0 1px 3px rgba(16,24,40,.05)}
+    #sheet{border-radius:6px}
+    .acts{background:linear-gradient(180deg,#fcfcfd,#f7f8fa);border-top-color:var(--g100)}
+    .imgs a{border-color:var(--g200);box-shadow:0 1px 2px rgba(16,24,40,.05);transition:transform .14s,box-shadow .14s}
+    .imgs a:hover{transform:translateY(-1px);box-shadow:0 6px 14px -6px rgba(16,24,40,.3)}
+
+    .gate{border-radius:14px;box-shadow:0 1px 2px rgba(16,24,40,.04),0 24px 48px -28px rgba(16,24,40,.35)}
+    .empty,.ed-empty{color:var(--g400)}
+    @media (hover:none){ .btn.ghost:hover,.row:hover,.imgs a:hover{background:inherit;transform:none;box-shadow:inherit} }
 </style>
 </head>
 <body>
