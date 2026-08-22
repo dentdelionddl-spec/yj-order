@@ -336,6 +336,37 @@ button,input{font-family:var(--body)}
         el.addEventListener('input', function(){ markDirty(el, k, base); });
         el.addEventListener('change', function(){ markDirty(el, k, base); });
       });
+
+      // 수량 자동 계산
+      var G = function(k){ return $('ed').querySelector('[data-k="' + k + '"]'); };
+      var nInt = function(k){ var el = G(k); var n = parseInt(el ? el.value : '', 10); return isNaN(n) ? 0 : n; };
+      var PU = (function(){
+        var s = nInt('styles'), c = nInt('colors'), z = nInt('sizes'), q = nInt('qty');
+        var d = s * c * z;
+        return (d > 0 && q > 0) ? Math.round(q / d) : 100;
+      })();
+      function syncCompose(){
+        var s = nInt('styles'), c = nInt('colors'), z = nInt('sizes'), q = nInt('qty');
+        var el = G('compose');
+        if (!el) return;
+        el.value = s + '스타일 × ' + c + '컬러 × ' + z + '사이즈 × ' + PU + '장 = 총 ' + q.toLocaleString() + '장';
+        markDirty(el, 'compose', fval(o, 'compose'));
+      }
+      ['styles', 'colors', 'sizes'].forEach(function(k){
+        var el = G(k);
+        if (!el) return;
+        el.addEventListener('input', function(){
+          var qEl = G('qty');
+          if (qEl) { qEl.value = nInt('styles') * nInt('colors') * nInt('sizes') * PU; markDirty(qEl, 'qty', fval(o, 'qty')); }
+          syncCompose();
+        });
+      });
+      var qIn = G('qty');
+      if (qIn) qIn.addEventListener('input', function(){
+        var d = nInt('styles') * nInt('colors') * nInt('sizes'), q = nInt('qty');
+        if (d > 0 && q > 0) PU = Math.round(q / d);
+        syncCompose();
+      });
       $('esave').disabled = true;
       $('est').className = 'est'; $('est').textContent = '';
     }
