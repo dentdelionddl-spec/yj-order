@@ -34,7 +34,27 @@ button,input{font-family:var(--body)}
 .btn.sm{padding:7px 12px;font-size:13px}
 
 .wrap{max-width:1300px;margin:0 auto;padding:24px}
-.grid{display:grid;grid-template-columns:minmax(340px,.85fr) minmax(460px,1.3fr);gap:20px;align-items:start}
+    .grid{display:grid;grid-template-columns:minmax(290px,.78fr) minmax(300px,.92fr) minmax(400px,1.2fr);gap:18px;align-items:start}
+
+    /* 편집 패널 */
+    .ed{padding:4px 18px 14px;max-height:calc(100dvh - 240px);overflow-y:auto}
+    .ed .grp{margin-top:16px}
+    .ed .grp:first-child{margin-top:8px}
+    .ed .gh{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.02em;color:var(--g500);margin-bottom:8px}
+    .ed .gh::after{content:'';flex:1;height:1px;background:var(--g200)}
+    .ed .fd{margin-bottom:9px}
+    .ed .fd label{display:block;font-size:11.5px;font-weight:600;color:var(--g600);margin-bottom:4px}
+    .ed input,.ed select,.ed textarea{width:100%;font-family:inherit;font-size:13.5px;line-height:1.5;color:var(--g900);background:#fff;border:1px solid var(--g300);border-radius:8px;padding:8px 11px;box-shadow:var(--sh-xs)}
+    .ed textarea{min-height:62px;resize:vertical}
+    .ed input:focus,.ed select:focus,.ed textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(46,107,230,.14)}
+    .ed .fd.dirty label{color:var(--blue)}
+    .ed .fd.dirty input,.ed .fd.dirty select,.ed .fd.dirty textarea{border-color:var(--blue);background:var(--blue-50)}
+    .ed .two{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    .ed-empty{padding:50px 20px;text-align:center;font-size:13.5px;color:var(--g500);line-height:1.7}
+    .esave-bar{display:flex;align-items:center;gap:10px;padding:12px 18px;border-top:1px solid var(--g200);background:var(--g25)}
+    .esave-bar .est{font-size:12px;font-weight:600;color:var(--g400)}
+    .esave-bar .est.ok{color:var(--ok-700)}
+    .esave-bar .est.err{color:var(--warn)}
 
 .panel{background:#fff;border:1px solid var(--g200);border-radius:12px;overflow:hidden}
 .panel-h{padding:14px 18px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:10px}
@@ -167,6 +187,9 @@ button,input{font-family:var(--body)}
       .imgs a{width:64px;height:64px}
       .gate{margin:44px 16px;padding:24px}
     }
+
+    @media (max-width:1320px){ .grid{grid-template-columns:minmax(280px,.9fr) minmax(360px,1.15fr)} .panel.ed-panel{grid-column:1/-1} }
+    @media (max-width:1040px){ .grid{grid-template-columns:1fr} .rows{max-height:none} .ed{max-height:none} }
 </style>
 </head>
 <body>
@@ -209,6 +232,12 @@ button,input{font-family:var(--body)}
         <div class="rows" id="rows"></div>
       </div>
 
+        <div class="panel ed-panel">
+          <div class="panel-h"><h2>오더 편집</h2><span class="sub" id="esub">왼쪽에서 선택하세요</span></div>
+          <div class="ed" id="ed"><div class="ed-empty">접수 건을 선택하면<br />작업지시서 항목을 바로 고칠 수 있습니다.</div></div>
+          <div class="esave-bar"><button class="btn" id="esave" disabled>변경사항 저장</button><span class="est" id="est"></span></div>
+        </div>
+
       <div class="panel">
         <div class="panel-h"><h2>작업 지시서</h2><span class="sub" id="psub">왼쪽에서 선택하세요</span></div>
         <div class="prev"><div class="sheet-box"><canvas id="sheet" width="1240" height="1754"></canvas></div></div>
@@ -233,6 +262,123 @@ button,input{font-family:var(--body)}
     if (location.search) history.replaceState(null, '', location.pathname);
     var ORDERS = [];
     var CUR = null;
+
+    // ── 오더 편집 패널 ──
+    var FABRIC = ['', '확정', '미확정', '공장 소싱 요청'];
+    var ASSET = ['', '실물 샘플', '도식화·작업지시서', '사진·이미지만', '없음'];
+    var SOURCE = ['', '스레드', '인스타', '직접입력', '기타'];
+    var EF = [
+      ['발주처', [
+        ['brand', '브랜드·회사명', 'text'],
+        ['manager', '담당자', 'text'],
+        ['phone', '연락처', 'text'],
+        ['channel', '판매 채널·현황', 'text'],
+        ['source', '유입 경로', 'sel', SOURCE]
+      ]],
+      ['오더 개요', [
+        ['items', '품목 (쉼표로 구분)', 'text'],
+        ['styles', '스타일 수', 'num'],
+        ['colors', '컬러 수', 'num'],
+        ['sizes', '사이즈 수', 'num'],
+        ['qty', '총 수량', 'num'],
+        ['compose', '발주 구성', 'text'],
+        ['due', '최종 납기일', 'date'],
+        ['price', '희망 단가', 'text'],
+        ['fabric', '원단·부자재', 'sel', FABRIC],
+        ['asset', '보유 자료', 'sel', ASSET]
+      ]],
+      ['작업 지시', [
+        ['material', '주원자재 · 부자재', 'area'],
+        ['detailSpec', '디테일 내용', 'area'],
+        ['sizeSpec', '사이즈 스펙', 'area'],
+        ['sewing', '부위별 봉제 · 가공', 'area'],
+        ['packing', '포장 명세', 'area'],
+        ['qc', 'QC 기준', 'area'],
+        ['qcWays', '검사 방식 (쉼표로 구분)', 'text'],
+        ['detail', '그 외 전달사항', 'area']
+      ]]
+    ];
+    var PAIR = { styles: 1, colors: 1, sizes: 1, qty: 1 };
+
+    function fval(o, k){ var v = o[k]; return v == null ? '' : String(v); }
+
+    function buildEditor(o){
+      var h = '';
+      EF.forEach(function(g){
+        h += '<div class="grp"><div class="gh">' + g[0] + '</div>';
+        var open2 = false;
+        g[1].forEach(function(f){
+          var k = f[0], label = f[1], type = f[2], opts = f[3];
+          var v = esc(fval(o, k));
+          var inner;
+          if (type === 'area') inner = '<textarea data-k="' + k + '">' + v + '</textarea>';
+          else if (type === 'sel') {
+            inner = '<select data-k="' + k + '">';
+            var cur = fval(o, k), has = false;
+            opts.forEach(function(x){ if (x === cur) has = true; inner += '<option value="' + esc(x) + '"' + (x === cur ? ' selected' : '') + '>' + (x || '—') + '</option>'; });
+            if (!has && cur) inner += '<option value="' + esc(cur) + '" selected>' + esc(cur) + '</option>';
+            inner += '</select>';
+          }
+          else if (type === 'date') inner = '<input type="date" data-k="' + k + '" value="' + v + '" />';
+          else if (type === 'num') inner = '<input type="number" inputmode="numeric" data-k="' + k + '" value="' + v + '" />';
+          else inner = '<input type="text" data-k="' + k + '" value="' + v + '" />';
+          var fd = '<div class="fd" data-fd="' + k + '"><label>' + label + '</label>' + inner + '</div>';
+          if (PAIR[k]) { if (!open2) { h += '<div class="two">'; open2 = true; } h += fd; }
+          else { if (open2) { h += '</div>'; open2 = false; } h += fd; }
+        });
+        if (open2) h += '</div>';
+        h += '</div>';
+      });
+      $('ed').innerHTML = h;
+      Array.prototype.forEach.call($('ed').querySelectorAll('[data-k]'), function(el){
+        var k = el.getAttribute('data-k');
+        var base = fval(o, k);
+        el.addEventListener('input', function(){ markDirty(el, k, base); });
+        el.addEventListener('change', function(){ markDirty(el, k, base); });
+      });
+      $('esave').disabled = true;
+      $('est').className = 'est'; $('est').textContent = '';
+    }
+
+    function markDirty(el, k, base){
+      var fd = el.closest('.fd');
+      var dirty = String(el.value) !== base;
+      if (fd) fd.className = dirty ? 'fd dirty' : 'fd';
+      $('esave').disabled = $('ed').querySelectorAll('.fd.dirty').length === 0;
+      $('est').className = 'est'; $('est').textContent = '';
+    }
+
+    $('esave').addEventListener('click', function(){
+      if (!CUR) return;
+      var o = CUR, fields = {};
+      Array.prototype.forEach.call($('ed').querySelectorAll('.fd.dirty [data-k]'), function(el){
+        fields[el.getAttribute('data-k')] = el.value;
+      });
+      if (!Object.keys(fields).length) return;
+      var btn = $('esave');
+      btn.disabled = true;
+      $('est').className = 'est'; $('est').textContent = '저장 중…';
+      fetch('/api/orders', {
+        method: 'PATCH',
+        headers: hdr({ 'Content-Type': 'application/json' }),
+        body: JSON.stringify({ id: o.id, fields: fields })
+      })
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          if (!d.ok) { btn.disabled = false; $('est').className = 'est err'; $('est').textContent = '저장 실패 · ' + (d.error || ''); return; }
+          for (var k in fields) o[k] = fields[k];
+          $('est').className = 'est ok'; $('est').textContent = '저장됨';
+          buildEditor(o);
+          $('est').className = 'est ok'; $('est').textContent = '저장됨';
+          render();
+          var el = $('rows').querySelector('.row[data-i]');
+          Array.prototype.forEach.call($('rows').querySelectorAll('.row'), function(x){
+            if (LIST[+x.getAttribute('data-i')] === o) x.classList.add('on');
+          });
+          draw(o, 1);
+        })
+        .catch(function(){ btn.disabled = false; $('est').className = 'est err'; $('est').textContent = '저장 중 오류'; });
+    });
 
     function hdr(extra){
       var h = { 'x-admin-key': KEY };
@@ -490,6 +636,8 @@ button,input{font-family:var(--body)}
   function select(o){
     CUR = o;
     $('psub').textContent = ono(o) + ' · ' + (o.brand || '');
+      $('esub').textContent = ono(o) + ' · ' + (o.brand || '');
+      buildEditor(o);
     $('dl').disabled = false; $('dl2').disabled = false;
     $('imgs').innerHTML = (o.images || []).map(function(u){
       return '<a href="' + u + '" target="_blank" rel="noopener"><img src="' + u + '" alt="" /></a>';
