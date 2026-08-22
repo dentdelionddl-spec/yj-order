@@ -28,6 +28,12 @@
 button,input,select,textarea{font-family:var(--body)}
 a{color:inherit}
 
+    /* 화면 폭 100% 고정 — 좌우 스크롤 방지 */
+    html{overflow-x:clip}
+    body{width:100%;max-width:100%;overflow-x:clip}
+    .app,.scroll,.top,.sec,.f{max-width:100%;min-width:0}
+    img,canvas,select,input,textarea,button{max-width:100%}
+
 .app{width:100%;max-width:520px;margin:0 auto;background:#fff;min-height:100dvh;display:flex;flex-direction:column;position:relative}
 .scroll{flex:1;padding:0 24px 32px}
 
