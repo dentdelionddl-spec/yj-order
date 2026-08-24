@@ -9,6 +9,24 @@
 <meta property="og:description" content="잠옷·셔츠·밴딩슬랙스 생산 공장. 컬러·사이즈당 100장부터." />
 <meta name="theme-color" content="#ffffff" />
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+    // 일별 방문 집계 — 노션 아카이빙
+    (function(){
+      try {
+        var day = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+        var seen = localStorage.getItem("yjv");
+        var first = seen !== day;
+        if (first) localStorage.setItem("yjv", day);
+        fetch("/api/visit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          keepalive: true,
+          body: JSON.stringify({ ref: document.referrer || "", first: first })
+        }).catch(function(){});
+      } catch (e) {}
+    })();
+  </script>
 <style>
 :root{
   --g25:#fcfcfd; --g50:#f9fafb; --g100:#f2f4f7; --g200:#eaecf0; --g300:#d0d5dd;
