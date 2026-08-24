@@ -1,7 +1,7 @@
 // 일별 방문 집계 — 노션 '방문 통계' DB에 날짜별로 누적
 // 환경변수: NOTION_TOKEN(필수), VISIT_DB_ID(선택)
 
-const DB_ID = process.env.VISIT_DB_ID || 'd9bb1b65e72f4918bed472d1ff7d7299';
+const DB_ID = process.env.VISIT_DB_ID || '22b96ecfb203408295a3f8755c6935b6';
 const NOTION_VERSION = '2022-06-28';
 const NOTION = 'https://api.notion.com/v1';
 
