@@ -70,6 +70,29 @@ async function uploadOne(img) {
   return { id: cd.id, name: name };
 }
 
+// 새 문의 슬랙 알림 — 환경변수 SLACK_WEBHOOK_URL (없으면 건너뜀, 실패해도 접수에는 영향 없음)
+async function notifySlack(o) {
+  const url = process.env.SLACK_WEBHOOK_URL;
+  if (!url) return;
+  const icon = { A: '🔥', B: '🟢', C: '⚪' }[o.grade] || '🔔';
+  const lines = o.lines.filter(([, v]) => v).map(([k, v]) => '*' + k + '*  ' + v).join('\n');
+  const buttons = [{ type: 'button', text: { type: 'plain_text', text: '관리자에서 보기' }, url: o.admin, style: 'primary' }];
+  if (o.notion) buttons.push({ type: 'button', text: { type: 'plain_text', text: '노션에서 보기' }, url: o.notion });
+  const body = {
+    text: icon + ' 새 문의 ' + (o.orderNo || '') + ' · ' + o.grade + '등급 · ' + o.brand,
+    blocks: [
+      { type: 'header', text: { type: 'plain_text', text: icon + ' 새 문의 · ' + o.grade + '등급' } },
+      { type: 'section', text: { type: 'mrkdwn', text: '*' + o.brand + '*' + (o.orderNo ? '  `' + o.orderNo + '`' : '') + '\n' + lines } },
+      { type: 'actions', elements: buttons },
+    ],
+  };
+  const ac = new AbortController();
+  const t = setTimeout(() => ac.abort(), 3000);
+  try {
+    await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: ac.signal });
+  } catch (e) { console.error('slack notify failed', e); } finally { clearTimeout(t); }
+}
+
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'method not allowed' });
@@ -176,6 +199,20 @@ export default async function handler(req, res) {
         });
       } catch (e) { console.error('orderNo patch failed', e); }
     }
+
+    await notifySlack({
+      grade: P['등급'].select.name, brand, orderNo, admin: 'https://yj-order.vercel.app/admin.html', notion: data.url,
+      lines: [
+        ['담당자', manager + ' · ' + phone],
+        ['품목', items.join(', ')],
+        ['수량', rowsText + (moqOk ? '' : ' (MOQ 미달)')],
+        ['최종 납기', due],
+        ['원단', txt(b.fabric)],
+        ['보유 자료', txt(b.asset)],
+        ['희망 단가', txt(b.price, 40)],
+        ['유입', txt(b.source) || '스레드'],
+      ],
+    });
 
     return res.status(200).json({ ok: true, no, orderNo });
   } catch (e) {
