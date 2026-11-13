@@ -1174,12 +1174,14 @@ body{touch-action:pan-y pinch-zoom}
 
     // ── 1. 머리 (높이 140) ──
     c.fillStyle = INK; c.fillRect(0, 0, W, 10);
-    var y = M, HH = 140;
+    var y = M, HH = 168; // 메타 6줄 × 28
     txt(c, 'MISING.MAN', X, y + 24, F(900, 26), INK);
     c.font = F(900, 26); var lw0 = c.measureText('MISING.MAN').width;
     txt(c, 'APPAREL OEM  ·  WORK ORDER', X + lw0 + 14, y + 23, F(700, 11.5), SUB);
     txt(c, '작업지시서', X, y + 100, F(800, 46), INK);
     txt(c, ono(o), X, y + HH - 4, F(700, 19), INK2);
+    c.font = F(700, 19); var onw = c.measureText(ono(o)).width;
+    if (o.brand) { vline(c, X + onw + 16, y + HH - 20, y + HH - 1, LINE2); txt(c, fit(c, o.brand, 300, F(800, 19)), X + onw + 32, y + HH - 4, F(800, 19), INK); }
 
     var aw = 92, ax = R - aw * 3;
     strokeR(c, ax, y, aw * 3, HH, RAD, LINE2);
@@ -1191,8 +1193,8 @@ body{touch-action:pan-y pinch-zoom}
 
     var todayK = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10), due = o.due, dd = '';
     if (due) { var days = Math.round((Date.parse(due) - Date.parse(todayK)) / 864e5); dd = days >= 0 ? 'D-' + days : 'D+' + (-days); }
-    var meta = [['발행일', ymdDot(todayK)], ['접수일', ymdDot(o.created)], ['보유 자료', o.asset || '-'], ['발주처', o.brand || '-']];
-    var mw = 248, mx0 = ax - COL - mw, rh0 = HH / meta.length;
+    var meta = [['발행일', ymdDot(todayK)], ['접수일', ymdDot(o.created)], ['보유 자료', o.asset || '-'], ['브랜드', o.brand || '-'], ['담당자', o.manager || '-'], ['연락처', o.phone || '-']];
+    var mw = 264, mx0 = ax - COL - mw, rh0 = HH / meta.length;
     hline(c, mx0, mx0 + mw, y, LINE2); hline(c, mx0, mx0 + mw, y + HH - 1, LINE2);
     meta.forEach(function(m, i){
       var ry0 = y + rh0 * i;
