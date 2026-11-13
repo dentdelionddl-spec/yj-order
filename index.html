@@ -11,20 +11,56 @@
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   <script defer src="/_vercel/insights/script.js"></script>
   <script>
-    // 일별 방문 집계 — 노션 아카이빙
+    // 유입 추적 — 첫 유입(UTM) 90일 보관 + 일별 방문 · 퍼널 집계
     (function(){
+      var day = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+      var q = new URLSearchParams(location.search);
+      var now = {
+        source: q.get("utm_source") || q.get("src") || "",
+        medium: q.get("utm_medium") || "",
+        campaign: q.get("utm_campaign") || "",
+        content: q.get("utm_content") || ""
+      };
+      var attr = null;
+      try { attr = JSON.parse(localStorage.getItem("yj-attr") || "null"); } catch (e) {}
+      if (attr && Date.now() - (attr.t || 0) > 90 * 864e5) attr = null;
+      if (!attr || (now.source && !attr.source)) {
+        attr = { source: now.source, medium: now.medium, campaign: now.campaign, content: now.content,
+                 ref: document.referrer || "", first: day, t: Date.now() };
+        try { localStorage.setItem("yj-attr", JSON.stringify(attr)); } catch (e) {}
+      }
+      window.YJ_ATTR = attr;
+
+      // 같은 브라우저에서 단계별 1회씩만 집계
+      window.yjTrack = function(step){
+        try {
+          var k = "yj-s-" + day + "-" + step;
+          if (sessionStorage.getItem(k)) return;
+          sessionStorage.setItem(k, "1");
+        } catch (e) {}
+        fetch("/api/visit", { method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+          body: JSON.stringify({ step: step }) }).catch(function(){});
+      };
+
       try {
-        var day = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
-        var seen = localStorage.getItem("yjv");
-        var first = seen !== day;
+        var first = localStorage.getItem("yjv") !== day;
         if (first) localStorage.setItem("yjv", day);
         fetch("/api/visit", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           keepalive: true,
-          body: JSON.stringify({ ref: document.referrer || "", first: first })
-        }).catch(function(){});
+          body: JSON.stringify({ ref: document.referrer || "", first: first, utm: now })
+        }).then(function(r){ return r.json(); }).then(function(d){ if (d && d.pixel) loadPixel(d.pixel); }).catch(function(){});
       } catch (e) {}
+
+      // 메타 픽셀 — Vercel 환경변수 META_PIXEL_ID 가 있을 때만 켜짐
+      function loadPixel(id){
+        if (window.fbq) return;
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', id); fbq('track', 'PageView');
+      }
     })();
   </script>
 <style>
@@ -211,6 +247,16 @@ html,body{overscroll-behavior:none;overscroll-behavior-y:none}
   .btn:hover{background:var(--blue);border-color:var(--blue)}
   .thumb button:hover{background:rgba(16,24,40,.68)}
 }
+
+.hear{margin:12px 0 0;background:#fff;border:1px solid var(--g200);border-radius:var(--r-lg);padding:18px}
+.hear b{display:block;font-size:15px;font-weight:700}
+.hear small{display:block;margin-top:2px;font-size:12px;color:var(--g500)}
+.hear-opts{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.hear-opts button{height:34px;padding:0 13px;border-radius:999px;border:1px solid var(--g300);background:#fff;font:600 13px inherit;color:var(--g700);cursor:pointer;line-height:1}
+.hear-opts button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.hear-opts button:disabled:not(.on){opacity:.45;cursor:default}
+.hear-ok{display:none;margin:10px 0 0;font-size:13px;font-weight:600}
+.hear-ok.on{display:block}
 </style>
 </head>
 <body>
@@ -259,6 +305,7 @@ html,body{overscroll-behavior:none;overscroll-behavior-y:none}
           <div class="f"><label for="f-name">담당자 <i>*</i></label><input id="f-name" maxlength="30" placeholder="이름" /></div>
           <div class="f"><label for="f-phone">연락처 <i>*</i></label><input id="f-phone" inputmode="tel" maxlength="30" placeholder="010-0000-0000" /></div>
         </div>
+        <div class="f"><label for="f-url">브랜드 인스타 · 스토어 주소 <em style="font-style:normal;color:var(--g400);font-weight:500">선택</em></label><input id="f-url" inputmode="url" maxlength="200" placeholder="instagram.com/브랜드 또는 스토어 링크" /></div>
       </div>
 
       <div class="sec">
@@ -348,6 +395,14 @@ html,body{overscroll-behavior:none;overscroll-behavior-y:none}
       <h2>접수됐습니다</h2>
       <p>담당자가 1영업일 안에 연락드립니다.</p>
       <div class="done-no" id="done-no"></div>
+    </div>
+    <div class="hear" id="hear">
+      <b>어떻게 알고 오셨나요?</b>
+      <small>한 번만 눌러주세요</small>
+      <div class="hear-opts" id="hear-opts">
+        <button type="button">스레드</button><button type="button">인스타그램</button><button type="button">메타 광고</button><button type="button">네이버 검색</button><button type="button">구글 검색</button><button type="button">지인 소개</button><button type="button">기존 거래</button><button type="button">기타</button>
+      </div>
+      <p class="hear-ok" id="hear-ok">감사합니다!</p>
     </div>
     <div class="done-tip">
       · 접수번호를 기억해두시면 문의하실 때 빠릅니다.<br>
@@ -505,7 +560,7 @@ html,body{overscroll-behavior:none;overscroll-behavior-y:none}
       sizeSpec:$('f-sizespec').value.trim(), sewing:$('f-sewing').value.trim(),
       packing:$('f-packing').value.trim(), qc:$('f-qc').value.trim(), qcWays:qcWays,
       detail:$('f-detail').value.trim(), grade:grade(st),
-      source:new URLSearchParams(location.search).get('src') || '스레드',
+      brandUrl:$('f-url').value.trim(), utm:window.YJ_ATTR || {},
       company_addr:f.company_addr.value,
       images:images.map(function(im){ return { name:im.name, mime:'image/jpeg', data:im.data }; })
     };
@@ -520,6 +575,7 @@ html,body{overscroll-behavior:none;overscroll-behavior-y:none}
         $('cta').style.display = 'none';
         $('yj-done').style.display = 'block';
                 $('done-no').textContent = res.d.orderNo || (res.d.no ? 'YJ-' + res.d.no : '접수 완료');
+        window.YJ_DONE = { id: res.d.id, tk: res.d.tk };
         window.scrollTo(0,0);
       })
       .catch(function(err){
@@ -527,6 +583,19 @@ html,body{overscroll-behavior:none;overscroll-behavior-y:none}
         fail('전송이 안 됐습니다. 잠시 후 다시 시도하시거나 스레드 DM으로 보내주세요.');
         console.error(err);
       });
+  });
+  // 폼 시작 = 폼 안에서 처음 무언가를 고르거나 입력한 순간
+  ['change', 'input', 'click'].forEach(function(ev){
+    f.addEventListener(ev, function once(){ if (window.yjTrack) yjTrack('폼 시작'); f.removeEventListener(ev, once, true); }, true);
+  });
+  // 완료 화면 — 알게 된 경로 한 번 탭
+  Array.prototype.forEach.call(document.querySelectorAll('#hear-opts button'), function(b){
+    b.addEventListener('click', function(){
+      var d = window.YJ_DONE || {};
+      Array.prototype.forEach.call(document.querySelectorAll('#hear-opts button'), function(x){ x.disabled = true; x.classList.toggle('on', x === b); });
+      $('hear-ok').classList.add('on');
+      if (d.id && d.tk) fetch('/api/survey', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: d.id, tk: d.tk, answer: b.textContent }) }).catch(function(){});
+    });
   });
 })();
 </script>

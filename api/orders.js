@@ -4,7 +4,29 @@
 const DB_ID = process.env.NOTION_DB_ID || 'b400cf41ae804765b1b15e3a4b004ba1';
 const NOTION_VERSION = '2022-06-28';
 const NOTION = 'https://api.notion.com/v1';
-const STATUS = ['상담 전', '보류', '거절', '샘플 진행', '미팅 예정', '진행', '완료'];
+const STATUS = ['상담 전', '미팅 예정', '견적 발송', '샘플 진행', '양산 진행', '납품 완료', '보류', '실패'];
+const VISIT_DB_ID = process.env.VISIT_DB_ID || '22b96ecfb203408295a3f8755c6935b6';
+// 진행 상태 → 그 단계에 도달한 날짜를 기록할 칸 (앞 단계가 비어 있으면 같이 채움)
+const STAGE_DATE = [['미팅 예정', '미팅일'], ['견적 발송', '견적일'], ['샘플 진행', '샘플일'], ['양산 진행', '수주일'], ['납품 완료', '수주일']];
+const todayKST = () => new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+
+// 노션 DB 전체 조회 (100개씩 페이지 넘김, 최대 2,000행)
+async function queryAll(dbId, body) {
+  const out = [];
+  let cursor;
+  for (let i = 0; i < 20; i++) {
+    const r = await fetch(NOTION + '/databases/' + dbId + '/query', {
+      method: 'POST', headers: headers(),
+      body: JSON.stringify(Object.assign({ page_size: 100 }, body || {}, cursor ? { start_cursor: cursor } : {})),
+    });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.message || 'notion error');
+    out.push(...(d.results || []));
+    if (!d.has_more) break;
+    cursor = d.next_cursor;
+  }
+  return out;
+}
 const GRADE = ['A', 'B', 'C'];
 
 function headers() {
@@ -26,6 +48,7 @@ const txt = (p) => {
   if (p.type === 'date') return p.date ? p.date.start : '';
   if (p.type === 'email') return p.email || '';
   if (p.type === 'phone_number') return p.phone_number || '';
+  if (p.type === 'url') return p.url || '';
   if (p.type === 'created_time') return p.created_time || '';
   if (p.type === 'unique_id') return p.unique_id ? (p.unique_id.prefix ? p.unique_id.prefix + '-' : '') + p.unique_id.number : '';
   if (p.type === 'files') return (p.files || []).map(function(f){ return (f.file && f.file.url) || (f.external && f.external.url) || ''; }).filter(Boolean);
@@ -66,6 +89,18 @@ function shape(page) {
     created: txt(P['접수일시']),
     images: txt(P['상품 이미지']) || [],
     memo: txt(P['메모']),
+    brandUrl: txt(P['브랜드 URL']),
+    utmSource: txt(P['UTM 소스']),
+    utmMedium: txt(P['UTM 매체']),
+    utmCampaign: txt(P['UTM 캠페인']),
+    utmContent: txt(P['UTM 콘텐츠']),
+    firstVisit: txt(P['첫 방문일']),
+    meetDate: txt(P['미팅일']),
+    quoteDate: txt(P['견적일']),
+    sampleDate: txt(P['샘플일']),
+    winDate: txt(P['수주일']),
+    lossReason: txt(P['실패 사유']),
+    heard: txt(P['알게 된 경로']),
   };
 }
 
@@ -110,7 +145,22 @@ export default async function handler(req, res) {
     if (st && STATUS.indexOf(st) === -1) return res.status(400).json({ error: 'invalid status' });
     if (gr && GRADE.indexOf(gr) === -1) return res.status(400).json({ error: 'invalid grade' });
     const props = {};
-    if (st) props['진행 상태'] = { select: { name: st } };
+    if (st) {
+      props['진행 상태'] = { select: { name: st } };
+      const idx = STAGE_DATE.findIndex((x) => x[0] === st);
+      if (idx > -1) {
+        try {
+          const pr = await fetch(NOTION + '/pages/' + pid, { headers: headers() });
+          const pg = await pr.json();
+          const PP = (pg && pg.properties) || {};
+          const today = todayKST();
+          for (let i = 0; i <= idx; i++) {
+            const col = STAGE_DATE[i][1];
+            if (!props[col] && !(PP[col] && PP[col].date)) props[col] = { date: { start: today } };
+          }
+        } catch (e) { console.error('stage date skipped', e); }
+      }
+    }
     if (gr) props['등급'] = { select: { name: gr } };
     if (hasMemo) {
       const memo = String(b.memo == null ? '' : b.memo).slice(0, 1900);
@@ -144,6 +194,10 @@ export default async function handler(req, res) {
         qc: ['QC 기준', 'rich_text'],
         qcWays: ['검사 방식', 'multi_select'],
         detail: ['상세 내용', 'rich_text'],
+        brandUrl: ['브랜드 URL', 'url'],
+        lossReason: ['실패 사유', 'select'],
+        meetDate: ['미팅일', 'date'],
+        heard: ['알게 된 경로', 'select'],
       };
       for (const k in F) {
         if (!MAP[k]) continue;
@@ -153,6 +207,7 @@ export default async function handler(req, res) {
         if (type === 'title') { if (!v) continue; props[name] = { title: [{ text: { content: v.slice(0, 200) } }] }; }
         else if (type === 'rich_text') props[name] = { rich_text: v ? [{ text: { content: v.slice(0, 1900) } }] : [] };
         else if (type === 'phone_number') props[name] = { phone_number: v || null };
+        else if (type === 'url') props[name] = { url: v ? (/^https?:\/\//i.test(v) ? v : 'https://' + v).slice(0, 300) : null };
         else if (type === 'number') { const n = parseInt(v, 10); props[name] = { number: isNaN(n) ? null : n }; }
         else if (type === 'date') props[name] = { date: /^\d{4}-\d{2}-\d{2}$/.test(v) ? { start: v } : null };
         else if (type === 'select') props[name] = { select: v ? { name: v.slice(0, 90) } : null };
@@ -179,6 +234,37 @@ export default async function handler(req, res) {
   
   const id = (req.query && req.query.id) || '';
 
+  // 대시보드용 집계 원자료 — 일별 방문 · 퍼널 행 + 문의별 날짜 · 유입 · 단계
+  if (req.query && req.query.stats) {
+    try {
+      const [vis, inq] = await Promise.all([
+        queryAll(VISIT_DB_ID, { sorts: [{ property: '일자', direction: 'ascending' }] }),
+        queryAll(DB_ID, { sorts: [{ property: '접수일시', direction: 'ascending' }] }),
+      ]);
+      const n = (p) => (p && p.number != null ? p.number : 0);
+      const visits = vis.map((pg) => {
+        const P = pg.properties || {};
+        const o = { d: txt(P['일자']) };
+        ['방문', '순방문', '메타광고', '스레드', '인스타', '직접', '기타', '폼 시작'].forEach((k) => { o[k] = n(P[k]); });
+        return o;
+      }).filter((v) => v.d);
+      const inquiries = inq.map((pg) => {
+        const P = pg.properties || {};
+        const kst = new Date(new Date(pg.created_time).getTime() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+        return {
+          d: kst, status: txt(P['진행 상태']), grade: txt(P['등급']), source: txt(P['유입 경로']),
+          campaign: txt(P['UTM 캠페인']), content: txt(P['UTM 콘텐츠']), loss: txt(P['실패 사유']), heard: txt(P['알게 된 경로']),
+          meet: txt(P['미팅일']), quote: txt(P['견적일']), sample: txt(P['샘플일']), win: txt(P['수주일']),
+          qty: n(P['총 수량']),
+        };
+      });
+      return res.status(200).json({ ok: true, visits, inquiries });
+    } catch (e) {
+      console.error(e);
+      return res.status(502).json({ error: String(e.message || e) });
+    }
+  }
+
   try {
     if (id) {
       const r = await fetch(NOTION + '/pages/' + id, { headers: headers() });
@@ -186,17 +272,7 @@ export default async function handler(req, res) {
       if (!r.ok) return res.status(502).json({ error: d.message || 'notion error' });
       return res.status(200).json({ ok: true, order: shape(d) });
     }
-    const r = await fetch(NOTION + '/databases/' + DB_ID + '/query', {
-      method: 'POST',
-      headers: headers(),
-      body: JSON.stringify({
-        page_size: 100,
-        sorts: [{ property: '접수일시', direction: 'descending' }],
-      }),
-    });
-    const d = await r.json();
-    if (!r.ok) return res.status(502).json({ error: d.message || 'notion error' });
-    const list = (d.results || []).map(shape);
+    const list = (await queryAll(DB_ID, { sorts: [{ property: '접수일시', direction: 'descending' }] })).map(shape);
     return res.status(200).json({ ok: true, count: list.length, orders: list });
   } catch (e) {
     console.error(e);

@@ -1,5 +1,8 @@
 // 오더문의 → 노션 저장 (Vercel Serverless Function)
-// 환경변수: NOTION_TOKEN (필수), NOTION_DB_ID (선택, 미설정 시 아래 기본값)
+// 환경변수: NOTION_TOKEN (필수), NOTION_DB_ID (선택, 미설정 시 아래 기본값), SLACK_WEBHOOK_URL (선택)
+
+import { createHmac } from 'node:crypto';
+import { bucket } from './visit.js';
 
 const DB_ID = process.env.NOTION_DB_ID || 'b400cf41ae804765b1b15e3a4b004ba1';
 const NOTION_VERSION = '2022-06-28';
@@ -9,7 +12,7 @@ const MIN_PER_UNIT = 100; // 컬러·사이즈당 최소 수량
 const ITEMS = ['잠옷·파자마', '잠옷원피스', '셔츠·남방', '밴딩슬랙스', '반팔티', '기타'];
 const FABRIC = ['확정', '미확정', '공장 소싱 요청'];
 const ASSET = ['실물 샘플', '도식화·작업지시서', '사진·이미지만', '없음'];
-const SOURCE = ['스레드', '인스타', '직접입력', '기타'];
+const SOURCE = ['메타광고', '스레드', '인스타', '직접입력', '기타'];
 const GRADE = ['A', 'B', 'C'];
 const QCWAY = ['자체검사', '외부검사', '공장 기준 위임'];
 
@@ -126,6 +129,12 @@ export default async function handler(req, res) {
   const rowsText = styles + '스타일 × ' + colors + '컬러 × ' + sizes + '사이즈 × ' + perUnit.toLocaleString() + '장 = 총 ' + qty.toLocaleString() + '장';
 
   const email = txt(b.email, 60);
+  const utm = (b.utm && typeof b.utm === 'object') ? b.utm : {};
+  const srcBucket = bucket(utm.ref, req.headers && req.headers.host, utm);
+  const source = srcBucket === '직접' || !srcBucket ? '직접입력' : srcBucket;
+  let brandUrl = txt(b.brandUrl, 200);
+  if (brandUrl && !/^https?:\/\//i.test(brandUrl)) brandUrl = 'https://' + brandUrl;
+  const firstDay = txt(utm.first, 10);
   const dueRaw = txt(b.due, 10);
   const due = (dueRaw.length === 10 && dueRaw[4] === '-' && dueRaw[7] === '-' && !isNaN(Date.parse(dueRaw))) ? dueRaw : null;
 
@@ -133,7 +142,7 @@ export default async function handler(req, res) {
     '브랜드·회사명': { title: [{ text: { content: brand } }] },
     '담당자': rt(manager),
     '연락처': { phone_number: phone },
-    '진행 상태': { select: { name: '신규' } },
+    '진행 상태': { select: { name: '상담 전' } },
     '등급': { select: { name: pick(b.grade, GRADE) || 'B' } },
     '품목': { multi_select: items.map((n) => ({ name: n })) },
     '스타일 수': { number: styles },
@@ -142,8 +151,14 @@ export default async function handler(req, res) {
     '총 수량': { number: qty },
     'MOQ 충족': { checkbox: !!moqOk },
     '발주 구성': rt(rowsText),
-    '유입 경로': { select: { name: pick(txt(b.source), SOURCE) || '스레드' } },
+    '유입 경로': { select: { name: pick(source, SOURCE) || '기타' } },
   };
+  if (brandUrl && /^https?:\/\/[^\s.]+\.[^\s]+$/i.test(brandUrl)) P['브랜드 URL'] = { url: brandUrl };
+  if (txt(utm.source, 100)) P['UTM 소스'] = rt(txt(utm.source, 100));
+  if (txt(utm.medium, 100)) P['UTM 매체'] = rt(txt(utm.medium, 100));
+  if (txt(utm.campaign, 200)) P['UTM 캠페인'] = rt(txt(utm.campaign, 200));
+  if (txt(utm.content, 200)) P['UTM 콘텐츠'] = rt(txt(utm.content, 200));
+  if (/^\d{4}-\d{2}-\d{2}$/.test(firstDay)) P['첫 방문일'] = { date: { start: firstDay } };
   if (qcWays.length) P['검사 방식'] = { multi_select: qcWays.map((n) => ({ name: n })) };
   if (email) P['이메일'] = { email };
   if (txt(b.kakao, 40)) P['카톡ID'] = rt(txt(b.kakao, 40));
@@ -210,11 +225,14 @@ export default async function handler(req, res) {
         ['원단', txt(b.fabric)],
         ['보유 자료', txt(b.asset)],
         ['희망 단가', txt(b.price, 40)],
-        ['유입', txt(b.source) || '스레드'],
+        ['브랜드 URL', brandUrl],
+        ['유입', source + (utm.campaign ? ' · ' + txt(utm.campaign, 80) : '') + (utm.content ? ' / ' + txt(utm.content, 80) : '')],
       ],
     });
 
-    return res.status(200).json({ ok: true, no, orderNo });
+    // 완료 화면의 '알게 된 경로' 응답용 서명 (이 문의 1건에만 유효)
+    const tk = createHmac('sha256', process.env.NOTION_TOKEN).update('survey:' + data.id).digest('hex').slice(0, 32);
+    return res.status(200).json({ ok: true, no, orderNo, id: data.id, tk });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ error: 'server error' });
