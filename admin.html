@@ -344,6 +344,37 @@ body{touch-action:pan-y pinch-zoom}
 }
 .twrap,.rows,.ed{touch-action:pan-x pan-y pinch-zoom}
 @media (max-width:820px){ .r-st{font-size:12px !important} } /* 작은 상태 알약은 원래 크기 유지 (maximum-scale=1 로 자동 확대는 이미 막힘) */
+
+/* ══ 미싱맨 블루 — 문의 페이지와 같은 포인트 컬러 ══ */
+:root{--brand:#2e6be6;--brand-d:#2159c9;--brand-50:#eff4ff;--brand-100:#d7e3fd;--blue:var(--brand);--blue-50:var(--brand-50)}
+.btn{background:var(--brand);border-color:var(--brand)}
+.btn:hover{background:var(--brand-d);box-shadow:0 6px 16px -8px rgba(46,107,230,.6)}
+.btn.ghost{background:rgba(255,255,255,.9);border-color:var(--line-2)}
+.btn.ghost:hover{background:#fff}
+.btn.danger{background:var(--warn);border-color:var(--warn)}
+.msel:focus,.btn:focus-visible,.r-st:focus{box-shadow:0 0 0 3px rgba(46,107,230,.18)}
+.seg button.on{background:var(--brand);box-shadow:0 4px 10px -4px rgba(46,107,230,.6)}
+.kpi.hero{background:linear-gradient(160deg,#3b78ee,#2159c9);border-color:#2159c9;box-shadow:0 18px 36px -20px rgba(33,89,201,.7)}
+.kpi.hero .k,.kpi.hero .r{color:rgba(255,255,255,.75)}
+.fr .t i{background:var(--brand)}
+.fr.post .t i{background:#8fb0f3}
+.trend .b.cur i{background:var(--brand)}
+.trend .b.cur em{color:var(--brand-d)}
+.tlab span.cur{color:var(--brand-d)}
+.st-new{background-color:var(--brand);color:#fff}
+.row.on{border-color:var(--brand-100)}
+.row.on::before{background:var(--brand)}
+.row.on .r-no{color:var(--brand-d)}
+.r-ck{accent-color:var(--brand)}
+.hd-list b{background:var(--brand)}
+.ed .fd.dirty label{color:var(--brand-d)}
+.ed .fd.dirty label::after{background:var(--brand)}
+.ed .fd.dirty input,.ed .fd.dirty select,.ed .fd.dirty textarea{border-color:var(--brand);background:var(--brand-50)}
+.ed input:focus,.ed select:focus,.ed textarea:focus,.r-memo textarea:focus,.gate input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(46,107,230,.12)}
+.brief .bh::before{background:var(--brand)}
+.brief a{color:var(--brand-d)}
+.tbl tr.sum td{color:var(--brand-d)}
+.logo{color:var(--ink);transform:skewX(-12deg) scaleX(.96);transform-origin:left center} /* 문의 페이지 로고와 동일 */
 </style>
 </head>
 <body>
