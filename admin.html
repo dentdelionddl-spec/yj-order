@@ -38,7 +38,7 @@ canvas,img{max-width:100%}
 .btn.sm{height:32px;padding:0 12px;font-size:12.5px;border-radius:9px}
 .btn.danger{background:var(--warn);border-color:var(--warn)}
 .btn.danger:hover{background:#b02a23;border-color:#b02a23}
-.sel,.msel{appearance:none;-webkit-appearance:none;height:36px;padding:0 34px 0 12px;border:1px solid var(--line-2);border-radius:var(--r-ctl);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%237c818a' stroke-width='1.6'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 12px center;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;box-shadow:var(--sh-1);min-width:0;text-overflow:ellipsis}
+.msel{appearance:none;-webkit-appearance:none;height:36px;padding:0 34px 0 12px;border:1px solid var(--line-2);border-radius:var(--r-ctl);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%237c818a' stroke-width='1.6'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 12px center;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;box-shadow:var(--sh-1);min-width:0;text-overflow:ellipsis}
 .msel:hover{border-color:rgba(16,24,40,.2)}
 .msel:focus,.btn:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(11,11,12,.12)}
 
@@ -915,14 +915,14 @@ body{touch-action:pan-y pinch-zoom}
       if (!LIST.length) { box.innerHTML = '<div class="empty"><b>접수된 오더가 없습니다</b>' + (MONTH === 'all' ? '사이트에서 문의가 들어오면 여기에 쌓입니다.' : '이 달에는 접수된 건이 없습니다.') + '</div>'; syncSel(); return; }
       box.innerHTML = LIST.map(function(o, i){
         var meta = [];
-        if (o.due) meta.push('출시 희망 ' + String(o.due).slice(2).replace(/-/g, '.'));
+        if (o.due) meta.push('납기 ' + String(o.due).slice(2).replace(/-/g, '.'));
         if (o.created) meta.push('접수 ' + String(o.created).slice(5, 10).replace('-', '.'));
         if (o.heard) meta.push(o.heard);
         return '<div class="row" data-i="' + i + '">' +
           '<input type="checkbox" class="r-ck"' + (SEL[o.id] ? ' checked' : '') + ' />' +
           '<div class="r-brand">' + (o.brand || '(회사명 없음)') + '</div>' +
           '<div class="r-no">' + ono(o) + '</div>' +
-          '<div class="r-main"><span class="r-qty">' + (o.qty ? Number(o.qty).toLocaleString() + '개' : '-') + '</span>' +
+          '<div class="r-main"><span class="r-qty">' + (o.qty ? Number(o.qty).toLocaleString() + '장' : '-') + '</span>' +
           '<span class="r-item">' + (o.items || '-') + '</span></div>' +
           '<div class="r-meta">' + (meta.join(' · ') || '&nbsp;') + '</div>' +
           '<div class="r-chips">' + badge(o) + '</div>' +
